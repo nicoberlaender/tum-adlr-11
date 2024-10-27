@@ -1,1 +1,1 @@
-# ADLR-tactile-exploration-of-objects
+# Tactile Exploration of Objects
