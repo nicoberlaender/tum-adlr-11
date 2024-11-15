@@ -73,3 +73,15 @@ def sample_pixels(binary_image, n):
     output[sampled_points[:, 0], sampled_points[:, 1]] = 1
     
     return output
+
+def segmap_to_binary(image):
+    """
+    Convert a 2D numpy array to a binary image.
+    
+    Args:
+        image: 2D numpy array
+        
+    Returns:
+        2D numpy array with values 0 and 1
+    """
+    return (image == 1).astype(np.uint8)
