@@ -46,3 +46,30 @@ def binary_to_image(binary_array):
     """
     # Convert to uint8 and scale to 0-255
     return (binary_array * 255).astype(np.uint8)
+
+def sample_pixels(binary_image, n):
+    """
+    Randomly sample n active pixels (value 1) from a binary image and return an image marking those pixels.
+    
+    Args:
+        binary_image: 2D numpy array with values 0 and 1
+        n: Number of pixels to sample
+        
+    Returns:
+        2D numpy array of same dimensions as input, with 1s at sampled locations and 0s elsewhere
+    """
+    # Initialize output image
+    output = np.zeros_like(binary_image)
+    
+    # Get active pixel coordinates
+    active_pixels = np.argwhere(binary_image > 0)
+    n = min(n, len(active_pixels))
+    
+    # Sample pixels
+    sampled_indices = np.random.choice(len(active_pixels), size=n, replace=False)
+    sampled_points = active_pixels[sampled_indices]
+    
+    # Mark sampled pixels in output image
+    output[sampled_points[:, 0], sampled_points[:, 1]] = 1
+    
+    return output
