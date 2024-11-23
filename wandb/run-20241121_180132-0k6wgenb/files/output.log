@@ -1,0 +1,8 @@
+Dataset mean: 0.0001971782800456778, std: 0.013990361973526497
+Traceback (most recent call last):
+  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\main1.py", line 151, in <module>
+    main()
+  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\main1.py", line 78, in main
+    criterion = nn.CrossEntropyLoss()
+                ^^
+NameError: name 'nn' is not defined

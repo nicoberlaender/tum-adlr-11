@@ -1,0 +1,16 @@
+{"time":"2024-11-21T11:42:48.881232+01:00","level":"INFO","msg":"using version","core version":"0.18.6"}
+{"time":"2024-11-21T11:42:48.8819149+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241121_114248-4kmnkynv\\logs\\debug-core.log"}
+{"time":"2024-11-21T11:42:49.1748834+01:00","level":"INFO","msg":"created new stream","id":"4kmnkynv"}
+{"time":"2024-11-21T11:42:49.1748834+01:00","level":"INFO","msg":"stream: started","id":"4kmnkynv"}
+{"time":"2024-11-21T11:42:49.1748834+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"4kmnkynv"}}
+{"time":"2024-11-21T11:42:49.1751497+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"4kmnkynv"}}
+{"time":"2024-11-21T11:42:49.1754269+01:00","level":"INFO","msg":"sender: started","stream_id":"4kmnkynv"}
+{"time":"2024-11-21T11:42:49.5228365+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-21T11:42:51.9547547+01:00","level":"INFO","msg":"stream: closing","id":"4kmnkynv"}
+{"time":"2024-11-21T11:42:51.9549713+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-21T11:42:51.9586242+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-21T11:42:52.7914423+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-21T11:42:53.0359473+01:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"4kmnkynv"}}
+{"time":"2024-11-21T11:42:53.0359473+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"4kmnkynv"}}
+{"time":"2024-11-21T11:42:53.0359473+01:00","level":"INFO","msg":"sender: closed","stream_id":"4kmnkynv"}
+{"time":"2024-11-21T11:42:53.03749+01:00","level":"INFO","msg":"stream: closed","id":"4kmnkynv"}

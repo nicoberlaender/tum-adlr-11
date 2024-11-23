@@ -1,0 +1,12 @@
+{"time":"2024-11-21T11:41:35.7677261+01:00","level":"INFO","msg":"using version","core version":"0.18.6"}
+{"time":"2024-11-21T11:41:35.7678809+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241121_114135-mrhhanle\\logs\\debug-core.log"}
+{"time":"2024-11-21T11:41:36.0313377+01:00","level":"INFO","msg":"created new stream","id":"mrhhanle"}
+{"time":"2024-11-21T11:41:36.032171+01:00","level":"INFO","msg":"stream: started","id":"mrhhanle"}
+{"time":"2024-11-21T11:41:36.0324806+01:00","level":"INFO","msg":"sender: started","stream_id":"mrhhanle"}
+{"time":"2024-11-21T11:41:36.0324806+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"mrhhanle"}}
+{"time":"2024-11-21T11:41:36.032171+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"mrhhanle"}}
+{"time":"2024-11-21T11:41:36.38722+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-21T11:41:38.0656515+01:00","level":"INFO","msg":"stream: closing","id":"mrhhanle"}
+{"time":"2024-11-21T11:41:38.0656515+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-21T11:41:38.0669682+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-21T11:41:39.3675528+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

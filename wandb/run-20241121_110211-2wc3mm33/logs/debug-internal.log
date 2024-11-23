@@ -1,0 +1,16 @@
+{"time":"2024-11-21T11:02:11.0888983+01:00","level":"INFO","msg":"using version","core version":"0.18.6"}
+{"time":"2024-11-21T11:02:11.0888983+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241121_110211-2wc3mm33\\logs\\debug-core.log"}
+{"time":"2024-11-21T11:02:11.2199043+01:00","level":"INFO","msg":"created new stream","id":"2wc3mm33"}
+{"time":"2024-11-21T11:02:11.2199043+01:00","level":"INFO","msg":"stream: started","id":"2wc3mm33"}
+{"time":"2024-11-21T11:02:11.2199043+01:00","level":"INFO","msg":"sender: started","stream_id":"2wc3mm33"}
+{"time":"2024-11-21T11:02:11.2199043+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"2wc3mm33"}}
+{"time":"2024-11-21T11:02:11.2204281+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"2wc3mm33"}}
+{"time":"2024-11-21T11:02:11.661988+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-21T11:02:13.3423108+01:00","level":"INFO","msg":"stream: closing","id":"2wc3mm33"}
+{"time":"2024-11-21T11:02:13.3423108+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-21T11:02:13.3439696+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-21T11:02:16.7128202+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-21T11:02:16.9400121+01:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"2wc3mm33"}}
+{"time":"2024-11-21T11:02:16.9400121+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"2wc3mm33"}}
+{"time":"2024-11-21T11:02:16.9400121+01:00","level":"INFO","msg":"sender: closed","stream_id":"2wc3mm33"}
+{"time":"2024-11-21T11:02:16.9405194+01:00","level":"INFO","msg":"stream: closed","id":"2wc3mm33"}

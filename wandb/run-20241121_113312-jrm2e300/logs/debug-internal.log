@@ -1,0 +1,16 @@
+{"time":"2024-11-21T11:33:12.3871468+01:00","level":"INFO","msg":"using version","core version":"0.18.6"}
+{"time":"2024-11-21T11:33:12.3877065+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241121_113312-jrm2e300\\logs\\debug-core.log"}
+{"time":"2024-11-21T11:33:13.3421102+01:00","level":"INFO","msg":"created new stream","id":"jrm2e300"}
+{"time":"2024-11-21T11:33:13.3421102+01:00","level":"INFO","msg":"stream: started","id":"jrm2e300"}
+{"time":"2024-11-21T11:33:13.3423302+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"jrm2e300"}}
+{"time":"2024-11-21T11:33:13.3423302+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"jrm2e300"}}
+{"time":"2024-11-21T11:33:13.3423302+01:00","level":"INFO","msg":"sender: started","stream_id":"jrm2e300"}
+{"time":"2024-11-21T11:33:13.9073078+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-21T11:33:15.6754662+01:00","level":"INFO","msg":"stream: closing","id":"jrm2e300"}
+{"time":"2024-11-21T11:33:15.6754662+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-21T11:33:15.6760579+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-21T11:33:16.5762817+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-21T11:33:16.9544877+01:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"jrm2e300"}}
+{"time":"2024-11-21T11:33:16.9549154+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"jrm2e300"}}
+{"time":"2024-11-21T11:33:16.9549154+01:00","level":"INFO","msg":"sender: closed","stream_id":"jrm2e300"}
+{"time":"2024-11-21T11:33:16.9564424+01:00","level":"INFO","msg":"stream: closed","id":"jrm2e300"}

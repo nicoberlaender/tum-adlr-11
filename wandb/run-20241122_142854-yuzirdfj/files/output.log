@@ -1,0 +1,15 @@
+Dataset mean: 7.720400954612756e-07, std: 5.4754757846909005e-05
+c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\create_dataset_file.py:52: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  input_image = torch.tensor(input_image, dtype=torch.float32)
+c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\create_dataset_file.py:53: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  target_image = torch.tensor(target_image, dtype=torch.float32)
+Epoch 1/10, Train Loss: 0.0000, Val Loss: 0.0000
+Epoch 2/10, Train Loss: 0.0000, Val Loss: 0.0000
+Epoch 3/10, Train Loss: 0.0000, Val Loss: 0.0000
+Epoch 4/10, Train Loss: 0.0000, Val Loss: 0.0000
+Epoch 5/10, Train Loss: 0.0000, Val Loss: 0.0000
+Epoch 6/10, Train Loss: 0.0000, Val Loss: 0.0000
+Epoch 7/10, Train Loss: 0.0000, Val Loss: 0.0000
+Epoch 8/10, Train Loss: 0.0000, Val Loss: 0.0000
+Epoch 9/10, Train Loss: 0.0000, Val Loss: 0.0000
+Epoch 10/10, Train Loss: 0.0000, Val Loss: 0.0000

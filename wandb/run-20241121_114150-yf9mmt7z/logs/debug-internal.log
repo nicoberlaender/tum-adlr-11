@@ -1,0 +1,11 @@
+{"time":"2024-11-21T11:41:50.648739+01:00","level":"INFO","msg":"using version","core version":"0.18.6"}
+{"time":"2024-11-21T11:41:50.6492708+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241121_114150-yf9mmt7z\\logs\\debug-core.log"}
+{"time":"2024-11-21T11:41:51.4966361+01:00","level":"INFO","msg":"created new stream","id":"yf9mmt7z"}
+{"time":"2024-11-21T11:41:51.497037+01:00","level":"INFO","msg":"stream: started","id":"yf9mmt7z"}
+{"time":"2024-11-21T11:41:51.4973287+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"yf9mmt7z"}}
+{"time":"2024-11-21T11:41:51.4973287+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"yf9mmt7z"}}
+{"time":"2024-11-21T11:41:51.4973287+01:00","level":"INFO","msg":"sender: started","stream_id":"yf9mmt7z"}
+{"time":"2024-11-21T11:41:52.0133709+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-21T11:41:53.2244932+01:00","level":"INFO","msg":"stream: closing","id":"yf9mmt7z"}
+{"time":"2024-11-21T11:41:53.2359311+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-21T11:41:53.2370649+01:00","level":"INFO","msg":"Stopped system monitor"}

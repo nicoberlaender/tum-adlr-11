@@ -1,0 +1,27 @@
+Dataset mean: 7.720400996428604e-07, std: 5.4754757846909005e-05
+c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\dataset\create_dataset_file.py:52: UserWarning: To copy construct from a tensor, it is recommended to use sourceTensor.clone().detach() or sourceTensor.clone().detach().requires_grad_(True), rather than torch.tensor(sourceTensor).
+  input_image = torch.tensor(input_image, dtype=torch.float32)
+Traceback (most recent call last):
+  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\main1.py", line 131, in <module>
+    main()
+  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\main1.py", line 83, in main
+    print(loss)
+  File "C:\Users\iacop\anaconda3\Lib\site-packages\torch\_tensor.py", line 523, in __repr__
+    return torch._tensor_str._str(self, tensor_contents=tensor_contents)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iacop\anaconda3\Lib\site-packages\torch\_tensor_str.py", line 708, in _str
+    return _str_intern(self, tensor_contents=tensor_contents)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iacop\anaconda3\Lib\site-packages\torch\_tensor_str.py", line 625, in _str_intern
+    tensor_str = _tensor_str(self, indent)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iacop\anaconda3\Lib\site-packages\torch\_tensor_str.py", line 357, in _tensor_str
+    formatter = _Formatter(get_summarized_data(self) if summarize else self)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\iacop\anaconda3\Lib\site-packages\torch\_tensor_str.py", line 146, in __init__
+    tensor_view, torch.isfinite(tensor_view) & tensor_view.ne(0)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: CUDA error: device-side assert triggered
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.

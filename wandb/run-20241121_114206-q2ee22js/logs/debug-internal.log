@@ -1,0 +1,16 @@
+{"time":"2024-11-21T11:42:06.5123751+01:00","level":"INFO","msg":"using version","core version":"0.18.6"}
+{"time":"2024-11-21T11:42:06.5124981+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241121_114206-q2ee22js\\logs\\debug-core.log"}
+{"time":"2024-11-21T11:42:07.428217+01:00","level":"INFO","msg":"created new stream","id":"q2ee22js"}
+{"time":"2024-11-21T11:42:07.4284713+01:00","level":"INFO","msg":"stream: started","id":"q2ee22js"}
+{"time":"2024-11-21T11:42:07.4284713+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"q2ee22js"}}
+{"time":"2024-11-21T11:42:07.4290441+01:00","level":"INFO","msg":"sender: started","stream_id":"q2ee22js"}
+{"time":"2024-11-21T11:42:07.4293234+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"q2ee22js"}}
+{"time":"2024-11-21T11:42:07.9008982+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-21T11:42:11.259448+01:00","level":"INFO","msg":"stream: closing","id":"q2ee22js"}
+{"time":"2024-11-21T11:42:11.259448+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-21T11:42:11.2603881+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-21T11:42:12.1285403+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-21T11:42:12.3704143+01:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"q2ee22js"}}
+{"time":"2024-11-21T11:42:12.3705769+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"q2ee22js"}}
+{"time":"2024-11-21T11:42:12.3705769+01:00","level":"INFO","msg":"sender: closed","stream_id":"q2ee22js"}
+{"time":"2024-11-21T11:42:12.3716413+01:00","level":"INFO","msg":"stream: closed","id":"q2ee22js"}

@@ -1,0 +1,8 @@
+{"time":"2024-11-22T17:23:02.0924022+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-22T17:23:02.0924022+01:00","level":"INFO","msg":"created symlink","path":"C:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241122_172302-v5gyfv6k\\logs\\debug-core.log"}
+{"time":"2024-11-22T17:23:02.2543668+01:00","level":"INFO","msg":"created new stream","id":"v5gyfv6k"}
+{"time":"2024-11-22T17:23:02.2543668+01:00","level":"INFO","msg":"stream: started","id":"v5gyfv6k"}
+{"time":"2024-11-22T17:23:02.2548795+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"v5gyfv6k"}
+{"time":"2024-11-22T17:23:02.2548795+01:00","level":"INFO","msg":"sender: started","stream_id":"v5gyfv6k"}
+{"time":"2024-11-22T17:23:02.2548795+01:00","level":"INFO","msg":"handler: started","stream_id":"v5gyfv6k"}
+{"time":"2024-11-22T17:23:02.6707489+01:00","level":"INFO","msg":"Starting system monitor"}

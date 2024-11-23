@@ -1,0 +1,17 @@
+{"time":"2024-11-22T14:38:00.6540374+01:00","level":"INFO","msg":"using version","core version":"0.18.6"}
+{"time":"2024-11-22T14:38:00.6540374+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241122_143800-ivjpas5t\\logs\\debug-core.log"}
+{"time":"2024-11-22T14:38:00.8900574+01:00","level":"INFO","msg":"created new stream","id":"ivjpas5t"}
+{"time":"2024-11-22T14:38:00.8901572+01:00","level":"INFO","msg":"stream: started","id":"ivjpas5t"}
+{"time":"2024-11-22T14:38:00.8901572+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"ivjpas5t"}}
+{"time":"2024-11-22T14:38:00.8901572+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"ivjpas5t"}}
+{"time":"2024-11-22T14:38:00.8901572+01:00","level":"INFO","msg":"sender: started","stream_id":"ivjpas5t"}
+{"time":"2024-11-22T14:38:01.2369073+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-22T14:38:52.3577566+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-22T14:38:52.3588425+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-22T14:38:53.3631767+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.5052918}],"total_operations":1}}
+{"time":"2024-11-22T14:38:53.4437034+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-22T14:38:54.7003796+01:00","level":"INFO","msg":"stream: closing","id":"ivjpas5t"}
+{"time":"2024-11-22T14:38:54.7003796+01:00","level":"INFO","msg":"handler: closed","stream_id":{"value":"ivjpas5t"}}
+{"time":"2024-11-22T14:38:54.7003796+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":{"value":"ivjpas5t"}}
+{"time":"2024-11-22T14:38:54.7003796+01:00","level":"INFO","msg":"sender: closed","stream_id":"ivjpas5t"}
+{"time":"2024-11-22T14:38:54.7009438+01:00","level":"INFO","msg":"stream: closed","id":"ivjpas5t"}

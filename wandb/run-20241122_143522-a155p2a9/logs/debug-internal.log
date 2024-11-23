@@ -1,0 +1,8 @@
+{"time":"2024-11-22T14:35:22.4364909+01:00","level":"INFO","msg":"using version","core version":"0.18.6"}
+{"time":"2024-11-22T14:35:22.4370341+01:00","level":"INFO","msg":"created symlink","path":"c:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241122_143522-a155p2a9\\logs\\debug-core.log"}
+{"time":"2024-11-22T14:35:23.1789237+01:00","level":"INFO","msg":"created new stream","id":"a155p2a9"}
+{"time":"2024-11-22T14:35:23.1789237+01:00","level":"INFO","msg":"stream: started","id":"a155p2a9"}
+{"time":"2024-11-22T14:35:23.179756+01:00","level":"INFO","msg":"handler: started","stream_id":{"value":"a155p2a9"}}
+{"time":"2024-11-22T14:35:23.1802629+01:00","level":"INFO","msg":"sender: started","stream_id":"a155p2a9"}
+{"time":"2024-11-22T14:35:23.1802629+01:00","level":"INFO","msg":"writer: Do: started","stream_id":{"value":"a155p2a9"}}
+{"time":"2024-11-22T14:35:23.5072405+01:00","level":"INFO","msg":"Starting system monitor"}
