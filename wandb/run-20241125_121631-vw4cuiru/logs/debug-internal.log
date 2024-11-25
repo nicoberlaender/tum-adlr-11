@@ -1,0 +1,17 @@
+{"time":"2024-11-25T12:16:31.9072773+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-25T12:16:31.9072773+01:00","level":"INFO","msg":"created symlink","path":"C:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241125_121631-vw4cuiru\\logs\\debug-core.log"}
+{"time":"2024-11-25T12:16:32.1605677+01:00","level":"INFO","msg":"created new stream","id":"vw4cuiru"}
+{"time":"2024-11-25T12:16:32.1606427+01:00","level":"INFO","msg":"stream: started","id":"vw4cuiru"}
+{"time":"2024-11-25T12:16:32.1606427+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"vw4cuiru"}
+{"time":"2024-11-25T12:16:32.1611456+01:00","level":"INFO","msg":"sender: started","stream_id":"vw4cuiru"}
+{"time":"2024-11-25T12:16:32.1611456+01:00","level":"INFO","msg":"handler: started","stream_id":"vw4cuiru"}
+{"time":"2024-11-25T12:16:32.6874927+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-25T12:16:57.7341745+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-25T12:16:57.7368741+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-25T12:16:58.7380129+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"saving job artifact","runtime_seconds":0.8061556,"subtasks":[{"desc":"requirements.frozen.txt","runtime_seconds":0.0207372,"progress":"2.3KB/2.3KB"},{"desc":"wandb-job.json","runtime_seconds":0.0207372,"progress":"762B/762B"}]},{"desc":"uploading output.log","runtime_seconds":0.6019894,"progress":"205.9KB/205.9KB"}],"total_operations":2}}
+{"time":"2024-11-25T12:17:00.4944253+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-25T12:17:02.0969755+01:00","level":"INFO","msg":"stream: closing","id":"vw4cuiru"}
+{"time":"2024-11-25T12:17:02.0969755+01:00","level":"INFO","msg":"handler: closed","stream_id":"vw4cuiru"}
+{"time":"2024-11-25T12:17:02.0969755+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"vw4cuiru"}
+{"time":"2024-11-25T12:17:02.0975217+01:00","level":"INFO","msg":"sender: closed","stream_id":"vw4cuiru"}
+{"time":"2024-11-25T12:17:02.0980837+01:00","level":"INFO","msg":"stream: closed","id":"vw4cuiru"}

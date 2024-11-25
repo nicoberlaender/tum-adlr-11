@@ -1,0 +1,77 @@
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+True
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Traceback (most recent call last):
+  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\overfitting_main.py", line 153, in <module>
+    main()
+  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\overfitting_main.py", line 105, in main
+    loss.backward()
+  File "C:\Users\iacop\anaconda3\envs\lvsm\lib\site-packages\torch\_tensor.py", line 581, in backward
+    torch.autograd.backward(
+  File "C:\Users\iacop\anaconda3\envs\lvsm\lib\site-packages\torch\autograd\__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "C:\Users\iacop\anaconda3\envs\lvsm\lib\site-packages\torch\autograd\graph.py", line 825, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn

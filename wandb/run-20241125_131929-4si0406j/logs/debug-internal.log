@@ -1,0 +1,16 @@
+{"time":"2024-11-25T13:19:29.940103+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-25T13:19:29.940103+01:00","level":"INFO","msg":"created symlink","path":"C:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241125_131929-4si0406j\\logs\\debug-core.log"}
+{"time":"2024-11-25T13:19:30.7029379+01:00","level":"INFO","msg":"created new stream","id":"4si0406j"}
+{"time":"2024-11-25T13:19:30.7029379+01:00","level":"INFO","msg":"stream: started","id":"4si0406j"}
+{"time":"2024-11-25T13:19:30.7029379+01:00","level":"INFO","msg":"handler: started","stream_id":"4si0406j"}
+{"time":"2024-11-25T13:19:30.7029379+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"4si0406j"}
+{"time":"2024-11-25T13:19:30.7029379+01:00","level":"INFO","msg":"sender: started","stream_id":"4si0406j"}
+{"time":"2024-11-25T13:19:31.0307822+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-25T13:19:31.7341674+01:00","level":"INFO","msg":"stream: closing","id":"4si0406j"}
+{"time":"2024-11-25T13:19:31.7341674+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-25T13:19:31.7346836+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-25T13:19:32.4126917+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-25T13:19:32.6368802+01:00","level":"INFO","msg":"handler: closed","stream_id":"4si0406j"}
+{"time":"2024-11-25T13:19:32.6368802+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"4si0406j"}
+{"time":"2024-11-25T13:19:32.6368802+01:00","level":"INFO","msg":"sender: closed","stream_id":"4si0406j"}
+{"time":"2024-11-25T13:19:32.6368802+01:00","level":"INFO","msg":"stream: closed","id":"4si0406j"}
