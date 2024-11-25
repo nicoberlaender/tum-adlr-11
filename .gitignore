@@ -2,3 +2,8 @@
 data.zip
 2D_Shape_Completion/data_new.zip
 2D_Shape_Completion/__pycache__
+*.pyc
+2D_Shape_Completion/dataset/__pycache__/
+data/
+2D_Shape_Completion/data_new/
+*.DS_Store
