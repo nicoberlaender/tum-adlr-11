@@ -1,8 +1,0 @@
-{"time":"2024-11-23T09:21:31.2502148+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
-{"time":"2024-11-23T09:21:31.2502841+01:00","level":"INFO","msg":"created symlink","path":"C:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241123_092131-qllibd0x\\logs\\debug-core.log"}
-{"time":"2024-11-23T09:21:31.3852687+01:00","level":"INFO","msg":"created new stream","id":"qllibd0x"}
-{"time":"2024-11-23T09:21:31.3852687+01:00","level":"INFO","msg":"stream: started","id":"qllibd0x"}
-{"time":"2024-11-23T09:21:31.3852687+01:00","level":"INFO","msg":"handler: started","stream_id":"qllibd0x"}
-{"time":"2024-11-23T09:21:31.3852687+01:00","level":"INFO","msg":"sender: started","stream_id":"qllibd0x"}
-{"time":"2024-11-23T09:21:31.3852687+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"qllibd0x"}
-{"time":"2024-11-23T09:21:31.9458573+01:00","level":"INFO","msg":"Starting system monitor"}

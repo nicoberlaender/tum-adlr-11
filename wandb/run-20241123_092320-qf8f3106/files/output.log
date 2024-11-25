@@ -1,8 +1,0 @@
-Dataset mean: 0, std: 1
-tensor(0., device='cuda:0') tensor(1., device='cuda:0')
-Backend tkagg is interactive backend. Turning interactive mode on.
-torch.Size([16, 1, 224, 224])
-torch.Size([16, 1, 224, 224])
-Output on GPU: True
-Output dtype: torch.float32
-Output shape: torch.Size([16, 1, 224, 224])

@@ -1,0 +1,712 @@
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.7774218916893005
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 1/1000, Train Loss: 0.7774, Val Loss: 0.7796
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.6056867837905884
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 2/1000, Train Loss: 0.6057, Val Loss: 0.3219
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.4871864914894104
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 3/1000, Train Loss: 0.4872, Val Loss: 0.2740
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.3963985741138458
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 4/1000, Train Loss: 0.3964, Val Loss: 0.2538
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.3367181122303009
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 5/1000, Train Loss: 0.3367, Val Loss: 0.3869
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.2872546911239624
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 6/1000, Train Loss: 0.2873, Val Loss: 0.3816
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.24712972342967987
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 7/1000, Train Loss: 0.2471, Val Loss: 0.3504
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.21411828696727753
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 8/1000, Train Loss: 0.2141, Val Loss: 0.3445
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.18893630802631378
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 9/1000, Train Loss: 0.1889, Val Loss: 0.3313
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.1697152704000473
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 10/1000, Train Loss: 0.1697, Val Loss: 0.2754
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.15490400791168213
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 11/1000, Train Loss: 0.1549, Val Loss: 0.2129
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.14367073774337769
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 12/1000, Train Loss: 0.1437, Val Loss: 0.1984
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.13293369114398956
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 13/1000, Train Loss: 0.1329, Val Loss: 0.2178
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.1226629912853241
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 14/1000, Train Loss: 0.1227, Val Loss: 0.2096
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.11085354536771774
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 15/1000, Train Loss: 0.1109, Val Loss: 0.1112
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.10019182413816452
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 16/1000, Train Loss: 0.1002, Val Loss: 0.0295
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.0910535454750061
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 17/1000, Train Loss: 0.0911, Val Loss: 0.0272
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.08299762010574341
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 18/1000, Train Loss: 0.0830, Val Loss: 0.0384
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.07128177583217621
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 19/1000, Train Loss: 0.0713, Val Loss: 0.0823
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.06185225024819374
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 20/1000, Train Loss: 0.0619, Val Loss: 0.0573
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.057491082698106766
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 21/1000, Train Loss: 0.0575, Val Loss: 0.0665
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.04710358753800392
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 22/1000, Train Loss: 0.0471, Val Loss: 0.0521
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.031245823949575424
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 23/1000, Train Loss: 0.0312, Val Loss: 0.0431
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.02478771284222603
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 24/1000, Train Loss: 0.0248, Val Loss: 0.0345
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.024536188691854477
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 25/1000, Train Loss: 0.0245, Val Loss: 0.0281
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.022093022242188454
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 26/1000, Train Loss: 0.0221, Val Loss: 0.0245
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.02054433897137642
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 27/1000, Train Loss: 0.0205, Val Loss: 0.0225
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.021187301725149155
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 28/1000, Train Loss: 0.0212, Val Loss: 0.0218
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.019519055262207985
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 29/1000, Train Loss: 0.0195, Val Loss: 0.0214
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.021106118336319923
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 30/1000, Train Loss: 0.0211, Val Loss: 0.0209
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.02062184363603592
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 31/1000, Train Loss: 0.0206, Val Loss: 0.0206
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.020998718217015266
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 32/1000, Train Loss: 0.0210, Val Loss: 0.0208
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.020195864140987396
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 33/1000, Train Loss: 0.0202, Val Loss: 0.0213
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.020019037649035454
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 34/1000, Train Loss: 0.0200, Val Loss: 0.0219
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.02074040099978447
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 35/1000, Train Loss: 0.0207, Val Loss: 0.0227
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.019608361646533012
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 36/1000, Train Loss: 0.0196, Val Loss: 0.0232
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01965225301682949
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 37/1000, Train Loss: 0.0197, Val Loss: 0.0236
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.020906539633870125
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 38/1000, Train Loss: 0.0209, Val Loss: 0.0238
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.021062057465314865
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 39/1000, Train Loss: 0.0211, Val Loss: 0.0239
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.020184548571705818
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 40/1000, Train Loss: 0.0202, Val Loss: 0.0237
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01995728351175785
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 41/1000, Train Loss: 0.0200, Val Loss: 0.0238
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.019850699231028557
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 42/1000, Train Loss: 0.0199, Val Loss: 0.0236
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017874591052532196
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 43/1000, Train Loss: 0.0179, Val Loss: 0.0234
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.021859649568796158
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 44/1000, Train Loss: 0.0219, Val Loss: 0.0230
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.02051934413611889
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 45/1000, Train Loss: 0.0205, Val Loss: 0.0226
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.02049992047250271
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 46/1000, Train Loss: 0.0205, Val Loss: 0.0223
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01915687881410122
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 47/1000, Train Loss: 0.0192, Val Loss: 0.0220
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01886439509689808
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 48/1000, Train Loss: 0.0189, Val Loss: 0.0218
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018552962690591812
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 49/1000, Train Loss: 0.0186, Val Loss: 0.0216
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.019774029031395912
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 50/1000, Train Loss: 0.0198, Val Loss: 0.0213
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01988505944609642
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 51/1000, Train Loss: 0.0199, Val Loss: 0.0210
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018996303901076317
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 52/1000, Train Loss: 0.0190, Val Loss: 0.0207
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018532341346144676
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 53/1000, Train Loss: 0.0185, Val Loss: 0.0210
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.02006717026233673
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 54/1000, Train Loss: 0.0201, Val Loss: 0.0207
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017622267827391624
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 55/1000, Train Loss: 0.0176, Val Loss: 0.0212
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018118424341082573
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 56/1000, Train Loss: 0.0181, Val Loss: 0.0210
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.0189533568918705
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 57/1000, Train Loss: 0.0190, Val Loss: 0.0208
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018149245530366898
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 58/1000, Train Loss: 0.0181, Val Loss: 0.0207
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018702762201428413
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 59/1000, Train Loss: 0.0187, Val Loss: 0.0199
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018684176728129387
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 60/1000, Train Loss: 0.0187, Val Loss: 0.0200
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.0175371915102005
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 61/1000, Train Loss: 0.0175, Val Loss: 0.0197
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018403977155685425
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 62/1000, Train Loss: 0.0184, Val Loss: 0.0196
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.0186751838773489
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 63/1000, Train Loss: 0.0187, Val Loss: 0.0184
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018700141459703445
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 64/1000, Train Loss: 0.0187, Val Loss: 0.0182
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018926115706562996
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 65/1000, Train Loss: 0.0189, Val Loss: 0.0185
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.019974838942289352
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 66/1000, Train Loss: 0.0200, Val Loss: 0.0187
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01902349293231964
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 67/1000, Train Loss: 0.0190, Val Loss: 0.0168
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018523918464779854
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 68/1000, Train Loss: 0.0185, Val Loss: 0.0170
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01817169040441513
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 69/1000, Train Loss: 0.0182, Val Loss: 0.0156
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01834411919116974
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 70/1000, Train Loss: 0.0183, Val Loss: 0.0161
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01827945187687874
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 71/1000, Train Loss: 0.0183, Val Loss: 0.0183
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.019225219264626503
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 72/1000, Train Loss: 0.0192, Val Loss: 0.0167
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017498619854450226
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 73/1000, Train Loss: 0.0175, Val Loss: 0.0179
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01761803962290287
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 74/1000, Train Loss: 0.0176, Val Loss: 0.0178
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.020212993025779724
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 75/1000, Train Loss: 0.0202, Val Loss: 0.0171
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017820995301008224
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 76/1000, Train Loss: 0.0178, Val Loss: 0.0172
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018384259194135666
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 77/1000, Train Loss: 0.0184, Val Loss: 0.0178
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018840035423636436
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 78/1000, Train Loss: 0.0188, Val Loss: 0.0182
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018678748980164528
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 79/1000, Train Loss: 0.0187, Val Loss: 0.0182
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01731419377028942
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 80/1000, Train Loss: 0.0173, Val Loss: 0.0177
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.019183754920959473
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 81/1000, Train Loss: 0.0192, Val Loss: 0.0178
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017737938091158867
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 82/1000, Train Loss: 0.0177, Val Loss: 0.0161
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017999013885855675
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 83/1000, Train Loss: 0.0180, Val Loss: 0.0150
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017940165475010872
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 84/1000, Train Loss: 0.0179, Val Loss: 0.0139
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018780892714858055
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 85/1000, Train Loss: 0.0188, Val Loss: 0.0130
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018794357776641846
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 86/1000, Train Loss: 0.0188, Val Loss: 0.0123
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01774417981505394
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 87/1000, Train Loss: 0.0177, Val Loss: 0.0114
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01720505766570568
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 88/1000, Train Loss: 0.0172, Val Loss: 0.0109
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017054390162229538
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 89/1000, Train Loss: 0.0171, Val Loss: 0.0110
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01697501167654991
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 90/1000, Train Loss: 0.0170, Val Loss: 0.0101
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016799790784716606
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 91/1000, Train Loss: 0.0168, Val Loss: 0.0101
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018248621374368668
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 92/1000, Train Loss: 0.0182, Val Loss: 0.0096
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017876755446195602
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 93/1000, Train Loss: 0.0179, Val Loss: 0.0096
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01743256486952305
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 94/1000, Train Loss: 0.0174, Val Loss: 0.0092
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01836361363530159
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 95/1000, Train Loss: 0.0184, Val Loss: 0.0101
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017768634483218193
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 96/1000, Train Loss: 0.0178, Val Loss: 0.0102
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018556741997599602
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 97/1000, Train Loss: 0.0186, Val Loss: 0.0110
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.0172345582395792
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 98/1000, Train Loss: 0.0172, Val Loss: 0.0111
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01776568964123726
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 99/1000, Train Loss: 0.0178, Val Loss: 0.0112
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017150182276964188
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 100/1000, Train Loss: 0.0172, Val Loss: 0.0108
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017166797071695328
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 101/1000, Train Loss: 0.0172, Val Loss: 0.0107
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01783670298755169
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 102/1000, Train Loss: 0.0178, Val Loss: 0.0105
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01780945062637329
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 103/1000, Train Loss: 0.0178, Val Loss: 0.0105
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017777403816580772
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 104/1000, Train Loss: 0.0178, Val Loss: 0.0100
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017098750919103622
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 105/1000, Train Loss: 0.0171, Val Loss: 0.0100
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017589787021279335
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 106/1000, Train Loss: 0.0176, Val Loss: 0.0098
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016817083582282066
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 107/1000, Train Loss: 0.0168, Val Loss: 0.0098
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017015544697642326
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 108/1000, Train Loss: 0.0170, Val Loss: 0.0097
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018333271145820618
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 109/1000, Train Loss: 0.0183, Val Loss: 0.0095
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017586424946784973
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 110/1000, Train Loss: 0.0176, Val Loss: 0.0092
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01821291632950306
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 111/1000, Train Loss: 0.0182, Val Loss: 0.0093
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01717713661491871
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 112/1000, Train Loss: 0.0172, Val Loss: 0.0089
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017767181620001793
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 113/1000, Train Loss: 0.0178, Val Loss: 0.0090
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01699744537472725
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 114/1000, Train Loss: 0.0170, Val Loss: 0.0087
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017170650884509087
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 115/1000, Train Loss: 0.0172, Val Loss: 0.0090
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01725594513118267
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 116/1000, Train Loss: 0.0173, Val Loss: 0.0088
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018270833417773247
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 117/1000, Train Loss: 0.0183, Val Loss: 0.0090
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017805323004722595
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 118/1000, Train Loss: 0.0178, Val Loss: 0.0086
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016884958371520042
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 119/1000, Train Loss: 0.0169, Val Loss: 0.0084
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.019163625314831734
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 120/1000, Train Loss: 0.0192, Val Loss: 0.0082
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018127648159861565
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 121/1000, Train Loss: 0.0181, Val Loss: 0.0088
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018413808196783066
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 122/1000, Train Loss: 0.0184, Val Loss: 0.0095
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017862586304545403
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 123/1000, Train Loss: 0.0179, Val Loss: 0.0112
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017161225900053978
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 124/1000, Train Loss: 0.0172, Val Loss: 0.0114
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01678330823779106
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 125/1000, Train Loss: 0.0168, Val Loss: 0.0112
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016197914257645607
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 126/1000, Train Loss: 0.0162, Val Loss: 0.0105
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01661398634314537
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 127/1000, Train Loss: 0.0166, Val Loss: 0.0108
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018488192930817604
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 128/1000, Train Loss: 0.0185, Val Loss: 0.0106
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018099410459399223
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 129/1000, Train Loss: 0.0181, Val Loss: 0.0099
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018242696300148964
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 130/1000, Train Loss: 0.0182, Val Loss: 0.0084
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017970208078622818
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 131/1000, Train Loss: 0.0180, Val Loss: 0.0075
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017254464328289032
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 132/1000, Train Loss: 0.0173, Val Loss: 0.0067
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017383113503456116
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 133/1000, Train Loss: 0.0174, Val Loss: 0.0062
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017735935747623444
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 134/1000, Train Loss: 0.0177, Val Loss: 0.0061
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016026495024561882
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 135/1000, Train Loss: 0.0160, Val Loss: 0.0061
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.015797387808561325
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 136/1000, Train Loss: 0.0158, Val Loss: 0.0063
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017031056806445122
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 137/1000, Train Loss: 0.0170, Val Loss: 0.0059
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01777096837759018
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 138/1000, Train Loss: 0.0178, Val Loss: 0.0060
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01791754923760891
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 139/1000, Train Loss: 0.0179, Val Loss: 0.0060
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017367342486977577
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 140/1000, Train Loss: 0.0174, Val Loss: 0.0061
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01688007451593876
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 141/1000, Train Loss: 0.0169, Val Loss: 0.0060
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016692427918314934
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 142/1000, Train Loss: 0.0167, Val Loss: 0.0063
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016300585120916367
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 143/1000, Train Loss: 0.0163, Val Loss: 0.0063
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016852106899023056
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 144/1000, Train Loss: 0.0169, Val Loss: 0.0062
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016847223043441772
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 145/1000, Train Loss: 0.0168, Val Loss: 0.0063
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017455577850341797
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 146/1000, Train Loss: 0.0175, Val Loss: 0.0065
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01932641863822937
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 147/1000, Train Loss: 0.0193, Val Loss: 0.0066
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01667092740535736
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 148/1000, Train Loss: 0.0167, Val Loss: 0.0063
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016716597601771355
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 149/1000, Train Loss: 0.0167, Val Loss: 0.0065
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016598274931311607
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 150/1000, Train Loss: 0.0166, Val Loss: 0.0063
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018487734720110893
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 151/1000, Train Loss: 0.0185, Val Loss: 0.0064
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017335934564471245
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 152/1000, Train Loss: 0.0173, Val Loss: 0.0065
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01682688295841217
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 153/1000, Train Loss: 0.0168, Val Loss: 0.0071
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016607118770480156
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 154/1000, Train Loss: 0.0166, Val Loss: 0.0067
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.018150465562939644
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 155/1000, Train Loss: 0.0182, Val Loss: 0.0065
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01628153771162033
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 156/1000, Train Loss: 0.0163, Val Loss: 0.0068
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016615865752100945
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 157/1000, Train Loss: 0.0166, Val Loss: 0.0064
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016200294718146324
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 158/1000, Train Loss: 0.0162, Val Loss: 0.0062
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01688368245959282
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 159/1000, Train Loss: 0.0169, Val Loss: 0.0060
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016277629882097244
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 160/1000, Train Loss: 0.0163, Val Loss: 0.0065
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016043398529291153
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 161/1000, Train Loss: 0.0160, Val Loss: 0.0060
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.0165236983448267
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 162/1000, Train Loss: 0.0165, Val Loss: 0.0067
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016477659344673157
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 163/1000, Train Loss: 0.0165, Val Loss: 0.0065
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.015195799060165882
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 164/1000, Train Loss: 0.0152, Val Loss: 0.0074
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.015956223011016846
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 165/1000, Train Loss: 0.0160, Val Loss: 0.0073
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016632642596960068
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 166/1000, Train Loss: 0.0166, Val Loss: 0.0077
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01646772399544716
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 167/1000, Train Loss: 0.0165, Val Loss: 0.0073
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01645306684076786
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 168/1000, Train Loss: 0.0165, Val Loss: 0.0072
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016849135980010033
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 169/1000, Train Loss: 0.0168, Val Loss: 0.0067
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01583009772002697
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 170/1000, Train Loss: 0.0158, Val Loss: 0.0064
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.017115401104092598
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 171/1000, Train Loss: 0.0171, Val Loss: 0.0061
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016406431794166565
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 172/1000, Train Loss: 0.0164, Val Loss: 0.0062
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01736580580472946
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 173/1000, Train Loss: 0.0174, Val Loss: 0.0062
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.016651825979351997
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 174/1000, Train Loss: 0.0167, Val Loss: 0.0062
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01601087488234043
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 175/1000, Train Loss: 0.0160, Val Loss: 0.0061
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\1.png
+0.01631746254861355
+C:/Users/iacop/Desktop/Programmazione/Github/tum-adlr-11/data\10.png
+Epoch 176/1000, Train Loss: 0.0163, Val Loss: 0.0061
+Traceback (most recent call last):
+  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\overfitting_main.py", line 144, in <module>
+    main()
+  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\overfitting_main.py", line 132, in main
+    print(f"Epoch {epoch+1}/{config.epochs}, "
+  File "C:\Users\iacop\anaconda3\envs\lvsm\lib\site-packages\wandb\sdk\lib\redirect.py", line 645, in write
+    self._old_write(data)
+KeyboardInterrupt

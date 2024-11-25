@@ -7,7 +7,7 @@ from dataset.preprocessing import sample_pixels, segmap_to_binary, binary_to_ima
 import numpy as np
 
 class ImageDataset(Dataset):
-    def __init__(self, root_dir, num_samples=10, transform=None):
+    def __init__(self, root_dir, num_samples=10, len_dataset = 1000000, transform=None):
         """
         Args:
             root_dir (string): Directory containing all the numbered folders with images.
@@ -18,12 +18,17 @@ class ImageDataset(Dataset):
         self.transform = transform
         self.data = []
         self.num_samples = num_samples
-
+        counter = 0
         # Gather all image paths in the root directory
         for file in os.listdir(root_dir):
             image_path = os.path.join(root_dir, file)
-            if os.path.isfile(image_path):  # Check if it's a file
+            if os.path.isfile(image_path) and counter<len_dataset:  # Check if it's a file
                 self.data.append(image_path)
+                counter = counter+1
+
+
+        self.data.sort(key=lambda x: int(os.path.basename(x).split('_')[0].split('.')[0]))
+
 
     def __len__(self):
         return len(self.data)
@@ -31,6 +36,7 @@ class ImageDataset(Dataset):
     def __getitem__(self, idx):
         # Load target image
         target_image_path = self.data[idx]
+        print(target_image_path)
         target_image = Image.open(target_image_path).convert('L')  # Convert to grayscale
 
         # Convert target image to a NumPy array

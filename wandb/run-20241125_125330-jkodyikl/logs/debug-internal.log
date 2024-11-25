@@ -1,0 +1,17 @@
+{"time":"2024-11-25T12:53:30.2573246+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-25T12:53:30.2578324+01:00","level":"INFO","msg":"created symlink","path":"C:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241125_125330-jkodyikl\\logs\\debug-core.log"}
+{"time":"2024-11-25T12:53:32.3204448+01:00","level":"INFO","msg":"created new stream","id":"jkodyikl"}
+{"time":"2024-11-25T12:53:32.3204448+01:00","level":"INFO","msg":"stream: started","id":"jkodyikl"}
+{"time":"2024-11-25T12:53:32.3209813+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"jkodyikl"}
+{"time":"2024-11-25T12:53:32.3209813+01:00","level":"INFO","msg":"handler: started","stream_id":"jkodyikl"}
+{"time":"2024-11-25T12:53:32.3209813+01:00","level":"INFO","msg":"sender: started","stream_id":"jkodyikl"}
+{"time":"2024-11-25T12:53:32.6056082+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-25T12:53:55.4722327+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-25T12:53:55.4744521+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-25T12:53:56.4753517+01:00","level":"INFO","msg":"handler: operation stats","stats":{"operations":[{"desc":"uploading config.yaml","runtime_seconds":0.3339793,"progress":"706B/706B"},{"desc":"uploading output.log","runtime_seconds":0.3339793,"progress":"203.9KB/203.9KB"}],"total_operations":2}}
+{"time":"2024-11-25T12:53:57.1906228+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-25T12:53:58.6240348+01:00","level":"INFO","msg":"stream: closing","id":"jkodyikl"}
+{"time":"2024-11-25T12:53:58.6240348+01:00","level":"INFO","msg":"handler: closed","stream_id":"jkodyikl"}
+{"time":"2024-11-25T12:53:58.6255406+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"jkodyikl"}
+{"time":"2024-11-25T12:53:58.6255406+01:00","level":"INFO","msg":"sender: closed","stream_id":"jkodyikl"}
+{"time":"2024-11-25T12:53:58.6256808+01:00","level":"INFO","msg":"stream: closed","id":"jkodyikl"}

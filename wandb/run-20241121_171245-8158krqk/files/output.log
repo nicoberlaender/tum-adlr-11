@@ -1,6 +1,0 @@
-Train loss at _0is _0.12658369898044763
-Traceback (most recent call last):
-  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\main.py", line 116, in <module>
-    with nn.no_grad():
-         ^^^^^^^^^^
-AttributeError: module 'torch.nn' has no attribute 'no_grad'

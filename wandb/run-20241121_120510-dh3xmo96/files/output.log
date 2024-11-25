@@ -1,5 +1,0 @@
-Traceback (most recent call last):
-  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\main.py", line 95, in <module>
-    images, targets = batch.to(device)
-                      ^^^^^^^^
-AttributeError: 'list' object has no attribute 'to'

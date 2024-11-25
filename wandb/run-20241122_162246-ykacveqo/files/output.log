@@ -1,3 +1,0 @@
-Dataset mean: 7.720401163691998e-07, std: 5.4754757846909005e-05
-tensor(0, device='cuda:0') tensor(255, device='cuda:0')
-Backend tkagg is interactive backend. Turning interactive mode on.

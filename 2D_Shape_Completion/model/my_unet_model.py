@@ -1,12 +1,14 @@
 from model.unet_parts import *
-
+import torch.nn.init as init
 
 class UNet(nn.Module):
-    def __init__(self, n_channels, n2_channels, n_classes, bilinear=False):
+    def __init__(self, n_channels, n2_channels, n_classes, bilinear=False, sigmoid = True):
         super(UNet, self).__init__()
         self.n_channels = n_channels
         self.n_classes = n_classes
         self.bilinear = bilinear
+        self.sigmoid = sigmoid
+        
 
         self.inc = (DoubleConv(n_channels, n2_channels))
         self.down1 = (Down(n2_channels, n2_channels*2))
@@ -19,6 +21,23 @@ class UNet(nn.Module):
         self.up3 = (Up(n2_channels*4, n2_channels*2// factor, bilinear))
         self.up4 = (Up(n2_channels*2, n2_channels, bilinear))
         self.outc = (OutConv(n2_channels, n_classes))
+        
+
+        # Initialize the weights of the network
+        self.apply(self._initialize_weights)
+
+    def _initialize_weights(self, m):
+        if isinstance(m, nn.Conv2d):
+            # Apply He initialization (Kaiming initialization)
+            init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+            if m.bias is not None:
+                init.zeros_(m.bias)
+
+        elif isinstance(m, nn.BatchNorm2d):
+            # Apply normal initialization for batch normalization layers
+            init.ones_(m.weight)
+            init.zeros_(m.bias)
+
 
     def forward(self, x):
         x1 = self.inc(x)
@@ -31,8 +50,9 @@ class UNet(nn.Module):
         x = self.up3(x, x2)
         x = self.up4(x, x1)
         logits = self.outc(x)
-        sigm = torch.nn.functional.sigmoid(logits)
-        return sigm
+        if ( self.sigmoid == True):
+            logits= torch.nn.functional.sigmoid(logits)
+        return logits
 
     def use_checkpointing(self):
         self.inc = torch.utils.checkpoint(self.inc)

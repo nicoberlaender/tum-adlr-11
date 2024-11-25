@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\main.py", line 54, in <module>
-    dataset = ImageDataset(root_dir=root_dir, transform=transform)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "c:\Users\iacop\Desktop\Programmazione\Github\tum-adlr-11\2D_Shape_Completion\create_dataset_file.py", line 19, in __init__
-    self.num_num_samples
-AttributeError: 'ImageDataset' object has no attribute 'num_num_samples'

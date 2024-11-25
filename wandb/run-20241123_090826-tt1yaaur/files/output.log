@@ -1,4 +1,0 @@
-Dataset mean: 0, std: 1
-Backend tkagg is interactive backend. Turning interactive mode on.
-tensor(0, device='cuda:0') tensor(0, device='cuda:0')
-tensor(True, device='cuda:0')

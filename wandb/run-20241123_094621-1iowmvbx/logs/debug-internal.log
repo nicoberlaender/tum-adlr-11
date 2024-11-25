@@ -1,8 +1,0 @@
-{"time":"2024-11-23T09:46:21.4880175+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
-{"time":"2024-11-23T09:46:21.4885626+01:00","level":"INFO","msg":"created symlink","path":"C:\\Users\\iacop\\Desktop\\Programmazione\\Github\\tum-adlr-11\\wandb\\run-20241123_094621-1iowmvbx\\logs\\debug-core.log"}
-{"time":"2024-11-23T09:46:21.6233202+01:00","level":"INFO","msg":"created new stream","id":"1iowmvbx"}
-{"time":"2024-11-23T09:46:21.6233202+01:00","level":"INFO","msg":"stream: started","id":"1iowmvbx"}
-{"time":"2024-11-23T09:46:21.6233202+01:00","level":"INFO","msg":"handler: started","stream_id":"1iowmvbx"}
-{"time":"2024-11-23T09:46:21.6233202+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"1iowmvbx"}
-{"time":"2024-11-23T09:46:21.6238661+01:00","level":"INFO","msg":"sender: started","stream_id":"1iowmvbx"}
-{"time":"2024-11-23T09:46:22.1188362+01:00","level":"INFO","msg":"Starting system monitor"}
