@@ -8,14 +8,18 @@ class UNet(nn.Module):
         self.n_classes = n_classes
         self.bilinear = bilinear
         self.sigmoid = sigmoid
-        
 
-        self.inc = (DoubleConv(n_channels, n2_channels*2))
-        self.down1 = (Down(n2_channels*2, n2_channels*4))
-        self.down2 = (Down(n2_channels*4, n2_channels*8))
-        self.up1 = (Up(n2_channels*8, n2_channels*4, bilinear))
-        self.up2 = (Up(n2_channels*4, n2_channels*2, bilinear))
-        self.outc = (OutConv(n2_channels*2, n_classes))
+        self.inc = (DoubleConv(n_channels, n2_channels))
+        self.down1 = (Down(n2_channels, n2_channels*2))
+        self.down2 = (Down(n2_channels*2, n2_channels*4))
+        self.down3 = (Down(n2_channels*4, n2_channels*8))
+        factor = 2 if bilinear else 1
+        self.down4 = (Down(n2_channels*8, n2_channels*16 // factor))
+        self.up1 = (Up(n2_channels*16, n2_channels*8 // factor, bilinear))
+        self.up2 = (Up(n2_channels*8, n2_channels*4 // factor, bilinear))
+        self.up3 = (Up(n2_channels*4, n2_channels*2// factor, bilinear))
+        self.up4 = (Up(n2_channels*2, n2_channels, bilinear))
+        self.outc = (OutConv(n2_channels, n_classes))
         
 
         # Initialize the weights of the network
@@ -38,8 +42,12 @@ class UNet(nn.Module):
         x1 = self.inc(x)
         x2 = self.down1(x1)
         x3 = self.down2(x2)
-        x4 = self.up1(x3, x2)
-        x = self.up2(x4, x1)
+        x4 = self.down3(x3)
+        x5 = self.down4(x4)
+        x = self.up1(x5, x4)
+        x = self.up2(x, x3)
+        x = self.up3(x, x2)
+        x = self.up4(x, x1)
         logits = self.outc(x)
         if ( self.sigmoid == True):
             logits= torch.nn.functional.sigmoid(logits)

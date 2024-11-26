@@ -20,8 +20,8 @@ def main():
 
   # Define hyperparameters
     hyperparameters = {
-        "epochs": 1000,
-        "batch_size": 1,
+        "epochs": 250,
+        "batch_size": 10,
         "learning_rate": 1e-3
 }
 
@@ -44,10 +44,10 @@ def main():
         device = 'mps'
 
     # Step 3: Reload Dataset and DataLoader with the Updated Transform
-    dataset = ImageDataset()
+    dataset = ImageDataset('overfit_data', len_dataset=10)
 
     # Create DataLoaders for both training and validation sets
-    train_loader = DataLoader(dataset, batch_size=1, shuffle=True)
+    train_loader = DataLoader(dataset, batch_size=config.batch_size, shuffle=False)
 
     model = UNet(1, 16, 1)
     model= model.to(device)
