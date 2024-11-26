@@ -7,3 +7,6 @@ data.zip
 data/
 2D_Shape_Completion/data_new/
 *.DS_Store
+wandb/
+.DS_Store
+*.pyc
