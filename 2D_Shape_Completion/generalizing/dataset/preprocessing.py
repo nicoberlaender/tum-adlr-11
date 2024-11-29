@@ -1,5 +1,4 @@
 import numpy as np
-from PIL import Image
 
 def get_surface_pixels(image):
     """
@@ -86,3 +85,25 @@ def segmap_to_binary(image):
         2D numpy array with values 0 and 1
     """
     return (image == 255).astype(np.uint8)
+
+def pil_to_binary(image):
+    """
+    Convert a black/white PIL image to a binary numpy array.
+    
+    Args:
+        image: PIL Image object in black/white mode ('1' or 'L')
+        
+    Returns:
+        2D numpy array with values 0 and 1
+    """
+    # Convert image to grayscale if it's not already
+    if image.mode != 'L':
+        image = image.convert('L')
+    
+    # Convert to numpy array
+    np_image = np.array(image)
+    
+    # Convert to binary
+    binary_image = (np_image > 127).astype(np.uint8)
+    
+    return binary_image

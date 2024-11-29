@@ -20,7 +20,7 @@ def main():
 
   # Define hyperparameters
     hyperparameters = {
-        "epochs": 50,
+        "epochs": 5,
         "batch_size": 16,
         "learning_rate": 1e-3
 }
@@ -44,7 +44,7 @@ def main():
         device = 'mps'
 
     # Step 3: Reload Dataset and DataLoader with the Updated Transform
-    dataset = ImageDataset('data', len_dataset=1000, transform=transforms.Compose([ToTensor()]))
+    dataset = ImageDataset('data', num_samples=100, len_dataset=750, transform=transforms.Compose([ToTensor()]))
 
     # Split the dataset into training and validation sets
     train_size = int(0.8 * len(dataset))  # 80% for training
@@ -70,6 +70,8 @@ def main():
 
         # Training phase
         for batch in train_loader:
+            if num_train_batches % 10 == 0:
+                print(num_train_batches, "/", len(train_loader))
             # Unpack the batch
             images, targets = batch
 
