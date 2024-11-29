@@ -33,7 +33,7 @@ class ImageDataset(Dataset):
                 input_image_array = preprocessing.binary_to_image(input_image_binary)
                 input_image = Image.fromarray(input_image_array) 
                 #save input image
-                sample_path = self.root_dir + '/samples/' + os.path.basename(image_path).split('.')[0] + '_sample.png'
+                sample_path = self.root_dir + '/samples/' + os.path.basename(image_path).split('.')[0] + '_surface_sample.png'
                 input_image.save(sample_path)
                 self.data.append(image_path)
                 self.sampled_data.append(sample_path)

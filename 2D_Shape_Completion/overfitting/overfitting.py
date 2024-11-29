@@ -44,7 +44,7 @@ def main():
         device = 'mps'
 
     # Step 3: Reload Dataset and DataLoader with the Updated Transform
-    dataset = ImageDataset('overfit_data', len_dataset=10)
+    dataset = ImageDataset('overfit_data', len_dataset=1)
 
     # Create DataLoaders for both training and validation sets
     train_loader = DataLoader(dataset, batch_size=config.batch_size, shuffle=False)
