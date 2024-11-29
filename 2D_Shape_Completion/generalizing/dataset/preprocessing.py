@@ -1,4 +1,5 @@
 import numpy as np
+from PIL import Image
 
 def get_surface_pixels(image):
     """

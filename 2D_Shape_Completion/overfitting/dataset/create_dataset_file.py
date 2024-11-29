@@ -20,24 +20,20 @@ class ImageDataset(Dataset):
         self.num_samples = num_samples
         self.data = []
         self.sampled_data = []
-        counter = 0
-        # Gather all image paths in the root directory
         for file in os.listdir(root_dir):
             image_path = os.path.join(root_dir, file)
             if (".DS_Store" in image_path):
                 continue
-            if os.path.isfile(image_path) and counter<len_dataset:  # Check if it's a file
-                target_image = Image.open(image_path).convert('L')
-                target_image_array = np.array(target_image)
-                input_image_binary = preprocessing.sample_pixels(target_image_array, self.num_samples)
-                input_image_array = preprocessing.binary_to_image(input_image_binary)
-                input_image = Image.fromarray(input_image_array) 
-                #save input image
-                sample_path = self.root_dir + '/samples/' + os.path.basename(image_path).split('.')[0] + '_surface_sample.png'
-                input_image.save(sample_path)
+            if os.path.isfile(image_path):  # Check if it's a file
                 self.data.append(image_path)
+        # Gather all sampled image paths in the samples directory
+        samples_dir = os.path.join(root_dir, 'samples')
+        for file in os.listdir(samples_dir):
+            sample_path = os.path.join(samples_dir, file)
+            if (".DS_Store" in sample_path):
+                continue
+            if os.path.isfile(sample_path):  # Check if it's a file
                 self.sampled_data.append(sample_path)
-                counter = counter+1
 
 
         #get filename without folder
