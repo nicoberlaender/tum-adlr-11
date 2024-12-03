@@ -63,6 +63,8 @@ def main():
     criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
 
+    global_step = 0
+
     # Training loop
     for epoch in range(config.epochs):
         model.train()
@@ -88,6 +90,15 @@ def main():
 
             train_loss += loss.item()  # Just add the loss
             num_train_batches += 1
+
+            if global_step % 10 == 0:
+                wandb.log({
+                "batch/train_loss": loss.item(),
+                "epoch": epoch,
+                "batch": global_step,
+            })
+
+            global_step += 1
 
             train_pbar.set_postfix({'loss': f'{loss.item():.4f}'})
 
@@ -120,8 +131,8 @@ def main():
         # Log metrics to wandb
         if (use_wandb == True):
             wandb.log({ 
-            "train_loss": train_loss,
-            "val_loss": val_loss,
+            "epoch/train_loss": train_loss,
+            "epoch/val_loss": val_loss,
             "epoch": epoch
         })
 
