@@ -111,7 +111,7 @@ def main():
 
         val_pbar = tqdm(val_loader, desc=f'Epoch {epoch+1}/{config.epochs} [Valid]')
         with torch.no_grad():
-            for batch in val_loader:
+            for batch in val_pbar:
                 # Unpack the batch
                 images, targets = batch
                 # Move tensors to the device
