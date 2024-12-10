@@ -74,7 +74,7 @@ def main():
 
     total_steps = len(train_loader) * config.epochs
 
-    model = UNet(1, 16, 1)
+    model = UNet(1, 32, 1)
     model= model.to(device)
 
     criterion = nn.BCELoss()
