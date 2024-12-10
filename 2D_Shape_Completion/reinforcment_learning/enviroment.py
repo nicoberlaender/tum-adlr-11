@@ -7,10 +7,17 @@ from typing import Optional
 from dataset.preprocessing import sample_pixels, segmap_to_binary, binary_to_image
 
 class RayEnviroment(gym.Env):
-
-    def __init__ ( self, shape_image, model, loss, max_number_rays):
-
+    def __init__(self, shape_image, model, loss, max_number_rays, render_mode=None):
         self.height, self.length = shape_image
+
+        # Validate render_mode
+        if render_mode not in {None, 'rgb_array'}:
+            raise ValueError("Invalid render_mode. Supported modes are: None, 'rgb_array'.")
+
+        self.render_mode = render_mode
+        self.metadata = {"render_modes": ['rgb_array'], "render_fps": 30}
+
+        # (Other initialization code remains unchanged)
 
         self.action_space = gym.spaces.Dict(
             {
@@ -23,7 +30,7 @@ class RayEnviroment(gym.Env):
         
 
         #Getting the border action and translating it in a border point
-        self.action_to_border = {x: self.action_to_border(x, self.length, self.height) for x in range(2 * (self.height + self.length))}
+        self.action_to_border = {x: self.fun_action_to_border(x, self.length, self.height) for x in range(2 * (self.height + self.length))}
 
 
         #Obseervations are the points so fare known
@@ -41,7 +48,9 @@ class RayEnviroment(gym.Env):
         self.image = np.zeros(shape_image)
 
         #Information on how to render
-        self.metadata = {}
+        self.metadata = {
+            "render_mode": 'rgb_array',
+        }
 
         #Model and loss to calculate reward
         self.model = model
@@ -53,6 +62,10 @@ class RayEnviroment(gym.Env):
         #Number current rays and terminated
         self.terminated = False
         self.number_rays= 0
+
+        #Predict image for rendering
+        self.predict = np.zeros(shape_image)
+        self.sampled_image = np.zeros(shape_image)
 
     def _get_obs(self):
         return {"sampled_point": self._sampled_point}
@@ -85,6 +98,7 @@ class RayEnviroment(gym.Env):
         #Reset number rays and terimanted
         self.number_rays = 0
         self.terminated = False
+
         
         return observation, info
 
@@ -98,11 +112,11 @@ class RayEnviroment(gym.Env):
             self._sampled_point[self.length * x + y] = 1
 
         #Make the image from samplepoint
-        image = np.reshape(self._sampled_point, (self.height, self.length))
+        self.sampled_image = np.reshape(self._sampled_point, (self.height, self.length))
 
         #Reward is the loss of the model 
-        predict = self.model(image)
-        reward = self.loss(predict, self.image)
+        self.predict = self.model(self.sampled_image)
+        reward = self.loss(self.predict, self.image)
 
         #Output
         observation = self._get_obs()
@@ -115,8 +129,32 @@ class RayEnviroment(gym.Env):
 
         truncated = None
 
-
         return observation, reward, self.terminated, truncated, info
+    
+
+    def render(self):
+        if self.metadata["render_mode"] == 'rgb_array':
+            # Ensure `predict` and `sampled_image` are in the correct format
+            predict_bw = (self.predict * 255).astype(np.uint8)  # Black and white (0 or 255)
+            sampled_image_bw = (self.sampled_image * 255).astype(np.uint8)  # Black and white (0 or 255)
+
+            # Convert arrays to PIL images
+            predict_image = Image.fromarray(predict_bw, mode="L")
+            sampled_image = Image.fromarray(sampled_image_bw, mode="L")
+            
+            # Combine the images side-by-side
+            combined_width = predict_image.width + sampled_image.width
+            combined_height = max(predict_image.height, sampled_image.height)
+            combined_image = Image.new("L", (combined_width, combined_height))  # Black and white canvas
+            
+            combined_image.paste(predict_image, (0, 0))  # Place `predict` on the left
+            combined_image.paste(sampled_image, (predict_image.width, 0))  # Place `sampled_image` on the right
+            
+            # Return the combined image as an array
+            return np.array(combined_image)
+        else:
+            raise ValueError("Render mode is not set to 'rgb_array'.")
+
 
     def _shoot_ray(self, action):
         #Get two different actions, the angle is already econded in angle_action since we are taking 360 degrees
@@ -151,7 +189,7 @@ class RayEnviroment(gym.Env):
 
 
 
-    def action_to_border(x, length, height):
+    def fun_action_to_border(self, x, length, height):
         if x <= length:
             return (0, x)  #Top border
         elif x <= length + height:

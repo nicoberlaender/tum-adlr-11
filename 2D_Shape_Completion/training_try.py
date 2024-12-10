@@ -68,21 +68,12 @@ hyperparameters = {
 use_wandb = True
 
 # Step 3: Reload Dataset and DataLoader with the Updated Transform
-dataset = ImageDataset('2D_Shape_Completion\data', num_samples=400, len_dataset=2500, transform=transforms.Compose([ToTensor()]))
+dataset = ImageDataset('2D_Shape_Completion\data', num_samples=400, len_dataset=20, transform=transforms.Compose([ToTensor()]))
 
-if use_wandb:
-    # Initialize wandb with project configuration
-    wandb.init(project='unet-training', name='shape_compleetion', config=hyperparameters)
-    config = wandb.config  # Directly use wandb.config
-else:
-    # Create a SimpleNamespace for offline configuration
-    config = SimpleNamespace(**hyperparameters)
 
-training_period=200
+training_period=2
 image_shape = (224,224)
-env = RayEnviroment(image_shape, model=model, loss = torch.nn.BCELoss(), max_number_rays = 15)
-env = RecordVideo(env, video_folder="video", name_prefix="training",
-                  episode_trigger=lambda x: x % training_period == 0)
+env = RayEnviroment(image_shape, model=model, loss = torch.nn.BCELoss(), max_number_rays = 15,render_mode='rgb_array')  # Required for video recording)
 env = RecordEpisodeStatistics(env)
 
 agent = Agent(
@@ -93,23 +84,15 @@ agent = Agent(
     final_epsilon=final_epsilon,
 )
 
-for episode in range(n_episodes):
-    obs, info = env.reset()
-    done = False
+env = RecordVideo(env, video_folder="video", name_prefix="training")
 
-    # play one episode
-    while not done:
-        action = agent.get_action(obs)
-        next_obs, reward, terminated, truncated, info = env.step(action)
+# Run a sample episode
+observation, _ = env.reset(seed=42, dataset=dataset)
+done = False
 
-        # update the agent
-        agent.update(obs, action, reward, terminated, next_obs)
+while not done:
+    action = env.action_space.sample()  # Replace with your action logic
+    observation, reward, done, truncated, info = env.step(action)
+    env.render()  # This ensures rendering happens at every step
 
-        # update if the environment is done and the current obs
-        done = terminated or truncated
-        obs = next_obs
-
-    wandb.log({"episode": episode, "reward": info["episode"]["r"], "length": info["episode"]["l"]})
-
-
-    agent.decay_epsilon()
+env.close()
