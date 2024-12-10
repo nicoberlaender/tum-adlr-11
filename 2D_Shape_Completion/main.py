@@ -10,7 +10,7 @@ from types import SimpleNamespace
 from torchvision import transforms
 from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader, random_split
-
+from torch.optim.lr_scheduler import OneCycleLR
 
 from model.my_unet_model import UNet
 from dataset.create_dataset_file import ImageDataset
@@ -22,7 +22,7 @@ def main():
   # Define hyperparameters
     hyperparameters = {
         "epochs": 1,
-        "batch_size": 16,
+        "batch_size": 64,
         "learning_rate": 1e-3
 }
 
@@ -57,6 +57,16 @@ def main():
     train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=16, shuffle=True)
 
+    total_steps = len(train_loader) * config.epochs
+
+    scheduler = OneCycleLR(
+        optimizer,
+        max_lr=config.learning_rate,
+        total_steps=total_steps,
+        pct_start=0.3,  # Spend 30% of iterations in warmup
+        anneal_strategy='cos'
+    )
+
     model = UNet(1, 16, 1)
     model= model.to(device)
 
@@ -87,13 +97,17 @@ def main():
             # Backward pass and optimization
             loss.backward()
             optimizer.step()
+            scheduler.step()
+
+            current_lr = optimizer.param_groups[0]['lr']
 
             train_loss += loss.item()  # Just add the loss
             num_train_batches += 1
 
-            if global_step % 10 == 0:
+            if global_step % 10 == 0 and use_wandb:
                 wandb.log({
                 "batch/train_loss": loss.item(),
+                "batch/learning_rate": current_lr,
                 "epoch": epoch,
                 "batch": global_step,
             })
