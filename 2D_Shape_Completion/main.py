@@ -45,7 +45,7 @@ def main():
         device = 'mps'
 
     # Step 3: Reload Dataset and DataLoader with the Updated Transform
-    dataset = ImageDataset('data', num_samples=400, len_dataset=2500, transform=transforms.Compose([ToTensor()]))
+    dataset = ImageDataset('data', num_samples=400, len_dataset=2500)
 
     # Split the dataset into training and validation sets
     train_size = int(0.8 * len(dataset))  # 80% for training
@@ -53,11 +53,32 @@ def main():
 
     train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
 
+    train_transform = transforms.Compose([
+        transforms.ToTensor(),
+        transforms.RandomHorizontalFlip(p=0.5),
+        transforms.RandomVerticalFlip(p=0.5),
+        transforms.RandomRotation(degrees=30),
+        transforms.RandomAffine(
+            degrees=0,
+            translate=(0.1, 0.1),
+            scale=(1.0, 1.0)
+        ),
+    ])
+
+    train_dataset.dataset.transform = train_transform
+
+
     # Create DataLoaders for both training and validation sets
-    train_loader = DataLoader(train_dataset, batch_size=16, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=16, shuffle=True)
+    train_loader = DataLoader(train_dataset, batch_size=config.batch_size, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=config.batch_size, shuffle=False)
 
     total_steps = len(train_loader) * config.epochs
+
+    model = UNet(1, 16, 1)
+    model= model.to(device)
+
+    criterion = nn.BCELoss()
+    optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
 
     scheduler = OneCycleLR(
         optimizer,
@@ -66,12 +87,6 @@ def main():
         pct_start=0.3,  # Spend 30% of iterations in warmup
         anneal_strategy='cos'
     )
-
-    model = UNet(1, 16, 1)
-    model= model.to(device)
-
-    criterion = nn.BCELoss()
-    optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
 
     global_step = 0
 
