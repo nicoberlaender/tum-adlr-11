@@ -7,7 +7,7 @@ from typing import Optional
 from dataset.preprocessing import sample_pixels, segmap_to_binary, binary_to_image
 
 class RayEnviroment(gym.Env):
-    def __init__(self, shape_image, model, loss, max_number_rays, render_mode=None):
+    def __init__(self, shape_image, model, loss, max_number_rays, dataset, render_mode=None):
         self.height, self.length = shape_image
 
         # Validate render_mode
@@ -67,21 +67,23 @@ class RayEnviroment(gym.Env):
         self.predict = np.zeros(shape_image)
         self.sampled_image = np.zeros(shape_image)
 
+        self.dataset = dataset
+
     def _get_obs(self):
         return {"sampled_point": self._sampled_point}
     
     def _get_info(self):
         return None
     
-    def reset(self, seed:Optional[int], dataset):
+    def reset(self, seed:Optional[int]):
         # We need the following line to seed self.np_random
         super().reset(seed=seed)
 
         #Randomly sample a path of the image
-        x = np.random.randint(len(dataset))
+        x = np.random.randint(len(self.dataset))
         
         #Get path
-        image_path = dataset.data[x]
+        image_path = self.dataset.data[x]
 
         #Initialize the image
         self.image = Image.open(image_path).convert('L')  # Convert to grayscale
