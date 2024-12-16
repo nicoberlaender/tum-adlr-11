@@ -38,7 +38,7 @@ if torch.backends.mps.is_available():
     device = 'mps'
 
 # Load the model and map it to the GPU
-model = torch.load("2D_Shape_Completion/model_full.pth", map_location=device)
+model = torch.load("model_full.pth", map_location=device)
 
 
 # Set the model to evaluation mode
@@ -68,7 +68,7 @@ hyperparameters = {
 use_wandb = True
 
 # Step 3: Reload Dataset and DataLoader with the Updated Transform
-dataset = ImageDataset('2D_Shape_Completion\data', num_samples=20, len_dataset=20, transform=transforms.Compose([ToTensor()]))
+dataset = ImageDataset('data', num_samples=20, len_dataset=20, transform=transforms.Compose([ToTensor()]))
 
 
 training_period=2
