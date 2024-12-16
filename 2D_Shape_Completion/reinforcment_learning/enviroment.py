@@ -75,7 +75,7 @@ class RayEnviroment(gym.Env):
     def _get_info(self):
         return None
     
-    def reset(self, seed:Optional[int]):
+    def reset(self, seed:Optional[int], options= None):
         # We need the following line to seed self.np_random
         super().reset(seed=seed)
 
@@ -106,7 +106,7 @@ class RayEnviroment(gym.Env):
 
     def step(self, action):
         #If agent performs actions means sending ray on the image, finds a point hopefully and reuse alghorithm 
-        x, y= self._shoot_ray(self, action)
+        x, y= self._shoot_ray(action)
 
         #Given the point found by the ray (still loses all the info about the fact that there are no points in betweeen)
         #Step for the enviroment

@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 
 def visual3(binary_prediction, sampled_surface, true_image):
@@ -23,3 +23,34 @@ def visual3(binary_prediction, sampled_surface, true_image):
     # Show the plot
     plt.show()
     return 0
+
+def ray_shooting(border, angle, length, height, image, max_steps=1000):
+    x, y = border
+
+    # Convert angle to radians
+    angle_action = np.radians(angle)
+
+    # Compute step direction for ray tracing 
+    dx = np.cos(angle_action)
+    dy = np.sin(angle_action)
+
+    # Ray tracing loop with maximum steps to avoid infinite loop
+    steps = 0
+    while steps < max_steps:
+        x += dx
+        y += dy
+        x_int = int(round(x))
+        y_int = int(round(y))
+        
+        # Check if the ray goes out of bounds
+        if x_int < 0 or x_int >= length or y_int < 0 or y_int >= height:
+            return None, None
+        
+        # Check if the ray hits an obstacle (assumed to be represented by 1)
+        elif image[x_int, y_int] >0:
+            return x_int, y_int
+        
+        steps += 1
+    
+    return None, None
+
