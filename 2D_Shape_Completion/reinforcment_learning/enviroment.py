@@ -1,5 +1,7 @@
 import numpy as np
 import gymnasium as gym
+import torch
+import torchvision.transforms as transforms
 
 from PIL import Image
 from typing import Optional
@@ -7,8 +9,11 @@ from typing import Optional
 from dataset.preprocessing import sample_pixels, segmap_to_binary, binary_to_image
 
 class RayEnviroment(gym.Env):
-    def __init__(self, shape_image, model, loss, max_number_rays, dataset, render_mode=None):
+    def __init__(self, shape_image, model, loss, max_number_rays, dataset, device, render_mode=None):
+        self.shape = shape_image
         self.height, self.length = shape_image
+
+        self.device = device
 
         # Validate render_mode
         if render_mode not in {None, 'rgb_array'}:
@@ -41,11 +46,12 @@ class RayEnviroment(gym.Env):
             }
         )
 
-        #Observation array (flattened image cointaining 1 if point was sampled or found, 0 else)
-        self._sampled_point = np.zeros(self.size, dtype=np.int8)
+        #Lista contenente i punti ottenuti
+        self._sampled_point = []
 
-        #Inizialize l'immage ground truth used in reset
+        #Inizialize l'immage ground truth used in reset plus the tensor of itself
         self.image = np.zeros(shape_image)
+        self.tensor_image = transforms.ToTensor()(self.image).unsqueeze(0).to(device)
 
         #Information on how to render
         self.metadata = {
@@ -70,7 +76,7 @@ class RayEnviroment(gym.Env):
         self.dataset = dataset
 
     def _get_obs(self):
-        return {"sampled_point": self._sampled_point}
+        return self._sampled_point
     
     def _get_info(self):
         return None
@@ -89,9 +95,9 @@ class RayEnviroment(gym.Env):
         self.image = Image.open(image_path).convert('L')  # Convert to grayscale
         self.image = np.array(self.image)
         self.image = segmap_to_binary(self.image)
-
+        self.tensor_image = transforms.ToTensor()(self.image).unsqueeze(0).to(self.device)
         #Initialize self._sampled_point to zero since we have no info yet
-        self._sampled_point = np.zeros(self.size, dtype = np.int8)
+        self._sampled_point = []
 
         #Get observation and info
         observation = self._get_obs()
@@ -101,7 +107,9 @@ class RayEnviroment(gym.Env):
         self.number_rays = 0
         self.terminated = False
 
-        
+        #Reset sampled image
+        self.predict = np.zeros(self.shape)
+
         return observation, info
 
     def step(self, action):
@@ -111,14 +119,27 @@ class RayEnviroment(gym.Env):
         #Given the point found by the ray (still loses all the info about the fact that there are no points in betweeen)
         #Step for the enviroment
         if (x!=None and y!=None):
-            self._sampled_point[self.length * x + y] = 1
-
-        #Make the image from samplepoint
-        self.sampled_image = np.reshape(self._sampled_point, (self.height, self.length))
-
+            print(f"Found a point at iteration _{self.number_rays}")
+            self._sampled_point.append((x,y))          
+            self.sampled_image[x][y]=1
+        else:
+            print(f"Not found anything at iteration _{self.number_rays}")
         #Reward is the loss of the model 
-        self.predict = self.model(self.sampled_image)
-        reward = self.loss(self.predict, self.image)
+        input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
+        input_tensor = input_tensor.unsqueeze(1)  # Add channel dimension
+        input_tensor = input_tensor.to(self.device)
+        output = self.model(input_tensor)
+
+        # Convert the model output to a probability map and binary mask
+        output_image = output[0][0].cpu().detach().numpy()  # Get the first output channel as a numpy array
+        self.predict = (output_image > 0.5).astype(np.uint8)  # Thresholding to create a binary mask
+
+        
+        if callable(self.loss):
+            reward = -self.loss(output, self.tensor_image)
+        else:
+            print("Errore: self.loss not callable")
+        
 
         #Output
         observation = self._get_obs()
@@ -138,30 +159,20 @@ class RayEnviroment(gym.Env):
         if self.metadata["render_mode"] == 'rgb_array':
             # Ensure `predict` and `sampled_image` are in the correct format
             predict_bw = (self.predict * 255).astype(np.uint8)  # Black and white (0 or 255)
-            sampled_image_bw = (self.sampled_image * 255).astype(np.uint8)  # Black and white (0 or 255)
 
-            # Convert arrays to PIL images
-            predict_image = Image.fromarray(predict_bw, mode="L")
-            sampled_image = Image.fromarray(sampled_image_bw, mode="L")
-            
-            # Combine the images side-by-side
-            combined_width = predict_image.width + sampled_image.width
-            combined_height = max(predict_image.height, sampled_image.height)
-            combined_image = Image.new("L", (combined_width, combined_height))  # Black and white canvas
-            
-            combined_image.paste(predict_image, (0, 0))  # Place `predict` on the left
-            combined_image.paste(sampled_image, (predict_image.width, 0))  # Place `sampled_image` on the right
-            
-            # Return the combined image as an array
-            return np.array(combined_image)
+            # Convert the black and white image to RGB by repeating the single channel across all 3 channels
+            predict_rgb = np.stack([predict_bw] * 3, axis=-1)  # Duplicate across the 3 channels (R, G, B)
+
+            return predict_rgb
         else:
             raise ValueError("Render mode is not set to 'rgb_array'.")
 
 
     def _shoot_ray(self, action):
         #Get two different actions, the angle is already econded in angle_action since we are taking 360 degrees
-        border_action, angle_action = action
-    
+        border_action = action["action_space_border"]
+        angle_action = action["action_space_angle"]
+        
         #Find point found by ray
         x , y = self.action_to_border[border_action]
 
@@ -200,3 +211,8 @@ class RayEnviroment(gym.Env):
             return (height - 1, 2 * length + height - x)  # Bottom border
         else:
             return (2 * (length + height) - x, 0)  # Left border
+        
+
+
+
+

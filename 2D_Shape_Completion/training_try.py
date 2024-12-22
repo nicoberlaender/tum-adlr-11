@@ -73,8 +73,8 @@ dataset = ImageDataset('data', num_samples=20, len_dataset=20, transform=transfo
 
 training_period=2
 image_shape = (224,224)
-env = RayEnviroment(image_shape, model=model, loss = torch.nn.BCELoss(), max_number_rays = 15,dataset=dataset,render_mode='rgb_array')  # Required for video recording)
-env = RecordEpisodeStatistics(env)
+env = RayEnviroment(image_shape, model=model, loss = torch.nn.BCELoss(), max_number_rays = 15,dataset=dataset, device=device, render_mode='rgb_array')  # Required for video recording)
+#env = RecordEpisodeStatistics(env)
 
 agent = Agent(
     env=env,
