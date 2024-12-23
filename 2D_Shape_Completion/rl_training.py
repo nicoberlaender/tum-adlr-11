@@ -68,7 +68,7 @@ hyperparameters = {
 use_wandb = False
 
 # Step 3: Reload Dataset and DataLoader with the Updated Transform
-dataset = ImageDataset('2D_Shape_Completion\data', num_samples=400, len_dataset=2500, transform=transforms.Compose([ToTensor()]))
+dataset = ImageDataset('2D_Shape_Completion/data', num_samples=400, len_dataset=2500, transform=transforms.Compose([ToTensor()]))
 
 if use_wandb:
     # Initialize wandb with project configuration
