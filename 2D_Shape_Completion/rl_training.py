@@ -71,7 +71,7 @@ env = Monitor(env, filename= '1')
 agent = PPO("MlpPolicy", env, verbose=1)
 
 # Create the callback to track the running average of rewards
-callback = RunningRewardCallback(window_size=100)
+callback = RunningRewardCallback(window_size=10)
 
 agent.learn(total_timesteps=15000, callback=callback)
 

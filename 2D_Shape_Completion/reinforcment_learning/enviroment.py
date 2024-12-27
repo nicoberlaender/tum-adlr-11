@@ -266,6 +266,8 @@ class RunningRewardCallback(BaseCallback):
         plt.xlabel('Episodes')
         plt.ylabel('Running Average Reward')
         plt.title('Running Average of Rewards during Training')
-        plt.show()
+
+        # Salva il grafico come immagine
+        plt.savefig('my_plot.png')
 
         return True
