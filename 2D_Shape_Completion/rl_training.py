@@ -73,40 +73,50 @@ agent = PPO("MlpPolicy", env, verbose=1)
 # Create the callback to track the running average of rewards
 callback = RunningRewardCallback(window_size=10)
 
-agent.learn(total_timesteps=15000, callback=callback)
+# Parametri di training
+total_timesteps = 15000
+training_period = 100  # ogni 100 episodi
 
-agent.save("PPO")
+# L'iteratore per l'addestramento
+for step in range(0, total_timesteps, training_period):
+    # Inizia l'addestramento
+    agent.learn(total_timesteps=training_period, callback=callback)
 
-# Supponiamo che tu stia ottenendo le ricompense cumulative per ogni episodio
-episode_rewards = env.get_episode_rewards()
+    print(f"Addestramento in corso: Iterazione {step}/{total_timesteps}")
 
-# Visualizzare la distribuzione delle ricompense e salvarla come immagine
-plt.hist(episode_rewards, bins=20)
-plt.title("Distribuzione delle ricompense per episodio")
-plt.xlabel("Reward")
-plt.ylabel("Frequenza")
-plt.savefig("rewards_distribution.png")  # Salva il grafico come file PNG
-plt.close()  # Chiudi la figura corrente per evitare problemi di memoria
+    # Salva il modello
+    agent.save(f"PPO_{step}")  # Salva con il passo corrente per evitare sovrascrittura
 
-# Visualizzare il reward per ogni episodio e salvarlo come immagine
-plt.plot(episode_rewards)
-plt.title("Reward per Episodio")
-plt.xlabel("Episodio")
-plt.ylabel("Reward")
-plt.savefig("reward_per_episode.png")  # Salva il grafico come file PNG
-plt.close()  # Chiudi la figura corrente
+    # Supponiamo che tu stia ottenendo le ricompense cumulative per ogni episodio
+    episode_rewards = env.get_episode_rewards()
 
-# Calcolare e visualizzare la media mobile
-window_size = 100  # Imposta la finestra della media mobile
-moving_avg_rewards = np.convolve(episode_rewards, np.ones(window_size)/window_size, mode='valid')
+    # Visualizzare la distribuzione delle ricompense e salvarla come immagine
+    plt.hist(episode_rewards, bins=20)
+    plt.title(f"Distribuzione delle ricompense per episodio (Iterazione {step})")
+    plt.xlabel("Reward")
+    plt.ylabel("Frequenza")
+    plt.savefig(f"rewards_distribution_{step}.png")  # Salva con step nel nome
+    plt.close()  # Chiudi la figura corrente per evitare problemi di memoria
 
-plt.plot(moving_avg_rewards)
-plt.title("Reward con Media Mobile")
-plt.xlabel("Episodio")
-plt.ylabel("Reward")
-plt.savefig("moving_avg_rewards.png")  # Salva il grafico come file PNG
-plt.close()  # Chiudi la figura corrente
+    # Visualizzare il reward per ogni episodio e salvarlo come immagine
+    plt.plot(episode_rewards)
+    plt.title(f"Reward per Episodio (Iterazione {step})")
+    plt.xlabel("Episodio")
+    plt.ylabel("Reward")
+    plt.savefig(f"reward_per_episode_{step}.png")  # Salva con step nel nome
+    plt.close()  # Chiudi la figura corrente
 
-# Ottieni le lunghezze degli episodi
-episode_lengths = env.get_episode_lengths()
-print("Lunghezza degli episodi:", episode_lengths)
+    # Calcolare e visualizzare la media mobile
+    window_size = 100  # Imposta la finestra della media mobile
+    moving_avg_rewards = np.convolve(episode_rewards, np.ones(window_size)/window_size, mode='valid')
+
+    plt.plot(moving_avg_rewards)
+    plt.title(f"Reward con Media Mobile (Iterazione {step})")
+    plt.xlabel("Episodio")
+    plt.ylabel("Reward")
+    plt.savefig(f"moving_avg_rewards_{step}.png")  # Salva con step nel nome
+    plt.close()  # Chiudi la figura corrente
+
+    # Ottieni le lunghezze degli episodi
+    episode_lengths = env.get_episode_lengths()
+    print("Lunghezza degli episodi:", episode_lengths)
