@@ -116,7 +116,7 @@ class RayEnviroment(gym.Env):
         else:
             print(f"Not found anything at iteration _{self.number_rays}")
             self.terminated = True
-            return self._get_obs(), -1, self.terminated, False, self._get_info()
+            return self._get_obs(), -2, self.terminated, False, self._get_info()
         
         #Reward is the loss of the model 
         input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
