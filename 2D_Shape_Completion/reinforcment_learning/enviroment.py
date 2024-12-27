@@ -116,7 +116,7 @@ class RayEnviroment(gym.Env):
         else:
             print(f"Not found anything at iteration _{self.number_rays}")
             self.terminated = True
-            return self._get_obs(), -100, self.terminated, False, self._get_info()
+            return self._get_obs(), -1, self.terminated, False, self._get_info()
         
         #Reward is the loss of the model 
         input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
@@ -230,3 +230,42 @@ class ActionNormWrapper(ActionWrapper):
         angle_action = angle_action / 360
 
         return [border_action, angle_action]
+    
+
+
+import numpy as np
+import matplotlib.pyplot as plt
+from stable_baselines3.common.callbacks import BaseCallback
+
+class RunningRewardCallback(BaseCallback):
+    def __init__(self, window_size=100, verbose=0):
+        super(RunningRewardCallback, self).__init__(verbose)
+        self.window_size = window_size
+        self.episode_rewards = []  # List to store rewards of each episode
+        self.running_avg_rewards = []  # List to store running average of rewards
+
+    def _on_step(self) -> bool:
+        # Store the episode reward for the current step
+        reward = self.locals.get('rewards', None)
+        if reward is not None:
+            self.episode_rewards.append(reward)
+        
+        # Compute the running average of rewards (using a sliding window)
+        if len(self.episode_rewards) > self.window_size:
+            self.episode_rewards.pop(0)  # Remove the oldest reward
+        
+        # Calculate and store the running average
+        avg_reward = np.mean(self.episode_rewards)
+        self.running_avg_rewards.append(avg_reward)
+        
+        # Print the running average of the reward
+        print(f"Running average reward: {avg_reward}")
+        
+        # Optionally, you can plot the rewards as well
+        plt.plot(self.running_avg_rewards)
+        plt.xlabel('Episodes')
+        plt.ylabel('Running Average Reward')
+        plt.title('Running Average of Rewards during Training')
+        plt.show()
+
+        return True

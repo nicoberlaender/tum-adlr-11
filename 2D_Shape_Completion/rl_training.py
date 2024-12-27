@@ -28,7 +28,7 @@ from model.my_unet_model import UNet
 from visualization.view_result import visual3
 from loss.losses import WeightedBCE, FocalLoss
 from dataset.preprocessing import sample_pixels, segmap_to_binary, binary_to_image
-from reinforcment_learning.enviroment import RayEnviroment , ActionNormWrapper
+from reinforcment_learning.enviroment import RayEnviroment , ActionNormWrapper, RunningRewardCallback
 from reinforcment_learning.agent import Agent
 from dataset.create_dataset_file import ImageDataset
 
@@ -69,7 +69,11 @@ env = Monitor(env, filename= '1')
 #env = RecordEpisodeStatistics(env)
 
 agent = PPO("MlpPolicy", env, verbose=1)
-agent.learn(total_timesteps=2500)
+
+# Create the callback to track the running average of rewards
+callback = RunningRewardCallback(window_size=100)
+
+agent.learn(total_timesteps=15000, callback=callback)
 
 agent.save("PPO")
 
