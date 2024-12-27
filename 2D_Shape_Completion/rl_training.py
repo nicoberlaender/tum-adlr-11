@@ -77,9 +77,35 @@ agent.learn(total_timesteps=15000, callback=callback)
 
 agent.save("PPO")
 
-# Ottieni le ricompense cumulative per ciascun episodio
+# Supponiamo che tu stia ottenendo le ricompense cumulative per ogni episodio
 episode_rewards = env.get_episode_rewards()
-print("Ricompense degli episodi:", episode_rewards)
+
+# Visualizzare la distribuzione delle ricompense e salvarla come immagine
+plt.hist(episode_rewards, bins=20)
+plt.title("Distribuzione delle ricompense per episodio")
+plt.xlabel("Reward")
+plt.ylabel("Frequenza")
+plt.savefig("rewards_distribution.png")  # Salva il grafico come file PNG
+plt.close()  # Chiudi la figura corrente per evitare problemi di memoria
+
+# Visualizzare il reward per ogni episodio e salvarlo come immagine
+plt.plot(episode_rewards)
+plt.title("Reward per Episodio")
+plt.xlabel("Episodio")
+plt.ylabel("Reward")
+plt.savefig("reward_per_episode.png")  # Salva il grafico come file PNG
+plt.close()  # Chiudi la figura corrente
+
+# Calcolare e visualizzare la media mobile
+window_size = 100  # Imposta la finestra della media mobile
+moving_avg_rewards = np.convolve(episode_rewards, np.ones(window_size)/window_size, mode='valid')
+
+plt.plot(moving_avg_rewards)
+plt.title("Reward con Media Mobile")
+plt.xlabel("Episodio")
+plt.ylabel("Reward")
+plt.savefig("moving_avg_rewards.png")  # Salva il grafico come file PNG
+plt.close()  # Chiudi la figura corrente
 
 # Ottieni le lunghezze degli episodi
 episode_lengths = env.get_episode_lengths()
