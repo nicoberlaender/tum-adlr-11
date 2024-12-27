@@ -3,6 +3,7 @@ import gymnasium as gym
 import torch
 import torchvision.transforms as transforms
 
+from gymnasium import ActionWrapper
 from PIL import Image
 from typing import Optional
 
@@ -22,17 +23,9 @@ class RayEnviroment(gym.Env):
         self.render_mode = render_mode
         self.metadata = {"render_modes": ['rgb_array'], "render_fps": 30}
 
-        # (Other initialization code remains unchanged)
-
-        self.action_space = gym.spaces.Dict(
-            {
-                #Possible actions are choosing the border pixel and choosing the degree of the ray 
-                "action_space_border" : gym.spaces.Discrete(2*(self.height+self.length)),
-                "action_space_angle" : gym.spaces.Discrete(360),
-
-            }
-        )
         
+
+        self.action_space = gym.spaces.MultiDiscrete([2*(self.height+self.length), 360])
 
         #Getting the border action and translating it in a border point
         self.action_to_border = {x: self.fun_action_to_border(x, self.length, self.height) for x in range(2 * (self.height + self.length))}
@@ -40,14 +33,10 @@ class RayEnviroment(gym.Env):
 
         #Obseervations are the points so fare known
         self.size = self.height * self.length
-        self.observation = gym.spaces.Dict(
-            {
-                "sampled_point" : gym.spaces.Box(0, self.size-1, shape=(self.size,), dtype=int)
-            }
-        )
+        self.observation_space = gym.spaces.MultiBinary(self.size)
 
         #Lista contenente i punti ottenuti
-        self._sampled_point = []
+        self._sampled_point = np.zeros(self.size, dtype = np.int8)
 
         #Inizialize l'immage ground truth used in reset plus the tensor of itself
         self.image = np.zeros(shape_image)
@@ -55,7 +44,7 @@ class RayEnviroment(gym.Env):
 
         #Information on how to render
         self.metadata = {
-            "render_mode": 'rgb_array',
+            "render_mode": render_mode,
         }
 
         #Model and loss to calculate reward
@@ -67,6 +56,7 @@ class RayEnviroment(gym.Env):
 
         #Number current rays and terminated
         self.terminated = False
+        self.truncated = False
         self.number_rays= 0
 
         #Predict image for rendering
@@ -79,7 +69,7 @@ class RayEnviroment(gym.Env):
         return self._sampled_point
     
     def _get_info(self):
-        return None
+        return {}
     
     def reset(self, seed:Optional[int], options= None):
         # We need the following line to seed self.np_random
@@ -97,7 +87,7 @@ class RayEnviroment(gym.Env):
         self.image = segmap_to_binary(self.image)
         self.tensor_image = transforms.ToTensor()(self.image).unsqueeze(0).to(self.device)
         #Initialize self._sampled_point to zero since we have no info yet
-        self._sampled_point = []
+        self._sampled_point = np.zeros(self.size, dtype = np.int8)
 
         #Get observation and info
         observation = self._get_obs()
@@ -106,6 +96,7 @@ class RayEnviroment(gym.Env):
         #Reset number rays and terimanted
         self.number_rays = 0
         self.terminated = False
+        self.truncated = False
 
         #Reset sampled image
         self.predict = np.zeros(self.shape)
@@ -120,10 +111,13 @@ class RayEnviroment(gym.Env):
         #Step for the enviroment
         if (x!=None and y!=None):
             print(f"Found a point at iteration _{self.number_rays}")
-            self._sampled_point.append((x,y))          
+            self._sampled_point[self.length *x +y]= 1          
             self.sampled_image[x][y]=1
         else:
             print(f"Not found anything at iteration _{self.number_rays}")
+            self.terminated = True
+            return self._get_obs(), -100, self.terminated, False, self._get_info()
+        
         #Reward is the loss of the model 
         input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
         input_tensor = input_tensor.unsqueeze(1)  # Add channel dimension
@@ -150,7 +144,7 @@ class RayEnviroment(gym.Env):
         if (self.number_rays >= self.max_number_rays):
             self.terminated = True
 
-        truncated = None
+        truncated = False
 
         return observation, reward, self.terminated, truncated, info
     
@@ -170,13 +164,13 @@ class RayEnviroment(gym.Env):
 
     def _shoot_ray(self, action):
         #Get two different actions, the angle is already econded in angle_action since we are taking 360 degrees
-        border_action = action["action_space_border"]
-        angle_action = action["action_space_angle"]
+        print(action)
+        border_action, angle_action = action
         
         #Find point found by ray
         x , y = self.action_to_border[border_action]
 
-        #Conver angle to radiants
+        #Conver angle tso radiants
         angle_action = np.radians(angle_action)
 
         # Compute step direction for ray tracing 
@@ -216,3 +210,23 @@ class RayEnviroment(gym.Env):
 
 
 
+
+
+
+
+
+
+
+
+
+
+class ActionNormWrapper(ActionWrapper):
+    
+
+    def action(self, action):
+        border_action, angle_action = action
+        border_action = border_action / (2 * (224 + 224))
+
+        angle_action = angle_action / 360
+
+        return [border_action, angle_action]

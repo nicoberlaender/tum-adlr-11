@@ -1,6 +1,5 @@
 import gymnasium as gym
 import numpy as np
-import wandb
 import matplotlib.pyplot as plt
 import sys
 import os
@@ -11,7 +10,7 @@ from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.vec_env import VecNormalize
 from PIL import Image
 from gymnasium.wrappers import RecordEpisodeStatistics, RecordVideo
-from types import SimpleNamespace
+
 from torchvision import transforms
 from torchvision.transforms import ToTensor
 
@@ -33,9 +32,14 @@ from reinforcment_learning.agent import Agent
 from dataset.create_dataset_file import ImageDataset
 
 
+
+
 # Specify the device
 device = 'cpu'
-
+if torch.cuda.is_available():
+    device = 'cuda'
+if torch.backends.mps.is_available():
+    device = 'mps'
 
 # Load the model and map it to the GPU
 model = torch.load("2D_Shape_Completion/model_full.pth", map_location=device)
@@ -64,19 +68,23 @@ env = RayEnviroment(image_shape,
 # Required for video recording)
 env = RecordVideo(env, video_folder="video", name_prefix="training",
                   episode_trigger=lambda x: x % training_period == 0)
-env = Monitor(env, filename= '1')
-#env = ActionNormWrapper(env)
-#env = RecordEpisodeStatistics(env)
+env = Monitor(env)
 
-agent = PPO("MlpPolicy", env, verbose=1)
-agent.learn(total_timesteps=2500)
+obs, _ = env.reset()
 
-agent.save("PPO")
+done = False
+truncated = False
 
-# Ottieni le ricompense cumulative per ciascun episodio
-episode_rewards = env.get_episode_rewards()
-print("Ricompense degli episodi:", episode_rewards)
+for n in range(training_period):
 
-# Ottieni le lunghezze degli episodi
-episode_lengths = env.get_episode_lengths()
-print("Lunghezza degli episodi:", episode_lengths)
+    action = env.action_space.sample()
+
+    obs, reward, done , truncated, info = env.step(action)
+
+    if ( done or truncated):
+
+        obs ,_ = env.reset()
+        done = False
+        truncated = False
+
+env.close()
