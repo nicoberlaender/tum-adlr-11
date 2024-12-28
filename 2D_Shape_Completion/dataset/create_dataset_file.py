@@ -73,7 +73,6 @@ class ImageDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
-        print(f"Index: {idx}, Dataset length: {len(self.sampled_data)}")  # Debug print
         # Load target image
         target_image_path = self.data[idx]
         target_image = Image.open(target_image_path).convert('L')
