@@ -38,7 +38,7 @@ device = 'cpu'
 
 
 # Load the model and map it to the GPU
-model = torch.load("2D_Shape_Completion/model_full.pth", map_location=device)
+model = torch.load("2D_Shape_Completion/saved_models/model_full.pth", map_location=device)
 
 
 # Set the model to evaluation mode
@@ -68,14 +68,14 @@ env = Monitor(env, filename= '1')
 #env = ActionNormWrapper(env)
 #env = RecordEpisodeStatistics(env)
 
-agent = PPO("MlpPolicy", env, verbose=1)
+agent = PPO("MlpPolicy", env, verbose=1, device=device)
 
 # Create the callback to track the running average of rewards
 callback = RunningRewardCallback(window_size=10)
 
 # Parametri di training
 total_timesteps = 15000
-training_period = 100  # ogni 100 episodi
+training_period = 2  # ogni 100 episodi
 
 # L'iteratore per l'addestramento
 for step in range(0, total_timesteps, training_period):

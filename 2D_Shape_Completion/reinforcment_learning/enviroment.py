@@ -54,9 +54,7 @@ class RayEnviroment(gym.Env):
         #Max number of rays the model can shoot
         self.max_number_rays = max_number_rays
 
-        #Number current rays and terminated
-        self.terminated = False
-        self.truncated = False
+        #Number current rays
         self.number_rays= 0
 
         #Predict image for rendering
@@ -95,8 +93,7 @@ class RayEnviroment(gym.Env):
 
         #Reset number rays and terimanted
         self.number_rays = 0
-        self.terminated = False
-        self.truncated = False
+
 
         #Reset sampled image
         self.predict = np.zeros(self.shape)
@@ -115,8 +112,8 @@ class RayEnviroment(gym.Env):
             self.sampled_image[x][y]=1
         else:
             print(f"Not found anything at iteration _{self.number_rays}")
-            self.terminated = True
-            return self._get_obs(), -2, self.terminated, False, self._get_info()
+            
+            return self._sampled_point, -2, False, True, self._get_info()
         
         #Reward is the loss of the model 
         input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
@@ -142,11 +139,11 @@ class RayEnviroment(gym.Env):
         #When i did too many reys terminate
         self.number_rays += 1
         if (self.number_rays >= self.max_number_rays):
-            self.terminated = True
+            return self._sampled_point, reward, True, info
 
-        truncated = False
+        
 
-        return observation, reward, self.terminated, truncated, info
+        return self._sampled_point, reward, False, False, info
     
 
     def render(self):
@@ -164,7 +161,7 @@ class RayEnviroment(gym.Env):
 
     def _shoot_ray(self, action):
         #Get two different actions, the angle is already econded in angle_action since we are taking 360 degrees
-        print(action)
+ 
         border_action, angle_action = action
         
         #Find point found by ray
@@ -205,14 +202,6 @@ class RayEnviroment(gym.Env):
             return (height - 1, 2 * length + height - x)  # Bottom border
         else:
             return (2 * (length + height) - x, 0)  # Left border
-        
-
-
-
-
-
-
-
 
 
 

@@ -8,11 +8,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class ImageDataset(Dataset):
-    def __init__(self, root_dir, num_samples = 400, len_dataset = 2500, transform=transforms.ToTensor()):
+    def __init__(self, root_dir, num_samples=400, len_dataset=2500, transform=transforms.ToTensor()):
         """
         Args:
             root_dir (string): Directory containing all the numbered folders with images.
             num_samples (int): Number of pixels to sample for input images.
+            len_dataset (int): Maximum number of samples to take from the dataset.
             transform (callable, optional): Transformations to apply to the images.
         """
         self.root_dir = root_dir
@@ -21,23 +22,46 @@ class ImageDataset(Dataset):
         self.num_samples = num_samples
         self.data = []
         self.sampled_data = []
+        
+        # Limite del numero totale di immagini nel dataset
+        dataset_size = 0
+        
         for file in os.listdir(root_dir):
+            if dataset_size >= len_dataset:  # Limita il numero di immagini caricate
+                break
+
             image_path = os.path.join(root_dir, file)
-            if (".DS_Store" in image_path):
+            if ".DS_Store" in image_path:
                 continue
             if os.path.isfile(image_path):  # Check if it's a file
+                # Limita il numero di campioni per ogni immagine
                 for _ in range(num_samples):
+                    if dataset_size >= len_dataset:
+                        break
                     self.data.append(image_path)
+                    dataset_size += 1
+
+                # Aggiungi i file della cartella di campioni
                 number = os.path.basename(image_path).split('.')[0]
                 folder_path = os.path.join(samples_dir, str(number))
                 if os.path.isdir(folder_path):
                     for file in os.listdir(folder_path):
+                        if dataset_size >= len_dataset:
+                            break
                         image_path = os.path.join(folder_path, file)
                         if os.path.isfile(image_path):
                             self.sampled_data.append(image_path)
+                            dataset_size += 1
 
         self.data.sort(key=lambda x: os.path.basename(x))
         self.sampled_data.sort(key=lambda x: x)
+        
+        # Se il dataset è troppo piccolo, possiamo ridurre self.data e self.sampled_data
+        if len(self.data) > len_dataset:
+            self.data = self.data[:len_dataset]
+        if len(self.sampled_data) > len_dataset:
+            self.sampled_data = self.sampled_data[:len_dataset]
+
 
 
     def __len__(self):
