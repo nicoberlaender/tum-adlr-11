@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torch.nn.functional as F
 import wandb
+import os
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 
@@ -167,6 +168,9 @@ def main():
                 'optimizer_state_dict': optimizer.state_dict(),
                 'val_loss': val_loss,
                 }
+                        
+            # Ensure the directory exists
+            os.makedirs('saved_models', exist_ok=True)
             torch.save(checkpoint,'saved_models/best_model.pth')
 
         # Log metrics to wandb
