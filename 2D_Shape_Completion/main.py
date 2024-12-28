@@ -31,7 +31,7 @@ def main():
 
     if use_wandb:
         # Initialize wandb with project configuration
-        wandb.init(project='unet-training', name='shape_compleetion', config=hyperparameters)
+        wandb.init(project='unet-training', name='shape_compleetion_28.12', config=hyperparameters)
         config = wandb.config  # Directly use wandb.config
     else:
         # Create a SimpleNamespace for offline configuration
@@ -89,6 +89,7 @@ def main():
     )
 
     global_step = 0
+    best_val_loss = float('inf')  # Initialize to a large number
 
     # Training loop
     for epoch in range(config.epochs):
@@ -156,6 +157,17 @@ def main():
                 val_pbar.set_postfix({'loss': f'{loss.item():.4f}'})
 
         val_loss /= num_val_batches
+
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            checkpoint = {
+                'epoch' : epoch,
+                'num_train_batches' :num_train_batches,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'val_loss': val_loss,
+                }
+            torch.save(checkpoint,'saved_models/best_model.pth')
 
         # Log metrics to wandb
         if (use_wandb == True):
