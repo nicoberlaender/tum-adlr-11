@@ -45,7 +45,7 @@ def main():
         device = 'mps'
 
     # Step 3: Reload Dataset and DataLoader with the Updated Transform
-    dataset = ImageDataset('data', num_samples=400, len_dataset=2500)
+    dataset = ImageDataset('2D_Shape_Completion/data', num_samples=400, len_dataset=2500)
 
     # Split the dataset into training and validation sets
     train_size = int(0.8 * len(dataset))  # 80% for training

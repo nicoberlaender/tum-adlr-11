@@ -23,11 +23,14 @@ class ImageDataset(Dataset):
         self.data = []
         self.sampled_data = []
         
-        # Limite del numero totale di immagini nel dataset
+        #Dataset counter
         dataset_size = 0
+        num_samples_per_image = 0
         
         for file in os.listdir(root_dir):
-            if dataset_size >= len_dataset:  # Limita il numero di immagini caricate
+            dataset_size +=1
+            num_samples_per_image = 0
+            if dataset_size >= len_dataset:  # Limits numbers of images 
                 break
 
             image_path = os.path.join(root_dir, file)
@@ -36,22 +39,24 @@ class ImageDataset(Dataset):
             if os.path.isfile(image_path):  # Check if it's a file
                 # Limita il numero di campioni per ogni immagine
                 for _ in range(num_samples):
-                    if dataset_size >= len_dataset:
+                    if num_samples_per_image >= num_samples:
                         break
                     self.data.append(image_path)
-                    dataset_size += 1
+                    num_samples_per_image += 1
+
+                num_samples_per_image = 0
 
                 # Aggiungi i file della cartella di campioni
                 number = os.path.basename(image_path).split('.')[0]
                 folder_path = os.path.join(samples_dir, str(number))
                 if os.path.isdir(folder_path):
                     for file in os.listdir(folder_path):
-                        if dataset_size >= len_dataset:
+                        if num_samples_per_image >= num_samples:
                             break
                         image_path = os.path.join(folder_path, file)
                         if os.path.isfile(image_path):
                             self.sampled_data.append(image_path)
-                            dataset_size += 1
+                            num_samples_per_image += 1
 
         self.data.sort(key=lambda x: os.path.basename(x))
         self.sampled_data.sort(key=lambda x: x)
@@ -68,6 +73,7 @@ class ImageDataset(Dataset):
         return len(self.data)
 
     def __getitem__(self, idx):
+        print(f"Index: {idx}, Dataset length: {len(self.sampled_data)}")  # Debug print
         # Load target image
         target_image_path = self.data[idx]
         target_image = Image.open(target_image_path).convert('L')
