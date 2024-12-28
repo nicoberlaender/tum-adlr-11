@@ -61,11 +61,7 @@ class ImageDataset(Dataset):
         self.data.sort(key=lambda x: os.path.basename(x))
         self.sampled_data.sort(key=lambda x: x)
         
-        # Se il dataset è troppo piccolo, possiamo ridurre self.data e self.sampled_data
-        if len(self.data) > len_dataset:
-            self.data = self.data[:len_dataset]
-        if len(self.sampled_data) > len_dataset:
-            self.sampled_data = self.sampled_data[:len_dataset]
+        
 
 
 
