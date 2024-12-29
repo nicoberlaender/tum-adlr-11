@@ -203,16 +203,16 @@ def train_and_val():
 
   # Define hyperparameters
     hyperparameters = {
-        "epochs": 10,
+        "epochs": 5,
         "batch_size": 64,
-        "learning_rate": 1e-3
+        "learning_rate": 1e-4
     }
     # Control whether to use wandb
     use_wandb = True
 
     if use_wandb:
         # Initialize wandb with project configuration
-        wandb.init(project='unet-training', name='shape_compleetion_28.12', config=hyperparameters)
+        wandb.init(project='unet-training', name='shape_compleetion_29.12', config=hyperparameters)
         config = wandb.config  # Directly use wandb.config
     else:
         # Create a SimpleNamespace for offline configuration
@@ -269,7 +269,8 @@ def train_and_val():
     model = UNet(1, 32, 1)
     model= model.to(device)
 
-    criterion = nn.BCELoss()
+    weights = torch.tensor([0.1, 1.0])  # Peso per sfondo e oggetti piccoli
+    criterion = nn.CrossEntropyLoss(weight=weights)
     optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
 
      # Print optimizer configuration
@@ -279,7 +280,7 @@ def train_and_val():
         optimizer,
         max_lr=config.learning_rate,
         total_steps=total_steps,
-        pct_start=0.2,  # Spend 30% of iterations in warmup
+        pct_start=0.05,  # Spend x% of iterations in warmup
         anneal_strategy='cos'
     )
 
@@ -346,6 +347,13 @@ def train_and_val():
                     # Accumulate validation loss
                     val_loss += val_batch_loss.item()
                     num_val_batches += 1
+                
+
+                # Save the best model
+                if val_batch_loss.item() < best_val_loss and global_step % 50 ==0:
+                    best_val_loss = val_loss
+                    torch.save({'model_state_dict': model}, "saved_models/best_model.pth")
+
 
             # Update the tqdm bar with both training and validation losses
             train_and_val_pbar.set_postfix({
@@ -364,21 +372,12 @@ def train_and_val():
                 "batch": global_step,
             })
 
-            # Save the best model
-        if val_batch_loss.item() < best_val_loss:
-            best_val_loss = val_loss
-            torch.save({'model_state_dict': model.state_dict()}, "saved_models/best_model.pth")
-
+            
             global_step +=1
 
         # Compute average losses for the epoch
         train_loss /= num_train_batches
         val_loss /= num_val_batches
-
-        
-
-        
-
         print(f"Epoch {epoch+1}/{config.epochs}, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
 
 

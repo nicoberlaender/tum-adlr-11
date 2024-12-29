@@ -106,14 +106,14 @@ class RayEnviroment(gym.Env):
 
         #Given the point found by the ray (still loses all the info about the fact that there are no points in betweeen)
         #Step for the enviroment
-        if (x!=None and y!=None):
+        if (x is not None and y is not None):
             print(f"Found a point at iteration _{self.number_rays}")
             self._sampled_point[self.length *x +y]= 1          
             self.sampled_image[x][y]=1
         else:
             print(f"Not found anything at iteration _{self.number_rays}")
             
-            return self._sampled_point, -2, False, True, self._get_info()
+            return self._sampled_point, -2, True, False, self._get_info()
         
         #Reward is the loss of the model 
         input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
@@ -133,7 +133,6 @@ class RayEnviroment(gym.Env):
         
 
         #Output
-        observation = self._get_obs()
         info = self._get_info()
         
         #When i did too many reys terminate
