@@ -203,7 +203,7 @@ def train_and_val():
 
   # Define hyperparameters
     hyperparameters = {
-        "epochs": 100,
+        "epochs": 10,
         "batch_size": 64,
         "learning_rate": 1e-3
     }
@@ -224,6 +224,13 @@ def train_and_val():
         device = 'cuda'
     elif torch.backends.mps.is_available():
         device = 'mps'
+
+     # Print important hyperparameter and configuration details
+    print("Training Configuration:")
+    print(f"Epochs: {config.epochs}")
+    print(f"Batch Size: {config.batch_size}")
+    print(f"Learning Rate: {config.learning_rate}")
+    print(f"Device: {device}")
 
     # Step 3: Reload Dataset and DataLoader with the Updated Transform
     dataset = ImageDataset('2D_Shape_Completion/data', num_samples=400, len_dataset=2500)
@@ -246,6 +253,10 @@ def train_and_val():
         ),
     ])
 
+    # Print transformations applied to the dataset
+    print("Transformations applied to the dataset:")
+    print(train_transform)
+
     train_dataset.dataset.transform = train_transform
 
 
@@ -261,11 +272,14 @@ def train_and_val():
     criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
 
+     # Print optimizer configuration
+    print(f"Optimizer: {optimizer}")
+
     scheduler = OneCycleLR(
         optimizer,
         max_lr=config.learning_rate,
         total_steps=total_steps,
-        pct_start=0.3,  # Spend 30% of iterations in warmup
+        pct_start=0.2,  # Spend 30% of iterations in warmup
         anneal_strategy='cos'
     )
 
