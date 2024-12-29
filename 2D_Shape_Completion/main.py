@@ -316,21 +316,22 @@ def train_and_val():
             train_loss += train_batch_loss.item()
             num_train_batches += 1
 
-            # *** Validation Phase ***
-            model.eval()
-            with torch.no_grad():
-                # Unpack the validation batch
-                val_images, val_targets = val_batch
-                val_images = val_images.to(device)
-                val_targets = val_targets.to(device)
+            if global_step % 10 == 0:
+                # *** Validation Phase ***
+                model.eval()
+                with torch.no_grad():
+                    # Unpack the validation batch
+                    val_images, val_targets = val_batch
+                    val_images = val_images.to(device)
+                    val_targets = val_targets.to(device)
 
-                # Forward pass
-                val_output = model(val_images)
-                val_batch_loss = criterion(val_output, val_targets)
+                    # Forward pass
+                    val_output = model(val_images)
+                    val_batch_loss = criterion(val_output, val_targets)
 
-                # Accumulate validation loss
-                val_loss += val_batch_loss.item()
-                num_val_batches += 1
+                    # Accumulate validation loss
+                    val_loss += val_batch_loss.item()
+                    num_val_batches += 1
 
             # Update the tqdm bar with both training and validation losses
             train_and_val_pbar.set_postfix({
