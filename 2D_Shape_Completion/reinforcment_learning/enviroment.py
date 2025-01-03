@@ -265,3 +265,53 @@ class RunningRewardCallback(BaseCallback):
 
 
         return True
+    
+
+class LossLoggingCallback(BaseCallback):
+    def __init__(self, verbose=1):
+        super(LossLoggingCallback, self).__init__(verbose)
+        # Initialize lists to store loss values
+        self.policy_losses = []
+        self.value_losses = []
+        self.entropy_losses = []
+
+    def _on_step(self) -> bool:
+        # Access and store the loss values
+        if 'policy_loss' in self.locals:
+            self.policy_losses.append(self.locals['policy_loss'])
+        if 'value_loss' in self.locals:
+            self.value_losses.append(self.locals['value_loss'])
+        if 'entropy_loss' in self.locals:
+            self.entropy_losses.append(self.locals['entropy_loss'])
+
+        return True
+
+    def _on_training_end(self) -> None:
+        # At the end of training, plot and save the losses
+        plt.figure(figsize=(12, 6))
+
+        # Plot Policy Loss
+        plt.subplot(1, 3, 1)
+        plt.plot(self.policy_losses, label='Policy Loss')
+        plt.xlabel('Steps')
+        plt.ylabel('Loss')
+        plt.title('Policy Loss')
+
+        # Plot Value Loss
+        plt.subplot(1, 3, 2)
+        plt.plot(self.value_losses, label='Value Loss')
+        plt.xlabel('Steps')
+        plt.ylabel('Loss')
+        plt.title('Value Loss')
+
+        # Plot Entropy Loss
+        plt.subplot(1, 3, 3)
+        plt.plot(self.entropy_losses, label='Entropy Loss')
+        plt.xlabel('Steps')
+        plt.ylabel('Loss')
+        plt.title('Entropy Loss')
+
+        # Save the plot as an image
+        plt.tight_layout()
+        plt.savefig("training_losses.png")
+        plt.close()  # Close the plot to free memory
