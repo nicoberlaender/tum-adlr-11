@@ -18,7 +18,7 @@ sys.path.append(os.path.join(os.getcwd(), 'dataset'))
 sys.path.append(os.path.join(os.getcwd(),'reinforcment_learning'))
 
 
-
+from stable_baselines3.common.callbacks import ProgressBarCallback
 from reinforcment_learning.enviroment import RayEnviroment , ActionNormWrapper, RunningRewardCallback
 from reinforcment_learning.agent import Agent
 from dataset.create_dataset_file import ImageDataset
@@ -59,9 +59,16 @@ env = Monitor(env, filename= '1')
 #env = ActionNormWrapper(env)
 #env = RecordEpisodeStatistics(env)
 
-agent = PPO("MlpPolicy", env, verbose=1, device=device, n_steps=2048, batch_size=64, n_epochs=1)
+agent = PPO("MlpPolicy", env, verbose=1, device=device, n_steps=8, batch_size=64, n_epochs=1)
 
 # Create the callback to track the running average of rewards
 callback = RunningRewardCallback(window_size=10)
 
-agent.learn(total_timesteps=1, callback=callback, reset_num_timesteps=False)
+# Add a progress bar callback
+progress_bar_callback = ProgressBarCallback()
+
+# Combine your custom callback and the progress bar callback
+combined_callbacks = [callback, progress_bar_callback]
+
+# Train the agent with the progress bar
+agent.learn(total_timesteps=100, callback=combined_callbacks, reset_num_timesteps=False)

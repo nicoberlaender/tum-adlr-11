@@ -2,12 +2,17 @@ import numpy as np
 import gymnasium as gym
 import torch
 import torchvision.transforms as transforms
+import matplotlib.pyplot as plt
 
+
+from stable_baselines3.common.callbacks import BaseCallback
 from gymnasium import ActionWrapper
-from PIL import Image
 from typing import Optional
 
-from dataset.preprocessing import sample_pixels, segmap_to_binary, binary_to_image
+
+from dataset.preprocessing import  path_to_tensor
+
+
 
 class RayEnviroment(gym.Env):
     def __init__(self, shape_image, model, loss, max_number_rays, dataset, device, render_mode=None):
@@ -59,6 +64,8 @@ class RayEnviroment(gym.Env):
 
         #Predict image for rendering
         self.predict = np.zeros(shape_image)
+
+        #Image with only the sampled points
         self.sampled_image = np.zeros(shape_image)
 
         self.dataset = dataset
@@ -80,10 +87,9 @@ class RayEnviroment(gym.Env):
         image_path = self.dataset.data[x]
 
         #Initialize the image
-        self.image = Image.open(image_path).convert('L')  # Convert to grayscale
-        self.image = np.array(self.image)
-        self.image = segmap_to_binary(self.image)
-        self.tensor_image = transforms.ToTensor()(self.image).unsqueeze(0).to(self.device)
+        self.image = path_to_tensor(image_path=image_path, device= self.device)
+        self.tensor_image = transforms.ToTensor()(self.image).unsqueeze(0).to(self.device) #Makes it a tensor and unsqueezes
+
         #Initialize self._sampled_point to zero since we have no info yet
         self._sampled_point = np.zeros(self.size, dtype = np.int8)
 
@@ -93,7 +99,6 @@ class RayEnviroment(gym.Env):
 
         #Reset number rays and terimanted
         self.number_rays = 0
-
 
         #Reset sampled image
         self.predict = np.zeros(self.shape)
@@ -112,35 +117,32 @@ class RayEnviroment(gym.Env):
             self.sampled_image[x][y]=1
         else:
             print(f"Not found anything at iteration _{self.number_rays}")
-            
             return self._sampled_point, -2, True, False, self._get_info()
         
         #Reward is the loss of the model 
         input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
-        input_tensor = input_tensor.unsqueeze(1)  # Add channel dimension
-        input_tensor = input_tensor.to(self.device)
+        input_tensor = input_tensor.unsqueeze(1).to(self.device)  # Add channel dimension
+
+        #Get prediction from model and found points
         output = self.model(input_tensor)
 
         # Convert the model output to a probability map and binary mask
         output_image = output[0][0].cpu().detach().numpy()  # Get the first output channel as a numpy array
         self.predict = (output_image > 0.5).astype(np.uint8)  # Thresholding to create a binary mask
 
-        
+
         if callable(self.loss):
             reward = -self.loss(output, self.tensor_image)
         else:
             print("Errore: self.loss not callable")
         
-
         #Output
         info = self._get_info()
         
         #When i did too many reys terminate
         self.number_rays += 1
         if (self.number_rays >= self.max_number_rays):
-            return self._sampled_point, reward, True, info
-
-        
+            return self._sampled_point, reward, True, False, info
 
         return self._sampled_point, reward, False, False, info
     
@@ -221,9 +223,6 @@ class ActionNormWrapper(ActionWrapper):
     
 
 
-import numpy as np
-import matplotlib.pyplot as plt
-from stable_baselines3.common.callbacks import BaseCallback
 
 class RunningRewardCallback(BaseCallback):
     def __init__(self, window_size=100, verbose=0):
@@ -238,16 +237,12 @@ class RunningRewardCallback(BaseCallback):
         if reward is not None:
             self.episode_rewards.append(reward)
         
-        # Compute the running average of rewards (using a sliding window)
-        if len(self.episode_rewards) > self.window_size:
-            self.episode_rewards.pop(0)  # Remove the oldest reward
-        
         # Calculate and store the running average
-        avg_reward = np.mean(self.episode_rewards)
+        avg_reward = np.mean(self.episode_rewards[-self.window_size:])
         self.running_avg_rewards.append(avg_reward)
         
         # Print the running average of the reward
-        print(f"Running average reward: {avg_reward}")
+        #print(f"Running average reward: {avg_reward}")
         
         # Optionally, you can plot the rewards as well
         plt.plot(self.running_avg_rewards)
@@ -255,7 +250,18 @@ class RunningRewardCallback(BaseCallback):
         plt.ylabel('Running Average Reward')
         plt.title('Running Average of Rewards during Training')
 
-        # Salva il grafico come immagine
-        plt.savefig('my_plot.png')
+        # Save plot as image
+        plt.savefig('Running_Average_Reward_Plot.png')
+        plt.close()
+
+        plt.plot(self.episode_rewards)
+        plt.xlabel('Steps')
+        plt.ylabel('Reward per step')
+        plt.title('Reward per step during Training')
+
+        # Save plot as image
+        plt.savefig('Reward_per_step_Plot.png')
+        plt.close()
+
 
         return True
