@@ -112,12 +112,12 @@ class RayEnviroment(gym.Env):
         #Given the point found by the ray (still loses all the info about the fact that there are no points in betweeen)
         #Step for the enviroment
         if (x is not None and y is not None):
-            print(f"Found a point at iteration _{self.number_rays}")
+            #print(f"Found a point at iteration _{self.number_rays}")
             self._sampled_point[self.length *x +y]= 1          
             self.sampled_image[x][y]=1
         else:
-            print(f"Not found anything at iteration _{self.number_rays}")
-            return self._sampled_point, -2, True, False, self._get_info()
+            #print(f"Not found anything at iteration _{self.number_rays}")
+            return self._sampled_point, -2.5 * (self.max_number_rays - self.number_rays) , True, False, self._get_info()
         
         #Reward is the loss of the model 
         input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
@@ -132,7 +132,7 @@ class RayEnviroment(gym.Env):
 
 
         if callable(self.loss):
-            reward = -self.loss(output, self.tensor_image)
+            reward = -self.loss(output, self.tensor_image) 
         else:
             print("Errore: self.loss not callable")
         
@@ -253,17 +253,6 @@ class RunningRewardCallback(BaseCallback):
         # Save plot as image
         plt.savefig('Running_Average_Reward_Plot.png')
         plt.close()
-
-        plt.plot(self.episode_rewards)
-        plt.xlabel('Steps')
-        plt.ylabel('Reward per step')
-        plt.title('Reward per step during Training')
-
-        # Save plot as image
-        plt.savefig('Reward_per_step_Plot.png')
-        plt.close()
-
-
         return True
     
 
