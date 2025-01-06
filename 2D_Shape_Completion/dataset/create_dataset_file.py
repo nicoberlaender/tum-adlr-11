@@ -24,7 +24,7 @@ class ImageDataset(Dataset):
         self.sampled_data = []
         
         #Dataset counter
-        dataset_size = 0
+        dataset_size = -1
         num_samples_per_image = 0
         
         for file in os.listdir(root_dir):
