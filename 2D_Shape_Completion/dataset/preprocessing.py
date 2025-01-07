@@ -1,5 +1,8 @@
 import numpy as np
 
+from PIL import Image
+
+
 def get_surface_pixels(image):
     """
     Extract surface pixels from a binary image.
@@ -107,3 +110,15 @@ def pil_to_binary(image):
     binary_image = (np_image > 127).astype(np.uint8)
     
     return binary_image
+
+
+def path_to_tensor (image_path, device):
+    #Initialize the image fron the path
+
+    image = Image.open(image_path).convert('L')  # Convert to grayscale
+
+    image = np.array(image) #Makes it np.array
+
+    return segmap_to_binary(image) #From 255 to 1 values
+
+    

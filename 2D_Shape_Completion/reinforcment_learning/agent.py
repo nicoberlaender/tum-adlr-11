@@ -38,39 +38,44 @@ class Agent:
 
         self.training_error = []
 
-    def get_action(self, obs: np.array) -> Tuple[int, int]:
+        self.action = {}
+
+    def get_action(self, obs):
         """
         Returns the best action (x, y) with probability (1 - epsilon),
         otherwise a random action with probability epsilon to ensure exploration.
         """
         # With probability epsilon, return a random action to explore the environment
         if np.random.random() < self.epsilon:
-            return (self.env.action_space["action_space_border"].sample(), self.env.action_space["action_space_angle"].sample())
+            return self.env.action_space.sample()
         # With probability (1 - epsilon) act greedily (exploit)
         else:
-            border_action = np.argmax(self.q_values[tuple(obs)][0])  # Choose x-coordinate
-            angle_action = np.argmax(self.q_values[tuple(obs)][1])   # Choose y-coordinate (angle)
-            return border_action, angle_action
+            q_value_matrix = self.q_values[tuple(obs)]
+            best_action_indices = np.unravel_index(np.argmax(q_value_matrix), q_value_matrix.shape)
+            self.action["action_space_border"], self.action["action_space_angle"] = best_action_indices
+            return self.action
+
 
     def update(
         self,
         obs: np.array,
-        action: Tuple[int, int],
+        action,
         reward: float,
         terminated: bool,
         truncated: bool,
-        next_obs: np.array,
+        next_obs,
     ):
         """Updates the Q-value of an action."""
-        border_action, angle_action = action
+        border_action = action["action_space_border"]
+        angle_action = action["action_space_angle"]
 
         future_q_value = (not terminated) * np.max(self.q_values[tuple(next_obs)])
         temporal_difference = (
-            reward + self.discount_factor * future_q_value - self.q_values[tuple(obs)][border_action, angle_action]
-        )
-
+                reward + self.discount_factor * future_q_value - self.q_values[tuple(obs)][border_action, angle_action]
+                )
         self.q_values[tuple(obs)][border_action, angle_action] += self.lr * temporal_difference
         self.training_error.append(temporal_difference)
+
 
         
 
