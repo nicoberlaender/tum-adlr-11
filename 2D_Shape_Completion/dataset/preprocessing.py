@@ -107,7 +107,7 @@ def pil_to_binary(image):
     np_image = np.array(image)
     
     # Convert to binary
-    binary_image = (np_image > 127).astype(np.uint8)
+    binary_image = (np_image > 127).astype(np.int8)
     
     return binary_image
 
