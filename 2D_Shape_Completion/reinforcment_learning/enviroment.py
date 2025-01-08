@@ -85,7 +85,6 @@ class RayEnviroment(gym.Env):
         
         #Get path
         image_path = self.dataset.data[x]
-        print(image_path)
 
         #Initialize the image
         self.image = path_to_tensor(image_path=image_path, device= self.device)
@@ -118,7 +117,8 @@ class RayEnviroment(gym.Env):
             self.sampled_image[x][y]=1
         else:
             #print(f"Not found anything at iteration _{self.number_rays}")
-            return self._sampled_point, -2.5 * (self.max_number_rays - self.number_rays) , True, False, self._get_info()
+            reward = -2.5 * (self.max_number_rays - self.number_rays)
+            return self._sampled_point, -1 , True, False, self._get_info()
         
         #Reward is the loss of the model 
         input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
@@ -145,7 +145,7 @@ class RayEnviroment(gym.Env):
         if (self.number_rays >= self.max_number_rays):
             return self._sampled_point, reward, True, False, info
 
-        return self._sampled_point, reward, False, False, info
+        return self._sampled_point, +1, False, False, info
     
 
     def render(self):
