@@ -23,7 +23,7 @@ def main():
     hyperparameters = {
         "epochs": 1,
         "batch_size": 16,
-        "learning_rate": 1e-3
+        "learning_rate": 5e-4
 }
 
     # Control whether to use wandb

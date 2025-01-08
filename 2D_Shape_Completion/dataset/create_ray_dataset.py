@@ -54,4 +54,4 @@ class ImageDatasetWithRays(Dataset):
         target = self.transform(target_image)
 
 
-        return input, target
+        return input * 2 - 1, target
