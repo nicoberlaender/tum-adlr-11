@@ -30,7 +30,7 @@ class RayEnviroment(gym.Env):
 
         
 
-        self.action_space = gym.spaces.MultiDiscrete([2*(self.height+self.length), 360])
+        self.action_space = gym.spaces.Box(low=0, high=1, shape=(2,), dtype=np.float32)
 
         #Getting the border action and translating it in a border point
         self.action_to_border = {x: self.fun_action_to_border(x, self.length, self.height) for x in range(2 * (self.height + self.length))}
@@ -117,8 +117,8 @@ class RayEnviroment(gym.Env):
             self.sampled_image[x][y]=1
         else:
             #print(f"Not found anything at iteration _{self.number_rays}")
-            reward = -2.5 * (self.max_number_rays - self.number_rays)
-            return self._sampled_point, -1 , True, False, self._get_info()
+            #reward = -2.5 * (self.max_number_rays - self.number_rays)
+            return self._sampled_point, 0 , False, False, self._get_info()
         
         #Reward is the loss of the model 
         input_tensor = torch.tensor(self.sampled_image, dtype=torch.float32).unsqueeze(0)  # Add batch dimension
@@ -143,7 +143,7 @@ class RayEnviroment(gym.Env):
         #When i did too many reys terminate
         self.number_rays += 1
         if (self.number_rays >= self.max_number_rays):
-            return self._sampled_point, reward, True, False, info
+            return self._sampled_point, 1, True, False, info
 
         return self._sampled_point, +1, False, False, info
     
