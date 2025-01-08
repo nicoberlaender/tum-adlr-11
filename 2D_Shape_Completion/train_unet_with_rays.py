@@ -15,6 +15,8 @@ from torch.utils.data import DataLoader, random_split
 from model.my_unet_model import UNet
 from dataset.create_ray_dataset import ImageDatasetWithRays
 
+#Data normalization (in either case)
+#Input layer has two channels (one for hits and one for misses)
 
 
 def main():
