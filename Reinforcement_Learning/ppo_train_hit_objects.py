@@ -1,0 +1,26 @@
+import wandb
+from stable_baselines3 import PPO
+from test_environment import TestEnvironment
+from wandb.integration.sb3 import WandbCallback
+from gymnasium.wrappers import RecordEpisodeStatistics
+
+env = TestEnvironment((224, 224), 15, "../data_new")
+env = RecordEpisodeStatistics(env)
+
+config = {
+    "env": env,
+    "total_timesteps": 100000,
+    "policy": "MlpPolicy"
+}
+
+run = wandb.init(project='ppo_hit_objects', config=config, sync_tensorboard=True, monitor_gym=True)
+
+model = PPO(config["policy"], config["env"], learning_rate=1e-3, verbose=1, tensorboard_log=f"runs/{run.id}")
+
+callback = WandbCallback(
+    gradient_save_freq=1000,
+    verbose=2
+)
+
+model.learn(total_timesteps=config["total_timesteps"], callback=callback)
+run.finish()
