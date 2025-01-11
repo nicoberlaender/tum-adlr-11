@@ -9,7 +9,7 @@ class TestEnvironment(gym.Env):
         self.shape = image_shape
         self.height, self.width = image_shape
 
-        self.action_space = gym.spaces.Box(low=0, high=1, shape=(2,), dtype=np.float32)
+        self.action_space = gym.spaces.Box(low=-1, high=1, shape=(2,), dtype=np.float32)
 
         #Obseervations are the points so fare known
         self.observation_space = gym.spaces.MultiBinary([self.height, self.width])
@@ -82,7 +82,7 @@ class TestEnvironment(gym.Env):
 
         x,y = self._value_to_border_pixel(border)
 
-        angle_action = angle * 360
+        angle_action = (angle + 1) * 180
 
         #Conver angle tso radiants
         angle_action = np.radians(angle_action)
@@ -109,6 +109,8 @@ class TestEnvironment(gym.Env):
                 return x_int, y_int
     
     def _value_to_border_pixel(self, border):
+        border = (border + 1) / 2
+
          # Convert border value to pixel position
         total_perimeter = 2 * (self.width + self.height)
         position = border * total_perimeter

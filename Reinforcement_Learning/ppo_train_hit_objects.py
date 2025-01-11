@@ -9,7 +9,7 @@ env = RecordEpisodeStatistics(env)
 
 config = {
     "env": env,
-    "total_timesteps": 100000,
+    "total_timesteps": 200000,
     "policy": "MlpPolicy"
 }
 
