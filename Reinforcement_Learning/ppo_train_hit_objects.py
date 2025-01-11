@@ -2,10 +2,8 @@ import wandb
 from stable_baselines3 import PPO
 from test_environment import TestEnvironment
 from wandb.integration.sb3 import WandbCallback
-from stable_baselines3.common.monitor import Monitor
 
 env = TestEnvironment((224, 224), 15, "../data_new")
-env = Monitor(env)
 
 config = {
     "env": env,
