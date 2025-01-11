@@ -24,15 +24,13 @@ class TestEnvironment(gym.Env):
         self.data_location = data_location
         
         #Load random image from data_location
-        # Create dataset from data_location using a custom dataset
-        #self.image_files = [os.path.join(self.data_location, f) for f in os.listdir(self.data_location) if f.endswith('.png')]
+        self.image_files = [os.path.join(self.data_location, f) for f in os.listdir(self.data_location) if f.endswith('.png')]
 
         #Randomly sample a path of the image
-        #idx = np.random.randint(len(self.image_files))
+        idx = np.random.randint(len(self.image_files))
 
         #Get path and load image
-        #image_path = self.image_files[idx]
-        image_path = os.path.join(self.data_location, "0.png")
+        image_path = self.image_files[idx]
         self.image = torchvision.io.read_image(image_path)
 
         #Convert image to np array with values in {0, 1}
@@ -51,10 +49,10 @@ class TestEnvironment(gym.Env):
         self.current_rays = 0
         
         # Load new image
-        #idx = np.random.randint(len(self.image_files))
-        #image_path = self.image_files[idx]
-        #self.image = torchvision.io.read_image(image_path)
-        #self.image = self.image[0] > 0
+        idx = np.random.randint(len(self.image_files))
+        image_path = self.image_files[idx]
+        self.image = torchvision.io.read_image(image_path)
+        self.image = self.image[0] > 0
         
         # Must return observation and info
         return self._get_obs(), self._get_info()
