@@ -13,7 +13,7 @@ config = {
 
 run = wandb.init(project='ppo_hit_objects', config=config, sync_tensorboard=True, monitor_gym=True, save_code=True)
 
-model = PPO(config["policy"], config["env"], learning_rate=1e-3, verbose=1, tensorboard_log=f"runs/{run.id}", device="cpu")
+model = PPO(config["policy"], config["env"], learning_rate=1e-3, verbose=1, tensorboard_log=f"runs/{run.id}")
 
 callback = WandbCallback(
     gradient_save_freq=1000,
