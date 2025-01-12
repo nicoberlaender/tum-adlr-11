@@ -1,7 +1,7 @@
 import wandb
 from stable_baselines3 import PPO
 from test_environment import TestEnvironment
-from test_env2 import TestEnvironment2
+from Reinforcement_Learning.test_env2 import TestEnvironment2
 from wandb.integration.sb3 import WandbCallback
 from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
 
@@ -23,7 +23,7 @@ vec_env = VecVideoRecorder(
 
 config = {
     "env": env,
-    "total_timesteps": 200000,
+    "total_timesteps" : 600,
     "policy": "MlpPolicy"
 }
 
