@@ -4,6 +4,11 @@ from Reinforcement_Learning.test_environment import TestEnvironment
 from Reinforcement_Learning.test_env2 import TestEnvironment2
 from wandb.integration.sb3 import WandbCallback
 from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
+import sys
+import os
+
+# Aggiungere il percorso al sys.path
+sys.path.append(os.path.abspath('./Reinforcement_Learning'))
 
 env = TestEnvironment2((224, 224), 15, "data_new/data_new", render_mode = 'rgb_array')
 
