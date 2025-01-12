@@ -28,7 +28,7 @@ vec_env = VecVideoRecorder(
 
 config = {
     "env": env,
-    "total_timesteps" : 600,
+    "total_timesteps" : 20000,
     "policy": "MlpPolicy"
 }
 
