@@ -26,3 +26,7 @@ data_new/
 Reinforcement_Learning/runs/
 Reinforcement_Learning/runs/
 data_new.zip
+/runs/
+/models/
+PPO.zip
+1.monitor.csv

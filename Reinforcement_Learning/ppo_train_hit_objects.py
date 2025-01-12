@@ -1,9 +1,10 @@
 import wandb
 from stable_baselines3 import PPO
 from test_environment import TestEnvironment
+from test_env2 import TestEnvironment2
 from wandb.integration.sb3 import WandbCallback
 
-env = TestEnvironment((224, 224), 15, "../data_new")
+env = TestEnvironment2((224, 224), 15, "data_new/data_new")
 
 config = {
     "env": env,
@@ -11,7 +12,7 @@ config = {
     "policy": "MlpPolicy"
 }
 
-run = wandb.init(project='ppo_hit_objects', config=config, sync_tensorboard=True, monitor_gym=True, save_code=True)
+run = wandb.init(project='ppo_hit_objects_new', config=config, sync_tensorboard=True, monitor_gym=True, save_code=True)
 
 model = PPO(config["policy"], config["env"], learning_rate=1e-3, verbose=1, tensorboard_log=f"runs/{run.id}")
 
