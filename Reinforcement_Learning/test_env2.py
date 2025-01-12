@@ -5,7 +5,7 @@ import gymnasium as gym
 import torchvision
 from PIL import Image
 import torchvision.transforms as transforms
-
+from matplotlib import pyplot as plt
 import os
 import sys
 
@@ -114,14 +114,18 @@ class TestEnvironment2(gym.Env):
         return self._get_obs(), reward, done, False, info
 
     def render(self):
-
-         # Ensure `predict` and `sampled_image` are in the correct format
-        predict_bw = (self.input * 255).astype(np.uint8) 
-         # Black and white (0 or 255)
-        # Convert the black and white image to RGB by repeating the single channel across all 3 channels
-        predict_rgb = np.stack([predict_bw] * 3, axis=-1)  # Duplicate across the 3 channels (R, G, B)
-
-        return predict_rgb
+        # Create a black-and-white image for rendering
+        predict_bw = (self.input.cpu().numpy() * 255).astype(np.uint8)  # Convert tensor to numpy and scale
+        predict_rgb = np.stack([predict_bw] * 3, axis=-1)  # Duplicate the single channel to R, G, B
+        
+        if self.render_mode == "human":
+            # Display using matplotlib
+            plt.imshow(predict_rgb)
+            plt.axis('off')
+            plt.show()
+        elif self.render_mode == "rgb_array":
+            # Return the image for external rendering
+            return predict_rgb
         
         
     def _shoot_ray(self, action):
