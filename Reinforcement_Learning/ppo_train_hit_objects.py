@@ -1,6 +1,6 @@
 import wandb
 from stable_baselines3 import PPO
-from test_environment import TestEnvironment
+from Reinforcement_Learning.test_environment import TestEnvironment
 from Reinforcement_Learning.test_env2 import TestEnvironment2
 from wandb.integration.sb3 import WandbCallback
 from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
