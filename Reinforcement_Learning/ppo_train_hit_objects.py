@@ -3,8 +3,23 @@ from stable_baselines3 import PPO
 from test_environment import TestEnvironment
 from test_env2 import TestEnvironment2
 from wandb.integration.sb3 import WandbCallback
+from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
 
-env = TestEnvironment2((224, 224), 15, "data_new/data_new")
+env = TestEnvironment2((224, 224), 15, "data_new/data_new", render_mode = 'rgb_array')
+
+# Wrap the environment with DummyVecEnv (required by VecVideoRecorder)
+vec_env = DummyVecEnv([lambda: env])
+
+# Configure video recording
+video_folder = "videos/"
+video_length = 200  # Record the first 200 steps of each episode
+vec_env = VecVideoRecorder(
+    vec_env, 
+    video_folder=video_folder, 
+    record_video_trigger=lambda x: x % 10 == 0,  # Record every 10,000 steps
+    video_length=video_length,
+    name_prefix="ppo_agent"
+)
 
 config = {
     "env": env,
@@ -18,7 +33,7 @@ model = PPO(config["policy"], config["env"], learning_rate=1e-3, verbose=1, tens
 
 callback = WandbCallback(
     gradient_save_freq=1000,
-    model_save_freq=10000,
+    model_save_freq=100,
     model_save_path=f"models/{run.id}",
     verbose=2
 )

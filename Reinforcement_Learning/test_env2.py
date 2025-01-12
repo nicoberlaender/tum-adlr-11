@@ -14,10 +14,10 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '2D
 sys.path.append(project_root)
 
 class TestEnvironment2(gym.Env):
-    def __init__(self, image_shape, number_rays, data_location):
+    def __init__(self, image_shape, number_rays, data_location, render_mode = 'rgb_array'):
         self.shape = image_shape
         self.height, self.width = image_shape
-
+        self.render_mode = render_mode
         self.action_space = gym.spaces.Box(low=-1, high=1, shape=(2,), dtype=np.float32)
 
         #Obseervations are the points so fare known
@@ -113,7 +113,17 @@ class TestEnvironment2(gym.Env):
 
         return self._get_obs(), reward, done, False, info
 
+    def render(self):
 
+         # Ensure `predict` and `sampled_image` are in the correct format
+        predict_bw = (self.input * 255).astype(np.uint8) 
+         # Black and white (0 or 255)
+        # Convert the black and white image to RGB by repeating the single channel across all 3 channels
+        predict_rgb = np.stack([predict_bw] * 3, axis=-1)  # Duplicate across the 3 channels (R, G, B)
+
+        return predict_rgb
+        
+        
     def _shoot_ray(self, action):
         #Get two different actions, the angle is already econded in angle_action since we are taking 360 degrees
  
