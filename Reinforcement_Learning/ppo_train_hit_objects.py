@@ -24,7 +24,7 @@ video_length = 200  # Record the first 200 steps of each episode
 vec_env = VecVideoRecorder(
     vec_env, 
     video_folder=video_folder, 
-    record_video_trigger=lambda x: x % 10 == 0,  # Record every 10,000 steps
+    record_video_trigger=lambda x: x % 100 == 0,  # Record every 10,000 steps
     video_length=video_length,
     name_prefix="ppo_agent"
 )

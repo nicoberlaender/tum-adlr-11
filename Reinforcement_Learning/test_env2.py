@@ -19,7 +19,8 @@ class TestEnvironment2(gym.Env):
         self.height, self.width = image_shape
         self.render_mode = render_mode
         self.action_space = gym.spaces.Box(low=-1, high=1, shape=(2,), dtype=np.float32)
-        self.metadata = {'render_mode': render_mode}
+        self.metadata = {'render_modes': ['human', 'rgb_array'],
+                          'render_fps': 30}
         #Obseervations are the points so fare known
         self.observation_space = gym.spaces.MultiBinary([self.height, self.width])
 
@@ -58,9 +59,11 @@ class TestEnvironment2(gym.Env):
 
         self.input = self.image > np.inf
 
+        self.obs = self.input
+
 
     def _get_obs(self):
-        return self.input
+        return self.obs
     
     def _get_info(self):
         return {}
@@ -79,6 +82,8 @@ class TestEnvironment2(gym.Env):
         self.image = self.image[0] > 0
 
         self.input = self.image > np.inf
+
+        self.obs = self.input
 
         # Must return observation and info
         return self._get_obs(), self._get_info()
@@ -102,7 +107,7 @@ class TestEnvironment2(gym.Env):
 
             # Convert the model output to a probability map and binary mask
             output_image = output[0][0].cpu()  
-            self.input = (output_image > 0.5)  # Thresholding to create a binary mask
+            self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
 
             reward = 1
         
@@ -115,7 +120,7 @@ class TestEnvironment2(gym.Env):
 
     def render(self):
         # Create a black-and-white image for rendering
-        predict_bw = (self.input.cpu().numpy() * 255).astype(np.uint8)  # Convert tensor to numpy and scale
+        predict_bw = (self.obs.cpu().numpy() * 255).astype(np.uint8)  # Convert tensor to numpy and scale
         predict_rgb = np.stack([predict_bw] * 3, axis=-1)  # Duplicate the single channel to R, G, B
         
         if self.render_mode == "human":
