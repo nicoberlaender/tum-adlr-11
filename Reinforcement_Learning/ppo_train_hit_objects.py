@@ -4,6 +4,8 @@ from test_environment import TestEnvironment
 from test_env2 import TestEnvironment2
 from wandb.integration.sb3 import WandbCallback
 from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
+from stable_baselines3.common.callbacks import ProgressBarCallback
+from stable_baselines3.common.callbacks import CallbackList
 import sys
 import os
 
@@ -14,6 +16,7 @@ env = TestEnvironment2((224, 224), 15, "data_new/data_new", render_mode = 'rgb_a
 
 # Wrap the environment with DummyVecEnv (required by VecVideoRecorder)
 vec_env = DummyVecEnv([lambda: env])
+
 
 # Configure video recording
 video_folder = "videos/"
@@ -26,9 +29,12 @@ vec_env = VecVideoRecorder(
     name_prefix="ppo_agent"
 )
 
+# Add a progress bar callback
+progress_bar_callback = ProgressBarCallback()
+
 config = {
     "env": env,
-    "total_timesteps" : 20000,
+    "total_timesteps" : 200000,
     "policy": "MlpPolicy"
 }
 
@@ -43,5 +49,8 @@ callback = WandbCallback(
     verbose=2
 )
 
-model.learn(total_timesteps=config["total_timesteps"], callback=callback)
+# Combine callbacks into a CallbackList
+callback_list = CallbackList([progress_bar_callback, callback])
+
+model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
 run.finish()
