@@ -34,7 +34,7 @@ progress_bar_callback = ProgressBarCallback()
 
 config = {
     "env": env,
-    "total_timesteps" : 200000,
+    "total_timesteps" : 400000,
     "policy": "MlpPolicy"
 }
 
