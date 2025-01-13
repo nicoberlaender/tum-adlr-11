@@ -95,7 +95,7 @@ class TestEnvironment2(gym.Env):
         self.current_rays += 1
 
         reward = 0
-        if ( x is  not None and y is not None):
+        if ( x is  not None and y is not None and self.input[x][y]==0):
 
             self.input[x][y]= 1          
             transformer_input = self.input.unsqueeze(0).to(self.device).float()
@@ -119,14 +119,30 @@ class TestEnvironment2(gym.Env):
         return self._get_obs(), reward, done, False, info
 
     def render(self):
-        # Create a black-and-white image for rendering
-        predict_bw = (self.obs.cpu().numpy() * 255).astype(np.uint8)  # Convert tensor to numpy and scale
-        predict_rgb = np.stack([predict_bw] * 3, axis=-1)  # Duplicate the single channel to R, G, B
+        # Convert tensors to numpy arrays and scale to 0-255 for visualization
+        predict_bw = (self.obs.cpu().numpy() * 255).astype(np.uint8)  # Convert self.obs
+        input_bw = (self.input.cpu().numpy() * 255).astype(np.uint8)  # Convert self.input
         
+        # Duplicate channels for RGB display
+        predict_rgb = np.stack([predict_bw] * 3, axis=-1)  # Convert self.obs to RGB
+        input_rgb = np.stack([input_bw] * 3, axis=-1)  # Convert self.input to RGB
+
         if self.render_mode == "human":
-            # Display using matplotlib
-            plt.imshow(predict_rgb)
-            plt.axis('off')
+            # Display both images side by side using matplotlib
+            fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+            
+            # Plot self.input
+            axes[0].imshow(input_rgb)
+            axes[0].set_title("Input")
+            axes[0].axis("off")
+            
+            # Plot self.obs
+            axes[1].imshow(predict_rgb)
+            axes[1].set_title("Prediction")
+            axes[1].axis("off")
+            
+            # Show the combined plot
+            plt.tight_layout()
             plt.show()
         elif self.render_mode == "rgb_array":
             # Return the image for external rendering
