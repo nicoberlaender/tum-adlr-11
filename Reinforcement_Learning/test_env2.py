@@ -19,7 +19,7 @@ class TestEnvironment2(gym.Env):
         self.height, self.width = image_shape
         self.render_mode = render_mode
         self.action_space = gym.spaces.Box(low=-1, high=1, shape=(2,), dtype=np.float32)
-
+        self.metadata = {'render_mode': render_mode}
         #Obseervations are the points so fare known
         self.observation_space = gym.spaces.MultiBinary([self.height, self.width])
 
