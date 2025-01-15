@@ -61,6 +61,10 @@ class TestEnvironment2(gym.Env):
 
         self.obs = self.input
 
+        self.loss = torch.nn.BCELoss()
+
+        self.current_loss = 0
+
 
     def _get_obs(self):
         return self.obs
@@ -85,6 +89,8 @@ class TestEnvironment2(gym.Env):
 
         self.obs = self.input
 
+        self.current_loss = -2
+
         # Must return observation and info
         return self._get_obs(), self._get_info()
 
@@ -95,7 +101,7 @@ class TestEnvironment2(gym.Env):
         self.current_rays += 1
 
         reward = 0
-        if ( x is  not None and y is not None and self.input[x][y]==0):
+        if ( x is  not None and y is not None):
 
             self.input[x][y]= 1          
             transformer_input = self.input.unsqueeze(0).to(self.device).float()
@@ -108,9 +114,11 @@ class TestEnvironment2(gym.Env):
             # Convert the model output to a probability map and binary mask
             output_image = output[0][0].cpu()  
             self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
+            
+            self.current_loss = - self.loss(output, transformer_input)
+            
+        reward = self.current_loss
 
-            reward = 1
-        
         done = self.current_rays >= self.number_rays
 
         #Output
@@ -122,14 +130,15 @@ class TestEnvironment2(gym.Env):
         # Convert tensors to numpy arrays and scale to 0-255 for visualization
         predict_bw = (self.obs.cpu().numpy() * 255).astype(np.uint8)  # Convert self.obs
         input_bw = (self.input.cpu().numpy() * 255).astype(np.uint8)  # Convert self.input
-        
+        grount_truth_bw = (self.image.cpu().numpy() * 255).astype(np.uint8)
+
         # Duplicate channels for RGB display
         predict_rgb = np.stack([predict_bw] * 3, axis=-1)  # Convert self.obs to RGB
         input_rgb = np.stack([input_bw] * 3, axis=-1)  # Convert self.input to RGB
-
+        grount_truth_rgb = np.stack([grount_truth_bw]* 3 , axis=-1)
         if self.render_mode == "human":
             # Display both images side by side using matplotlib
-            fig, axes = plt.subplots(1, 2, figsize=(10, 5))
+            fig, axes = plt.subplots(1, 3, figsize=(10, 5))
             
             # Plot self.input
             axes[0].imshow(input_rgb)
@@ -140,6 +149,11 @@ class TestEnvironment2(gym.Env):
             axes[1].imshow(predict_rgb)
             axes[1].set_title("Prediction")
             axes[1].axis("off")
+
+            #PLot self.image
+            axes[2].imshow(grount_truth_rgb)
+            axes[2].set_title("Ground Truth")
+            axes[2].axis("off")
             
             # Show the combined plot
             plt.tight_layout()
