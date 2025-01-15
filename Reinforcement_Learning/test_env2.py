@@ -94,7 +94,7 @@ class TestEnvironment2(gym.Env):
 
         self.obs = self.input
 
-        self.current_loss = -2
+        self.current_loss = 0
 
         self.action = None
         self.x = None
@@ -127,9 +127,8 @@ class TestEnvironment2(gym.Env):
             output_image = output[0][0].cpu()  
             self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
             
-            self.current_loss = - self.loss(output, transformer_input)
-            
-        reward = self.current_loss
+            self.current_loss = self.current_loss - self.loss(output, transformer_input)
+            reward = self.current_loss
 
         done = self.current_rays >= self.number_rays
 
