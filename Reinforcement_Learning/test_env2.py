@@ -100,6 +100,14 @@ class TestEnvironment2(gym.Env):
         self.x = None
         self.y = None
 
+        transformer_input = self.input.unsqueeze(0).to(self.device).float()
+        transformer_input = transformer_input.unsqueeze(0) 
+        with torch.no_grad():
+            #Get prediction from model and found points
+            output = self.unet(transformer_input)
+        # Convert the model output to a probability map and binary mask
+        self.current_loss = self.loss(output, transformer_input)
+
         # Must return observation and info
         return self._get_obs(), self._get_info()
 
