@@ -54,7 +54,7 @@ class TestEnvironment2(gym.Env):
         elif torch.backends.mps.is_available():
             self.device = 'mps'
         # Load the model and map it to the GPU
-        self.unet = torch.load("Reinforcement_Learning/saved_models/model_full.pth", map_location=self.device)
+        self.unet = torch.load("Reinforcement_Learning/saved_models/model_full_old.pth", map_location=self.device)
         self.unet.eval()
 
         self.input = self.image > np.inf
@@ -64,6 +64,11 @@ class TestEnvironment2(gym.Env):
         self.loss = torch.nn.BCELoss()
 
         self.current_loss = 0
+
+        #for the visualization
+        self.action = None
+        self.x = None
+        self.y = None
 
 
     def _get_obs(self):
@@ -91,12 +96,19 @@ class TestEnvironment2(gym.Env):
 
         self.current_loss = -2
 
+        self.action = None
+        self.x = None
+        self.y = None
+
         # Must return observation and info
         return self._get_obs(), self._get_info()
 
     def step(self, action):
         #If agent performs actions means sending ray on the image, finds a point hopefully and reuse alghorithm 
+        self.action = action
         x, y= self._shoot_ray(action)
+        self.x = x
+        self.y = y
 
         self.current_rays += 1
 
@@ -137,6 +149,7 @@ class TestEnvironment2(gym.Env):
         input_rgb = np.stack([input_bw] * 3, axis=-1)  # Convert self.input to RGB
         grount_truth_rgb = np.stack([grount_truth_bw]* 3 , axis=-1)
         if self.render_mode == "human":
+
             # Display both images side by side using matplotlib
             fig, axes = plt.subplots(1, 3, figsize=(10, 5))
             
@@ -145,6 +158,25 @@ class TestEnvironment2(gym.Env):
             axes[0].set_title("Input")
             axes[0].axis("off")
             
+            if ( self.action is not None):
+                border, angle = self.action
+
+                x,y = self._value_to_border_pixel(border)
+
+                angle = (angle + 1) * 180 +180
+                # Add a green point at coordinates (self.x, self.y)
+                axes[0].scatter(y, x, c='green', s=20)  # s controls the size of the point
+                axes[0].scatter(self.y, self.x, c='blue', s=20)  # s controls the size of the point
+                
+                # Add an arrow showing the angle
+                arrow_length = 50  # Length of the arrow
+                angle_rad = np.deg2rad(angle)  # Convert angle to radians
+                arrow_dx = arrow_length * np.cos(angle_rad)
+                arrow_dy = arrow_length * np.sin(angle_rad)
+
+                # Create an arrow
+                #axes[0].arrow(y,x, arrow_dx, arrow_dy, head_width=10, head_length=15, fc='blue', ec='blue')
+
             # Plot self.obs
             axes[1].imshow(predict_rgb)
             axes[1].set_title("Prediction")
@@ -158,6 +190,8 @@ class TestEnvironment2(gym.Env):
             # Show the combined plot
             plt.tight_layout()
             plt.show()
+            print("Curren loss :", self.current_loss)
+            
         elif self.render_mode == "rgb_array":
             # Return the image for external rendering
             return predict_rgb
