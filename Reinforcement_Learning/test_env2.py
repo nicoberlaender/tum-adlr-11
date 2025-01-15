@@ -127,8 +127,8 @@ class TestEnvironment2(gym.Env):
             output_image = output[0][0].cpu()  
             self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
             
-            self.current_loss = self.current_loss - self.loss(output, transformer_input)
-            reward = self.current_loss
+            reward = self.current_loss - self.loss(output, transformer_input)
+            self.current_loss = self.loss(output, transformer_input)
 
         done = self.current_rays >= self.number_rays
 
