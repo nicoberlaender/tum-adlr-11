@@ -119,14 +119,11 @@ class TestEnvironment2(gym.Env):
             
             self.current_loss = -self.loss(output, transformer_input)
 
-        reward = self.current_loss
-
-        self.episode_reward += reward
-
         done = self.current_rays >= self.number_rays
 
+        self.episode_rewards.append(self.current_loss)
+
         if done:
-            self.episode_rewards.append(self.current_loss)
             episode_mean = np.mean(self.episode_rewards)
             wandb.log({
                 "Current loss": self.current_loss,
