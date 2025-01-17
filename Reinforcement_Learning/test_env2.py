@@ -127,12 +127,13 @@ class TestEnvironment2(gym.Env):
         done = self.current_rays >= self.number_rays
 
         if done:
-            self.episode_rewards.append(self.current_episode_reward)
+            # Append float value to list
+            self.episode_rewards.append(float(self.current_episode_reward))
             episode_rew_mean = np.mean(self.episode_rewards)
             wandb.log({
-                "Current loss": self.current_loss,
-                "Episode Reward Mean": episode_rew_mean,
-                "Episode reward": self.current_episode_reward
+                "Current loss": float(self.current_loss),
+                "Episode Reward Mean": float(episode_rew_mean),
+                "Episode reward": float(self.current_episode_reward)
             })
         else:
             wandb.log({"Current loss": self.current_loss})
