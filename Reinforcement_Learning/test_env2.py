@@ -107,7 +107,7 @@ class TestEnvironment2(gym.Env):
         self.current_rays += 1
 
         if ( x is  not None and y is not None):
-
+            
             self.input[x][y]= 1          
             transformer_input = self.input.unsqueeze(0).to(self.device).float()
             transformer_input = transformer_input.unsqueeze(0) 

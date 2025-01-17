@@ -27,15 +27,17 @@ env1 = TestEnvironment2((224, 224), 15, data_path, render_mode='rgb_array')
 # Create vectorized environment
 env = DummyVecEnv([lambda : env1])
 
-# Add video recording wrapper
+# Define recording interval
+RECORD_INTERVAL = 2048 * 10  # 20,480 steps
+
+# Add video recording wrapper with fixed trigger
 env = VecVideoRecorder(
     env,
     video_folder=video_folder,
-    record_video_trigger=lambda x: x % 2048 * 10== 0,  # Record every 2048 steps
-    video_length=100,  # Record 300 frames per video
+    record_video_trigger=lambda x: (x % RECORD_INTERVAL) == 0,  # Add parentheses to fix precedence
+    video_length=100,  
     name_prefix="ppo_agent"
 )
-
 # Add a progress bar callback
 progress_bar_callback = ProgressBarCallback()
 
