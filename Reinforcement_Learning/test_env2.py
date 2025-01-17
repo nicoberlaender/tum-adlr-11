@@ -54,6 +54,7 @@ class TestEnvironment2(gym.Env):
 
         self.loss = torch.nn.BCELoss()
 
+        self.episode_rewards = []
 
     def _get_obs(self):
         return self.obs
@@ -80,8 +81,6 @@ class TestEnvironment2(gym.Env):
         self.obs = self.input
 
         self.current_loss = 0
-
-        self.episode_reward = 0
 
         transformer_input = self.input.unsqueeze(0).to(self.device).float()
         transformer_input = transformer_input.unsqueeze(0) 
@@ -127,9 +126,11 @@ class TestEnvironment2(gym.Env):
         done = self.current_rays >= self.number_rays
 
         if done:
+            self.episode_rewards.append(self.current_loss)
+            episode_mean = np.mean(self.episode_rewards)
             wandb.log({
                 "Current loss": self.current_loss,
-                "Episode Reward": self.episode_reward,
+                "Episode Reward": episode_mean,
             })
         else:
             wandb.log({"Current loss": self.current_loss})
