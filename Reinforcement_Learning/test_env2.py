@@ -124,7 +124,7 @@ class TestEnvironment2(gym.Env):
         self.episode_rewards.append(self.current_loss)
 
         if done:
-            episode_mean = np.mean(self.episode_rewards)
+            episode_mean = np.mean(self.episode_rewards.cpu().numpy())
             wandb.log({
                 "Current loss": self.current_loss,
                 "Episode Reward": episode_mean,
