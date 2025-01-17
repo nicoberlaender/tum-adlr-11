@@ -69,15 +69,15 @@ print("Run id is :", run.id)
 
 callback = WandbCallback(
     gradient_save_freq=1000,
-    #model_save_freq=100,
-    #model_save_path=f"models/{run.id}",
+    model_save_freq=100,
+    model_save_path=f"models/{run.id}",
     verbose=2
 )
 
-#video_logging_callback = VideoLoggingCallback(video_path=os.path.join(current_path, 'videos'), log_freq=2048*100)
+video_logging_callback = VideoLoggingCallback(video_path=os.path.join(current_path, 'videos'), log_freq=2048*100)
 
 # Combine callbacks into a CallbackList
-callback_list = CallbackList([progress_bar_callback, callback,])
+callback_list = CallbackList([progress_bar_callback, callback,video_logging_callback ])
 
 model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
 run.finish()
