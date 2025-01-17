@@ -31,7 +31,7 @@ env = DummyVecEnv([lambda : env1])
 env = VecVideoRecorder(
     env,
     video_folder=video_folder,
-    record_video_trigger=lambda x: x % 2048 * 100== 0,  # Record every 2048 steps
+    record_video_trigger=lambda x: x % 2048 * 10== 0,  # Record every 2048 steps
     video_length=100,  # Record 300 frames per video
     name_prefix="ppo_agent"
 )
@@ -74,7 +74,7 @@ callback = WandbCallback(
     verbose=2
 )
 
-video_logging_callback = VideoLoggingCallback(video_path=os.path.join(current_path, 'videos'), log_freq=2048*100)
+video_logging_callback = VideoLoggingCallback(video_path=os.path.join(current_path, 'videos'), log_freq=2048*10)
 
 # Combine callbacks into a CallbackList
 callback_list = CallbackList([progress_bar_callback, callback,video_logging_callback ])

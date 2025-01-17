@@ -90,6 +90,8 @@ class TestEnvironment2(gym.Env):
         # Convert the model output to a probability map and binary mask
         self.current_loss = -self.loss(output, transformer_input)
 
+        reward = self.current_loss
+
         wandb.log({"Current loss": self.current_loss, 
                    })
         # Must return observation and info
@@ -119,20 +121,22 @@ class TestEnvironment2(gym.Env):
             
             self.current_loss = -self.loss(output, transformer_input)
 
+        reward += self.current_loss
+
         done = self.current_rays >= self.number_rays
 
-        self.episode_rewards.append(self.current_loss)
-
         if done:
-            episode_mean = np.mean(self.episode_rewards.cpu().numpy())
+            
+            episode_rew_mean = np.mean(reward)
             wandb.log({
                 "Current loss": self.current_loss,
-                "Episode Reward": episode_mean,
+                "Episode Reward Mean": episode_rew_mean,
+                "Episode reward": reward
             })
         else:
             wandb.log({"Current loss": self.current_loss})
 
-        return self._get_obs(), self.current_loss, done, False, self._get_info()
+        return self._get_obs(), reward, done, False, self._get_info()
     def render(self):     
         # Convert tensors to numpy arrays and scale to 0-255 for visualization and  Duplicate channels for RGB display
         predict_rgb =converter(self.obs) 
