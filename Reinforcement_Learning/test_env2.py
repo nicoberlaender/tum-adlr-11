@@ -90,7 +90,7 @@ class TestEnvironment2(gym.Env):
         # Convert the model output to a probability map and binary mask
         self.current_loss = -self.loss(output, transformer_input)
 
-        self.reward = self.current_loss
+        self.current_episode_reward = 0
 
         wandb.log({"Current loss": self.current_loss, 
                    })
@@ -119,19 +119,20 @@ class TestEnvironment2(gym.Env):
             output_image = output[0][0].cpu()  
             self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
             
-            self.current_loss = -self.loss(output, transformer_input)
+            # Convert loss to CPU float
+            self.current_loss = float(-self.loss(output, transformer_input).cpu().detach())
+        self.current_episode_reward += self.current_loss
 
-        self.reward += self.current_loss
 
         done = self.current_rays >= self.number_rays
 
         if done:
-            self.episode_rewards.append(self.reward)
+            self.episode_rewards.append(self.current_episode_reward)
             episode_rew_mean = np.mean(self.episode_rewards)
             wandb.log({
                 "Current loss": self.current_loss,
                 "Episode Reward Mean": episode_rew_mean,
-                "Episode reward": self.reward
+                "Episode reward": self.current_episode_reward
             })
         else:
             wandb.log({"Current loss": self.current_loss})
