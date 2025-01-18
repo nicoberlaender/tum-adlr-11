@@ -21,7 +21,7 @@ video_folder = "videos/"
 # Ensure video directory exists
 os.makedirs(video_folder, exist_ok=True)
 
-env1 = TestEnvironment2((224, 224), 15, data_path, render_mode='rgb_array')
+env1 = TestEnvironment2((224, 224), 15, data_path, render_mode='rgb_array', wand= False)
    
 
 # Create vectorized environment
@@ -44,7 +44,7 @@ progress_bar_callback = ProgressBarCallback()
 # Configure training
 config = {
     "env": env,
-    "total_timesteps": 400000,
+    "total_timesteps": 40,
     "policy": "MlpPolicy"
 }
 
@@ -82,6 +82,39 @@ video_logging_callback = VideoLoggingCallback(video_path=os.path.join(current_pa
 callback_list = CallbackList([progress_bar_callback, callback,video_logging_callback ])
 
 model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
-run.finish()
+
 env.close()
 
+
+env2 = TestEnvironment2((224, 224), 15, data_path, render_mode='human', wand = True)
+
+num_episodes = 5
+counter = 0
+
+print(f"Starting environment rendering for {num_episodes} episodes...")
+obs, info = env.reset()
+env2.render()
+while counter < num_episodes:
+    # Get action from the model based on the current observation
+    action, _ = model.predict(obs, deterministic=False)
+    obs, reward, done, truncated, info = env2.step(action)
+
+    env.render()  # Render the environment for visualization
+
+    # Provide feedback to the user
+    print(f"Episode {counter + 1}:")
+    print(f"  Action Taken: {action}")
+    print(f"  Reward Received: {reward}")
+    print(f"  Done: {done}, Truncated: {truncated}")
+
+    if done or truncated:
+        print(f"Episode {counter + 1} finished. Resetting environment...")
+        counter += 1
+        obs, info = env2.reset()
+        env2.render()
+
+print("All episodes completed. Exiting...")
+
+env2.close()
+
+run.finish()
