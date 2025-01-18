@@ -71,8 +71,8 @@ print("Run id is :", run.id)
 
 callback = WandbCallback(
     gradient_save_freq=1000,
-    model_save_freq=100,
-    model_save_path=f"models/{run.id}",
+    #model_save_freq=100,
+    #model_save_path=f"models/{run.id}",
     verbose=2
 )
 
@@ -87,30 +87,30 @@ env.close()
 
 
 env2 = TestEnvironment2((224, 224), 15, data_path, render_mode='human', wand = True)
-
+env2 = DummyVecEnv([lambda: env2]) 
 num_episodes = 5
 counter = 0
 
 print(f"Starting environment rendering for {num_episodes} episodes...")
-obs, info = env.reset()
+obs= env2.reset()
 env2.render()
 while counter < num_episodes:
     # Get action from the model based on the current observation
     action, _ = model.predict(obs, deterministic=False)
-    obs, reward, done, truncated, info = env2.step(action)
+    obs, reward, done,  info = env2.step(action)
 
-    env.render()  # Render the environment for visualization
+    env2.render()  # Render the environment for visualization
 
     # Provide feedback to the user
     print(f"Episode {counter + 1}:")
     print(f"  Action Taken: {action}")
     print(f"  Reward Received: {reward}")
-    print(f"  Done: {done}, Truncated: {truncated}")
+    print(f"  Done: {done}")
 
-    if done or truncated:
+    if done :
         print(f"Episode {counter + 1} finished. Resetting environment...")
         counter += 1
-        obs, info = env2.reset()
+        obs = env2.reset()
         env2.render()
 
 print("All episodes completed. Exiting...")

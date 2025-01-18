@@ -59,6 +59,7 @@ class TestEnvironment2(gym.Env):
 
         self.episode_rewards = []
 
+
     def _get_obs(self):
         return self.obs
     
@@ -94,6 +95,8 @@ class TestEnvironment2(gym.Env):
         self.current_loss = -self.loss(output, transformer_input)
 
         self.current_episode_reward = 0
+
+        self.action = None
 
         wandb.log({"Current loss": self.current_loss, 
                    })
@@ -158,7 +161,7 @@ class TestEnvironment2(gym.Env):
                 plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self._value_to_border_pixel(border), angle, (self.y, self.x), self.wand, self.current_rays)
                 
             else:
-                plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth")
+                plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self.wand, self.current_rays)
             
             print("Curren loss :", self.current_loss)
             
