@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
-
+import wandb
 
 # Convert tensors to numpy arrays and scale to 0-255 for visualization and  Duplicate channels for RGB display
 def converter(tensor):
@@ -11,11 +11,11 @@ def converter(tensor):
 
 
 #PLot 3 images( usually input, output and ground truth and add title, point and arrow)
-def plotter_with_ray (image1, image2, imgae3, title1, title2, title3, border_points, angle, point):
+def plotter_with_ray (image1, image2, imgae3, title1, title2, title3, border_points, angle, point, wand = False, step= 0):
     # Display both images side by side using matplotlib
     fig, axes = plt.subplots(1, 3, figsize=(10, 5))
-            
-     # Plot self.input
+      
+    # Plot self.input
     axes[0].imshow(image1)
     axes[0].set_title(title1)
     axes[0].axis("off")
@@ -48,7 +48,11 @@ def plotter_with_ray (image1, image2, imgae3, title1, title2, title3, border_poi
 
     # Show the combined plot
     plt.tight_layout()
-    plt.show()
+    if wand:
+        wandb.log({"Image": wandb.Image(plt), 
+                   "Step" : step})
+    else:
+        plt.show()
 
 #PLot 3 images( usually input, output and ground truth and add title, point and arrow)
 def plotter (image1, image2, imgae3, title1, title2, title3):

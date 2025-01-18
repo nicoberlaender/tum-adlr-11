@@ -18,7 +18,10 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '2D
 sys.path.append(project_root)
 
 class TestEnvironment2(gym.Env):
-    def __init__(self, image_shape, number_rays, data_location, render_mode = 'rgb_array'):
+    def __init__(self, image_shape, number_rays, data_location, render_mode = 'rgb_array', wand = False):
+
+        self.wand = wand
+
         self.shape = image_shape
 
         self.height, self.width = image_shape
@@ -152,7 +155,7 @@ class TestEnvironment2(gym.Env):
 
                 angle = (angle + 1) * 180 +180
 
-                plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self._value_to_border_pixel(border), angle, (self.y, self.x))
+                plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self._value_to_border_pixel(border), angle, (self.y, self.x), self.wand, self.current_rays)
                 
             else:
                 plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth")
