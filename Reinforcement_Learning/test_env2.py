@@ -146,7 +146,7 @@ class TestEnvironment2(gym.Env):
             self.current_loss = new_loss
         else:
             # Penalize missing the object
-            reward = -0.1
+            reward = 0
 
         self.current_episode_reward += reward
 
