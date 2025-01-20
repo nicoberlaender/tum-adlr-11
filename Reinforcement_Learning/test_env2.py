@@ -149,7 +149,7 @@ class TestEnvironment2(gym.Env):
         elif self.wand:
             wandb.log({"Current loss": self.current_loss})
 
-        return self._get_obs(), self.current_loss, done, False, self._get_info()
+        return self._get_obs(), self.current_episode_reward, done, False, self._get_info()
     def render(self):     
         # Convert tensors to numpy arrays and scale to 0-255 for visualization and  Duplicate channels for RGB display
         predict_rgb =converter(self.obs) 
