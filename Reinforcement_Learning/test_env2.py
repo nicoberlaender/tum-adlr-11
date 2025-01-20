@@ -134,7 +134,7 @@ class TestEnvironment2(gym.Env):
 
         done = self.current_rays >= self.number_rays
         
-        if done and self.wand:
+        if done:
             # Append float value to list
             self.episode_rewards.append(float(self.current_episode_reward))
             self.current_losses.append(float(self.current_loss))
