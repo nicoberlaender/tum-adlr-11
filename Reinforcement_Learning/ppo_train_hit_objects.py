@@ -44,7 +44,7 @@ progress_bar_callback = ProgressBarCallback()
 # Configure training
 config = {
     "env": env,
-    "total_timesteps": 300000,
+    "total_timesteps": 250000,
     "policy": "CnnPolicy"
 }
 
@@ -71,8 +71,8 @@ print("Run id is :", run.id)
 
 callback = WandbCallback(
     gradient_save_freq=1000,
-    #model_save_freq=100,
-    #model_save_path=f"models/{run.id}",
+    model_save_freq=50000,
+    model_save_path=f"models/{run.id}",
     verbose=2
 )
 
@@ -85,7 +85,7 @@ model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
 
 env.close()
 
-
+"""
 env2 = TestEnvironment2((224, 224), 15, data_path, render_mode='human', wand = True)
 env2 = DummyVecEnv([lambda: env2]) 
 num_episodes = 5
@@ -116,5 +116,6 @@ while counter < num_episodes:
 print("All episodes completed. Exiting...")
 
 env2.close()
+"""
 
 run.finish()
