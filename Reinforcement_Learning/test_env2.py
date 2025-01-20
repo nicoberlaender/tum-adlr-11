@@ -106,8 +106,6 @@ class TestEnvironment2(gym.Env):
 
         self.action = None
 
-        wandb.log({"Current loss": self.current_loss, 
-                   })
         # Must return observation and info
         return self._get_obs(), self._get_info()
     
@@ -156,13 +154,15 @@ class TestEnvironment2(gym.Env):
             # Append float value to list
             self.episode_rewards.append(float(self.current_episode_reward))
             episode_rew_mean = np.mean(self.episode_rewards)
-            wandb.log({
-                "Current loss": float(self.current_loss),
-                "Episode Reward Mean": float(episode_rew_mean),
-                "Episode reward": float(self.current_episode_reward)
-            })
+            if self.wand:
+                wandb.log({
+                    "Current loss": float(self.current_loss),
+                    "Episode Reward Mean": float(episode_rew_mean),
+                    "Episode reward": float(self.current_episode_reward)
+                })
         else:
-            wandb.log({"Current loss": self.current_loss})
+            if self.wand:
+                wandb.log({"Current loss": self.current_loss})
 
         return self._get_obs(), self.current_loss, done, False, self._get_info()
     
@@ -184,7 +184,7 @@ class TestEnvironment2(gym.Env):
             else:
                 plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self.wand, self.current_rays)
             
-            print("Curren loss :", self.current_loss)
+            print("Current loss :", self.current_loss)
             
         elif self.metadata["render_mode"] == 'rgb_array':
             # Ensure proper shape for video recording (height, width, channels)

@@ -26,15 +26,10 @@ def plotter_with_ray (image1, image2, imgae3, title1, title2, title3, border_poi
 
     # Add a green point at coordinates (self.x, self.y)
     axes[0].scatter(bord_y, bord_x, c='green', s=20)  # s controls the size of the point
-    axes[0].scatter(y, x, c='blue', s=20)  # s controls the size of the point
+    axes[0].scatter(x, y, c='blue', s=20)  # s controls the size of the point
                 
-    # Add an arrow showing the angle
-    arrow_length = 50  # Length of the arrow
-    angle_rad = np.deg2rad(angle)  # Convert angle to radians
-    arrow_dx = arrow_length * np.cos(angle_rad)
-    arrow_dy = arrow_length * np.sin(angle_rad)
-
-    #axes[0].arrow(y,x, arrow_dx, arrow_dy, head_width=10, head_length=15, fc='blue', ec='blue')
+    #Show arrow from border point with the angle (angle is between 0 and 360)
+    axes[0].arrow(bord_y, bord_x, -30*np.sin(np.deg2rad(angle)), -30*np.cos(np.deg2rad(angle)), head_width=5, head_length=5, fc='red', ec='red')
 
     # Plot self.obs
     axes[1].imshow(image2)
