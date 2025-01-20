@@ -52,7 +52,7 @@ class TestEnvironment2(gym.Env):
         elif torch.backends.mps.is_available():
             self.device = 'mps'
         # Load the model and map it to the GPU
-        self.unet = torch.load("Reinforcement_Learning/saved_models/model_full_old.pth", map_location=self.device)
+        self.unet = torch.load("saved_models/model_full_old.pth", map_location=self.device)
         self.unet.eval()
 
         self.loss = torch.nn.BCELoss()
