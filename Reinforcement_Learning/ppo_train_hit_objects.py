@@ -3,19 +3,14 @@ from stable_baselines3 import PPO
 from test_env2 import TestEnvironment2, VideoLoggingCallback
 from wandb.integration.sb3 import WandbCallback
 from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
-from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.callbacks import ProgressBarCallback
 from stable_baselines3.common.callbacks import CallbackList
-import sys
 import os
-
-
-
 
 # Setup paths
 current_path = os.getcwd()
 parent_path = os.path.abspath(os.path.join(current_path, os.pardir))
-data_path = os.path.join(current_path, "data_new")
+data_path = os.path.join(parent_path, "data_new")
 video_folder = "videos/"
 
 # Ensure video directory exists
