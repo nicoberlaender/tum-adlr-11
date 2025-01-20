@@ -52,7 +52,7 @@ class TestEnvironment2(gym.Env):
         elif torch.backends.mps.is_available():
             self.device = 'mps'
         # Load the model and map it to the GPU
-        self.unet = torch.load("saved_models/model_full_old.pth", map_location=self.device)
+        self.unet = torch.load("Reinforcement_Learning/saved_models/model_full_old.pth", map_location=self.device)
         self.unet.eval()
 
         self.loss = torch.nn.BCELoss()
@@ -114,6 +114,7 @@ class TestEnvironment2(gym.Env):
         previous_loss = self.current_loss
 
         self.action = action
+        print(self.action)
         x, y= self._shoot_ray(action)
         self.x = x
         self.y = y
@@ -164,7 +165,7 @@ class TestEnvironment2(gym.Env):
             if self.wand:
                 wandb.log({"Current loss": self.current_loss})
 
-        return self._get_obs(), self.current_loss, done, False, self._get_info()
+        return self._get_obs(), reward, done, False, self._get_info()
     
     def render(self):     
         # Convert tensors to numpy arrays and scale to 0-255 for visualization and  Duplicate channels for RGB display
@@ -196,7 +197,6 @@ class TestEnvironment2(gym.Env):
         
     def _shoot_ray(self, action):
         #Get two different actions, the angle is already econded in angle_action since we are taking 360 degrees
- 
         border, angle = action
 
         x,y = self._value_to_border_pixel(border)
