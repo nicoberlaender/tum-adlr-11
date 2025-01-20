@@ -132,7 +132,10 @@ class TestEnvironment2(gym.Env):
             new_similarity = float(jaccard.cpu().detach())
 
             # Calculate reward as improvement in Jaccard similarity
-            reward = max(0, (new_similarity - self.current_similarity) / max(self.current_similarity, 1e-6))
+            if self.current_similarity == 0:
+                reward = new_similarity  # Direct reward for first improvement
+            else:
+                reward = max(0, (new_similarity - self.current_similarity) / max(self.current_similarity, 1e-6))
 
             # Update current similarity for next step
             self.current_similarity = new_similarity
