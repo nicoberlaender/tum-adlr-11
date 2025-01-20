@@ -85,7 +85,7 @@ class TestEnvironment2(gym.Env):
         self.input = self.image > np.inf
 
         self.obs = self.input
-
+        self.total_reward = 0
         self.current_loss = 0
 
         transformer_input = self.input.unsqueeze(0).to(self.device).float()
@@ -99,9 +99,9 @@ class TestEnvironment2(gym.Env):
         self.current_episode_reward = 0
 
         self.action = None
-        
-        wandb.log({"Current loss": self.current_loss, 
-                    })
+        if self.wand:
+            wandb.log({"Current loss": self.current_loss, 
+                        })
         # Must return observation and info
         return self._get_obs(), self._get_info()
 
@@ -129,12 +129,12 @@ class TestEnvironment2(gym.Env):
             
             # Convert loss to CPU float
             self.current_loss = float(self.loss(output, transformer_input).cpu().detach())
-        self.current_episode_reward -= self.current_loss * 1/ self.number_rays
-
+        self.current_episode_reward = -self.current_loss * 1/ self.number_rays
+        self.total_reward += self.current_episode_reward
 
         done = self.current_rays >= self.number_rays
         
-        if done:
+        if done and self.wand:
             # Append float value to list
             self.episode_rewards.append(float(self.current_episode_reward))
             self.current_losses.append(float(self.current_loss))
