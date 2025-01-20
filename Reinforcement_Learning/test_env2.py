@@ -59,6 +59,7 @@ class TestEnvironment2(gym.Env):
 
         self.episode_rewards = []
 
+        self.num_wandb_steps = 0
 
     def _get_obs(self):
         return self.obs
@@ -97,9 +98,9 @@ class TestEnvironment2(gym.Env):
         self.current_episode_reward = 0
 
         self.action = None
-
-        wandb.log({"Current loss": self.current_loss, 
-                   })
+        if self.wand:
+            wandb.log({"Current loss": self.current_loss, 
+                    })
         # Must return observation and info
         return self._get_obs(), self._get_info()
 
@@ -131,8 +132,8 @@ class TestEnvironment2(gym.Env):
 
 
         done = self.current_rays >= self.number_rays
-
-        if done:
+        
+        if done and self.wand:
             # Append float value to list
             self.episode_rewards.append(float(self.current_episode_reward))
             episode_rew_mean = np.mean(self.episode_rewards)
@@ -141,7 +142,7 @@ class TestEnvironment2(gym.Env):
                 "Episode Reward Mean": float(episode_rew_mean),
                 "Episode reward": float(self.current_episode_reward)
             })
-        else:
+        elif self.wand:
             wandb.log({"Current loss": self.current_loss})
 
         return self._get_obs(), self.current_loss, done, False, self._get_info()
@@ -152,16 +153,17 @@ class TestEnvironment2(gym.Env):
         grount_truth_rgb = converter(self.image) 
 
         #For visualization
-        if self.metadata["render_mode"] == 'human':            
+        if self.metadata["render_mode"] == 'human':
+            self.num_wandb_steps += 1            
             if ( self.action is not None):
                 border, angle = self.action
 
                 angle = (angle + 1) * 180 +180
-
-                plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self._value_to_border_pixel(border), angle, (self.y, self.x), self.wand, self.current_rays)
+                
+                plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self._value_to_border_pixel(border), angle, (self.x, self.y), self.wand, self.num_wandb_steps, -self.current_loss)
                 
             else:
-                plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self.wand, self.current_rays)
+                plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self.wand, self.num_wandb_steps, -self.current_loss)
             
             print("Curren loss :", self.current_loss)
             
