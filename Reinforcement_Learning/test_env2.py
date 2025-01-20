@@ -99,8 +99,8 @@ class TestEnvironment2(gym.Env):
         self.current_episode_reward = 0
 
         self.action = None
-        if self.wand:
-            wandb.log({"Current loss": self.current_loss, 
+        
+        wandb.log({"Current loss": self.current_loss, 
                     })
         # Must return observation and info
         return self._get_obs(), self._get_info()
