@@ -89,18 +89,7 @@ class TestEnvironment2(gym.Env):
 
         self.obs = self.input
 
-        self.current_loss = 0
-
-        # Convert self.obs to tensor to feed into the model
-        transformer_input = torch.from_numpy(self.obs).to(self.device).float()
-        transformer_input = transformer_input.unsqueeze(0)
-        transformer_input = transformer_input.unsqueeze(0)
-
-        with torch.no_grad():
-            #Get prediction from model and found points
-            output = self.unet(transformer_input)
-        # Convert the model output to a probability map and binary mask
-        self.current_loss = float(self.loss(output, transformer_input).cpu().detach())
+        self.current_similarity = 0
 
         self.current_episode_reward = 0
 
@@ -111,8 +100,6 @@ class TestEnvironment2(gym.Env):
     
 
     def step(self, action):
-        previous_loss = self.current_loss
-
         self.action = action
         x, y= self._shoot_ray(action)
         self.x = x
@@ -134,14 +121,21 @@ class TestEnvironment2(gym.Env):
             # Use probability map directly as observation, but cut away the batch dimension
             self.obs = output.cpu().detach().numpy().squeeze()
 
-            # Calculate new loss
-            new_loss = float(self.loss(output, transformer_input).cpu().detach())
+            # Convert prediction to binary mask using threshold
+            pred_mask = (output > 0.5).float()
 
-            # Calculate reward as improvement in loss
-            reward = max(0, (previous_loss - new_loss) / previous_loss)
+            # Calculate Jaccard similarity
+            intersection = torch.sum(pred_mask * transformer_input)
+            union = torch.sum(pred_mask) + torch.sum(transformer_input) - intersection
+            jaccard = intersection / (union + 1e-6)  # Add small epsilon to prevent division by zero
 
-            # Update current loss for next step
-            self.current_loss = new_loss
+            new_similarity = float(jaccard.cpu().detach())
+
+            # Calculate reward as improvement in Jaccard similarity
+            reward = max(0, (new_similarity - self.current_similarity) / max(self.current_similarity, 1e-6))
+
+            # Update current similarity for next step
+            self.current_similarity = new_similarity
         else:
             # Penalize missing the object
             reward = 0
@@ -156,13 +150,13 @@ class TestEnvironment2(gym.Env):
             episode_rew_mean = np.mean(self.episode_rewards)
             if self.wand:
                 wandb.log({
-                    "Current loss": float(self.current_loss),
+                    "Current loss": float(self.current_similarity),
                     "Episode Reward Mean": float(episode_rew_mean),
                     "Episode reward": float(self.current_episode_reward)
                 })
         else:
             if self.wand:
-                wandb.log({"Current loss": self.current_loss})
+                wandb.log({"Current loss": self.current_similarity})
 
         return self._get_obs(), reward, done, False, self._get_info()
     
@@ -184,7 +178,7 @@ class TestEnvironment2(gym.Env):
             else:
                 plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self.wand, self.current_rays)
             
-            print("Current loss :", self.current_loss)
+            print("Current similarity :", self.current_similarity)
             
         elif self.metadata["render_mode"] == 'rgb_array':
             # Ensure proper shape for video recording (height, width, channels)
