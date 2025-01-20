@@ -114,7 +114,6 @@ class TestEnvironment2(gym.Env):
         previous_loss = self.current_loss
 
         self.action = action
-        print(self.action)
         x, y= self._shoot_ray(action)
         self.x = x
         self.y = y
