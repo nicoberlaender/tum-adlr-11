@@ -44,7 +44,7 @@ progress_bar_callback = ProgressBarCallback()
 # Configure training
 config = {
     "env": env,
-    "total_timesteps": 40,
+    "total_timesteps": 400000,
     "policy": "MlpPolicy"
 }
 
@@ -71,8 +71,8 @@ print("Run id is :", run.id)
 
 callback = WandbCallback(
     gradient_save_freq=1000,
-    #model_save_freq=100,
-    #model_save_path=f"models/{run.id}",
+    model_save_freq=100,
+    model_save_path=f"models/{run.id}",
     verbose=2
 )
 
