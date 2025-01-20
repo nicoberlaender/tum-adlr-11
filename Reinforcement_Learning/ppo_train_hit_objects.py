@@ -15,7 +15,7 @@ import os
 # Setup paths
 current_path = os.getcwd()
 parent_path = os.path.abspath(os.path.join(current_path, os.pardir))
-data_path = os.path.join(parent_path, "data_new/data_new")
+data_path = os.path.join(current_path, "data_new")
 video_folder = "videos/"
 
 # Ensure video directory exists
@@ -45,7 +45,7 @@ progress_bar_callback = ProgressBarCallback()
 config = {
     "env": env,
     "total_timesteps": 400000,
-    "policy": "MlpPolicy"
+    "policy": "CnnPolicy"
 }
 
 # Initialize wandb
@@ -79,7 +79,7 @@ callback = WandbCallback(
 video_logging_callback = VideoLoggingCallback(video_path=os.path.join(current_path, 'videos'), log_freq=2048*10)
 
 # Combine callbacks into a CallbackList
-callback_list = CallbackList([progress_bar_callback, callback,video_logging_callback ])
+callback_list = CallbackList([progress_bar_callback, callback, video_logging_callback ])
 
 model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
 

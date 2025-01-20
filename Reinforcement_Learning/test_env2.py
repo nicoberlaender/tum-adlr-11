@@ -28,12 +28,12 @@ class TestEnvironment2(gym.Env):
 
         self.action_space = gym.spaces.Box(low=-1, high=1, shape=(2,), dtype=np.float32)
 
+        self.observation_space = gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8)
+
         self.metadata = {'render_mode': render_mode,
                           'render_fps': 30}
         
         self.render_mode = render_mode
-        #Obseervations are the points so fare known
-        self.observation_space = gym.spaces.MultiBinary([self.height, self.width])
 
         #Max number of rays the model can shoot
         self.number_rays = number_rays
@@ -52,7 +52,7 @@ class TestEnvironment2(gym.Env):
         elif torch.backends.mps.is_available():
             self.device = 'mps'
         # Load the model and map it to the GPU
-        self.unet = torch.load("saved_models/model_full_old.pth", map_location=self.device)
+        self.unet = torch.load("Reinforcement_Learning/saved_models/model_full_old.pth", map_location=self.device)
         self.unet.eval()
 
         self.loss = torch.nn.BCELoss()
@@ -61,7 +61,9 @@ class TestEnvironment2(gym.Env):
 
 
     def _get_obs(self):
-        return self.obs
+        # Add channel dimension to observation
+        observation = self.obs[None, :, :] * 255
+        return observation.astype(np.uint8)
     
     def _get_info(self):
         return {}
@@ -78,21 +80,27 @@ class TestEnvironment2(gym.Env):
 
         #Initialize the image
         self.image = torchvision.io.read_image(image_path)
-        self.image = self.image[0] > 0
 
-        self.input = self.image > np.inf
+        #Convert image to numpy array with two axis and 0-1 values
+        self.image = self.image[0].numpy().astype(np.float32) / 255
+
+        #Input should be black image
+        self.input = np.zeros_like(self.image, dtype=np.float32)
 
         self.obs = self.input
 
         self.current_loss = 0
 
-        transformer_input = self.input.unsqueeze(0).to(self.device).float()
-        transformer_input = transformer_input.unsqueeze(0) 
+        # Convert self.obs to tensor to feed into the model
+        transformer_input = torch.from_numpy(self.obs).to(self.device).float()
+        transformer_input = transformer_input.unsqueeze(0)
+        transformer_input = transformer_input.unsqueeze(0)
+
         with torch.no_grad():
             #Get prediction from model and found points
             output = self.unet(transformer_input)
         # Convert the model output to a probability map and binary mask
-        self.current_loss = -self.loss(output, transformer_input)
+        self.current_loss = float(self.loss(output, transformer_input).cpu().detach())
 
         self.current_episode_reward = 0
 
@@ -102,9 +110,11 @@ class TestEnvironment2(gym.Env):
                    })
         # Must return observation and info
         return self._get_obs(), self._get_info()
+    
 
     def step(self, action):
-        #If agent performs actions means sending ray on the image, finds a point hopefully and reuse alghorithm 
+        previous_loss = self.current_loss
+
         self.action = action
         x, y= self._shoot_ray(action)
         self.x = x
@@ -112,23 +122,33 @@ class TestEnvironment2(gym.Env):
 
         self.current_rays += 1
 
-        if ( x is  not None and y is not None):
+        if (x is not None and y is not None):
+            self.input[x][y] = 1     
             
-            self.input[x][y]= 1          
-            transformer_input = self.input.unsqueeze(0).to(self.device).float()
-            transformer_input = transformer_input.unsqueeze(0) 
+            # Feed the input to the model
+            transformer_input = torch.from_numpy(self.input).to(self.device).float()
+            transformer_input = transformer_input.unsqueeze(0)
+            transformer_input = transformer_input.unsqueeze(0)
 
             with torch.no_grad():
                 output = self.unet(transformer_input)
 
-            # Convert the model output to a probability map and binary mask
-            output_image = output[0][0].cpu()  
-            self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
-            
-            # Convert loss to CPU float
-            self.current_loss = float(-self.loss(output, transformer_input).cpu().detach())
-        self.current_episode_reward += self.current_loss
+            # Use probability map directly as observation, but cut away the batch dimension
+            self.obs = output.cpu().detach().numpy().squeeze()
 
+            # Calculate new loss
+            new_loss = float(self.loss(output, transformer_input).cpu().detach())
+
+            # Calculate reward as improvement (negative since loss is negative)
+            reward = previous_loss - new_loss
+
+            # Update current loss for next step
+            self.current_loss = new_loss
+        else:
+            # Penalize missing the object
+            reward = -0.1
+
+        self.current_episode_reward += reward
 
         done = self.current_rays >= self.number_rays
 
@@ -145,11 +165,12 @@ class TestEnvironment2(gym.Env):
             wandb.log({"Current loss": self.current_loss})
 
         return self._get_obs(), self.current_loss, done, False, self._get_info()
+    
     def render(self):     
         # Convert tensors to numpy arrays and scale to 0-255 for visualization and  Duplicate channels for RGB display
-        predict_rgb =converter(self.obs) 
-        input_rgb = converter(self.input) 
-        grount_truth_rgb = converter(self.image) 
+        predict_rgb = self.obs * 255
+        input_rgb = self.input * 255
+        grount_truth_rgb = self.image * 255
 
         #For visualization
         if self.metadata["render_mode"] == 'human':            
@@ -166,8 +187,11 @@ class TestEnvironment2(gym.Env):
             print("Curren loss :", self.current_loss)
             
         elif self.metadata["render_mode"] == 'rgb_array':
-            # Return the image for external rendering
-            return predict_rgb
+            # Ensure proper shape for video recording (height, width, channels)
+            render_img = np.expand_dims(predict_rgb, axis=-1)  # Add channel dimension
+            render_img = np.repeat(render_img, 3, axis=-1)  # Repeat to 3 channels
+            render_img = render_img.astype(np.uint8)  # Convert to uint8
+            return render_img  # Return format: (height, width, 3)
         
         
     def _shoot_ray(self, action):
