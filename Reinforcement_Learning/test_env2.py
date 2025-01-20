@@ -139,8 +139,8 @@ class TestEnvironment2(gym.Env):
             # Calculate new loss
             new_loss = float(self.loss(output, transformer_input).cpu().detach())
 
-            # Calculate reward as improvement (negative since loss is negative)
-            reward = max(0, previous_loss - new_loss)
+            # Calculate reward as improvement in loss
+            reward = max(0, (previous_loss - new_loss) / previous_loss)
 
             # Update current loss for next step
             self.current_loss = new_loss
