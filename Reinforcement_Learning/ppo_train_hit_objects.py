@@ -21,7 +21,7 @@ video_folder = "videos/"
 # Ensure video directory exists
 os.makedirs(video_folder, exist_ok=True)
 
-env1 = TestEnvironment2((224, 224), 15, data_path, render_mode='rgb_array', wand= False)
+env1 = TestEnvironment2((224, 224), 15, data_path, render_mode='rgb_array', wand= True)
    
 
 # Create vectorized environment
