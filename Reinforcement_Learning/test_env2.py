@@ -58,6 +58,7 @@ class TestEnvironment2(gym.Env):
         self.loss = torch.nn.BCELoss()
 
         self.episode_rewards = []
+        self.current_losses = []
 
         self.num_wandb_steps = 0
 
@@ -93,7 +94,7 @@ class TestEnvironment2(gym.Env):
             #Get prediction from model and found points
             output = self.unet(transformer_input)
         # Convert the model output to a probability map and binary mask
-        self.current_loss = -self.loss(output, transformer_input)
+        self.current_loss = self.loss(output, transformer_input)
 
         self.current_episode_reward = 0
 
@@ -127,8 +128,8 @@ class TestEnvironment2(gym.Env):
             self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
             
             # Convert loss to CPU float
-            self.current_loss = float(-self.loss(output, transformer_input).cpu().detach())
-        self.current_episode_reward += self.current_loss
+            self.current_loss = float(self.loss(output, transformer_input).cpu().detach())
+        self.current_episode_reward -= self.current_loss * 1/ self.number_rays
 
 
         done = self.current_rays >= self.number_rays
@@ -136,11 +137,14 @@ class TestEnvironment2(gym.Env):
         if done and self.wand:
             # Append float value to list
             self.episode_rewards.append(float(self.current_episode_reward))
+            self.current_losses.append(float(self.current_loss))
             episode_rew_mean = np.mean(self.episode_rewards)
+            loss_mean = np.mean(self.current_losses)
             wandb.log({
                 "Current loss": float(self.current_loss),
                 "Episode Reward Mean": float(episode_rew_mean),
-                "Episode reward": float(self.current_episode_reward)
+                "Episode reward": float(self.current_episode_reward),
+                "Loss Mean": float(loss_mean),
             })
         elif self.wand:
             wandb.log({"Current loss": self.current_loss})
