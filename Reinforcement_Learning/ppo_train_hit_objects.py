@@ -58,7 +58,10 @@ model = PPO(
     config["policy"],
     config["env"],
     learning_rate=1e-3,
-    ent_coef=0.01,
+    ent_coef=0.1,
+    batch_size=256,
+    use_sde=True,
+    sde_sample_freq=4,
     verbose=1,
     tensorboard_log=f"runs/{run.id}"
 )

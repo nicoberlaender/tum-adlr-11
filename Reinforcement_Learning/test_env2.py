@@ -155,7 +155,12 @@ class TestEnvironment2(gym.Env):
                 })
         else:
             if self.wand:
-                wandb.log({"Current similarity": self.current_similarity})
+                wandb.log({
+                    "Current similarity": self.current_similarity,
+                    "Action_border": float(action[0]),
+                    "Action_angle": float(action[1]),
+                    "Action_magnitude": float(np.linalg.norm(action))
+                })
 
         return self._get_obs(), reward, done, False, self._get_info()
     
