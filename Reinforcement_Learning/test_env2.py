@@ -125,11 +125,15 @@ class TestEnvironment2(gym.Env):
             # Convert prediction to binary mask using threshold
             pred_mask = (output > 0.5).float()
 
-            # Calculate Jaccard similarity
-            intersection = torch.sum(pred_mask * transformer_input)
-            union = torch.sum(pred_mask) + torch.sum(transformer_input) - intersection
-            jaccard = intersection / (union + 1e-6)  # Add small epsilon to prevent division by zero
-            reward = float(jaccard.cpu().detach())
+            # convert to numpy array
+            pred_mask = pred_mask.cpu().detach().numpy().squeeze()
+
+            #calculate intersection between pred_mask and self.image
+            intersection = (pred_mask * self.image).sum()
+            union = pred_mask.sum() + self.image.sum() - intersection
+            jaccard = intersection / (union + 1e-6)
+
+            reward = jaccard
             self.current_similarity = reward
         else:
             # Penalize missing the object
@@ -157,7 +161,7 @@ class TestEnvironment2(gym.Env):
     
     def render(self):     
         # Convert tensors to numpy arrays and scale to 0-255 for visualization and  Duplicate channels for RGB display
-        predict_rgb = self.obs * 255
+        predict_rgb = (self.obs >= 0.5) * 255
         input_rgb = self.input * 255
         grount_truth_rgb = self.image * 255
 
