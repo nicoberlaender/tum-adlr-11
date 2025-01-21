@@ -39,7 +39,7 @@ progress_bar_callback = ProgressBarCallback()
 # Configure training
 config = {
     "env": env,
-    "total_timesteps": 500000,
+    "total_timesteps": 300000,
     "policy": "CnnPolicy"
 }
 
@@ -58,6 +58,7 @@ model = PPO(
     config["policy"],
     config["env"],
     learning_rate=1e-3,
+    ent_coef=0.01,
     verbose=1,
     tensorboard_log=f"runs/{run.id}"
 )
