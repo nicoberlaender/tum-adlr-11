@@ -39,7 +39,7 @@ progress_bar_callback = ProgressBarCallback()
 # Configure training
 config = {
     "env": env,
-    "total_timesteps": 300000,
+    "total_timesteps": 1000000,
     "policy": "CnnPolicy"
 }
 
@@ -57,8 +57,12 @@ run = wandb.init(
 model = PPO(
     config["policy"],
     config["env"],
-    learning_rate=1e-3,
-    ent_coef=0.02,
+    learning_rate=1e-4,
+    n_steps=2048,
+    batch_size=64,
+    n_epochs=10,
+    gamma=0.99,
+    ent_coef=0.05,
     verbose=1,
     tensorboard_log=f"runs/{run.id}"
 )
