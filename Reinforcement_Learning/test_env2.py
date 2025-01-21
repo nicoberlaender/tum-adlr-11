@@ -89,8 +89,6 @@ class TestEnvironment2(gym.Env):
 
         self.obs = self.input
 
-        self.current_similarity = 0
-
         self.current_episode_reward = 0
 
         self.action = None
@@ -112,8 +110,7 @@ class TestEnvironment2(gym.Env):
             
             # Feed the input to the model
             transformer_input = torch.from_numpy(self.input).to(self.device).float()
-            transformer_input = transformer_input.unsqueeze(0)
-            transformer_input = transformer_input.unsqueeze(0)
+            transformer_input = transformer_input.unsqueeze(0).unsqueeze(0)
 
             with torch.no_grad():
                 output = self.unet(transformer_input)
@@ -129,16 +126,7 @@ class TestEnvironment2(gym.Env):
             union = torch.sum(pred_mask) + torch.sum(transformer_input) - intersection
             jaccard = intersection / (union + 1e-6)  # Add small epsilon to prevent division by zero
 
-            new_similarity = float(jaccard.cpu().detach())
-
-            # Calculate reward as improvement in Jaccard similarity
-            if self.current_similarity == 0:
-                reward = new_similarity  # Direct reward for first improvement
-            else:
-                reward = max(0, (new_similarity - self.current_similarity) / max(self.current_similarity, 1e-6))
-
-            # Update current similarity for next step
-            self.current_similarity = new_similarity
+            reward = float(jaccard.cpu().detach())
         else:
             # Penalize missing the object
             reward = 0
