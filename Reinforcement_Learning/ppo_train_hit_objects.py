@@ -39,7 +39,7 @@ progress_bar_callback = ProgressBarCallback()
 # Configure training
 config = {
     "env": env,
-    "total_timesteps": 250000,
+    "total_timesteps": 500000,
     "policy": "CnnPolicy"
 }
 
