@@ -59,6 +59,8 @@ class TestEnvironment2(gym.Env):
 
         self.episode_rewards = []
 
+        self.current_similarity = 0
+
 
     def _get_obs(self):
         # Add channel dimension to observation
@@ -93,6 +95,8 @@ class TestEnvironment2(gym.Env):
 
         self.action = None
 
+        self.current_similarity = 0
+
         # Must return observation and info
         return self._get_obs(), self._get_info()
     
@@ -125,8 +129,8 @@ class TestEnvironment2(gym.Env):
             intersection = torch.sum(pred_mask * transformer_input)
             union = torch.sum(pred_mask) + torch.sum(transformer_input) - intersection
             jaccard = intersection / (union + 1e-6)  # Add small epsilon to prevent division by zero
-
             reward = float(jaccard.cpu().detach())
+            self.current_similarity = reward
         else:
             # Penalize missing the object
             reward = 0
@@ -141,13 +145,13 @@ class TestEnvironment2(gym.Env):
             episode_rew_mean = np.mean(self.episode_rewards)
             if self.wand:
                 wandb.log({
-                    "Current loss": float(self.current_similarity),
+                    "Current similarity": float(self.current_similarity),
                     "Episode Reward Mean": float(episode_rew_mean),
                     "Episode reward": float(self.current_episode_reward)
                 })
         else:
             if self.wand:
-                wandb.log({"Current loss": self.current_similarity})
+                wandb.log({"Current similarity": self.current_similarity})
 
         return self._get_obs(), reward, done, False, self._get_info()
     
