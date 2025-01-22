@@ -113,7 +113,7 @@ class TestEnvironment2(gym.Env):
             self.total_num_steps += 1
             #If agent performs actions means sending ray on the image, finds a point hopefully and reuse alghorithm 
             self.action = action[:,i]
-            x, y= self._shoot_ray(action)
+            x, y= self._shoot_ray(self.action)
             self.x = x
             self.y = y
 
