@@ -134,7 +134,7 @@ class TestEnvironment2(gym.Env):
                 
                 # Convert loss to CPU float
                 self.current_loss = float(self.loss(output, transformer_input).cpu().detach())
-            self.current_episode_reward = -self.current_loss * 1/ self.current_rays
+            self.current_episode_reward = -self.current_loss 
             self.total_reward += self.current_episode_reward
 
             done = self.current_rays >= self.number_rays
