@@ -57,7 +57,7 @@ run = wandb.init(
 model = PPO(
     config["policy"],
     config["env"],
-    learning_rate=1e-4,
+    learning_rate=3e-4,
     n_steps=2048,
     batch_size=64,
     n_epochs=10,
