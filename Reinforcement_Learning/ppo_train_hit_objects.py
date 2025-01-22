@@ -27,7 +27,7 @@ env1 = TestEnvironment2((224, 224), 15, data_path, render_mode='rgb_array', wand
 
 # Create vectorized environment
 env = DummyVecEnv([lambda : env1])
-env = VecNormalize(env, norm_obs=True, norm_reward=True,)
+env = VecNormalize(env, norm_obs=False, norm_reward=True,)
 # Define recording interval
 RECORD_INTERVAL = 2048 * 10  # 20,480 steps
 
