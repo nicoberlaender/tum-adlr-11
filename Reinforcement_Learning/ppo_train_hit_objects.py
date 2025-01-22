@@ -6,6 +6,7 @@ from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
 from stable_baselines3.common.monitor import Monitor
 from stable_baselines3.common.callbacks import ProgressBarCallback
 from stable_baselines3.common.callbacks import CallbackList
+from stable_baselines3.common.vec_env import VecNormalize
 import sys
 import os
 
@@ -26,18 +27,12 @@ env1 = TestEnvironment2((224, 224), 15, data_path, render_mode='rgb_array', wand
 
 # Create vectorized environment
 env = DummyVecEnv([lambda : env1])
-
+env = VecNormalize(env, norm_obs=True, norm_reward=True,)
 # Define recording interval
 RECORD_INTERVAL = 2048 * 10  # 20,480 steps
 
 # Add video recording wrapper with fixed trigger
-env = VecVideoRecorder(
-    env,
-    video_folder=video_folder,
-    record_video_trigger=lambda x: (x % RECORD_INTERVAL) == 0,  # Add parentheses to fix precedence
-    video_length=100,  
-    name_prefix="ppo_agent"
-)
+#env = VecVideoRecorder(env,video_folder=video_folder,record_video_trigger=lambda x: (x % RECORD_INTERVAL) == 0,  # Add parentheses to fix precedencevideo_length=100,  name_prefix="ppo_agent")
 # Add a progress bar callback
 progress_bar_callback = ProgressBarCallback()
 
@@ -57,6 +52,9 @@ run = wandb.init(
     save_code=True
 )
 
+# Define custom metrics
+wandb.define_metric("step")
+wandb.define_metric("Loss")
 
 # Create model
 model = PPO(
@@ -76,11 +74,11 @@ callback = WandbCallback(
     verbose=2
 )
 
-video_logging_callback = VideoLoggingCallback(video_path=os.path.join(current_path, 'videos'), log_freq=2048*10)
+#video_logging_callback = VideoLoggingCallback(video_path=os.path.join(current_path, 'videos'), log_freq=2048*10)
 
 # Combine callbacks into a CallbackList
-callback_list = CallbackList([progress_bar_callback, callback,video_logging_callback ])
-
+#callback_list = CallbackList([progress_bar_callback, callback,video_logging_callback ])
+callback_list = CallbackList([progress_bar_callback, callback])
 model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
 
 env.close()

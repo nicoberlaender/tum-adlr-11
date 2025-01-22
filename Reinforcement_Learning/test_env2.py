@@ -62,6 +62,9 @@ class TestEnvironment2(gym.Env):
 
         self.num_wandb_steps = 0
 
+        self.total_num_steps = 0
+
+        self.num_resets = 0
     def _get_obs(self):
         return self.obs
     
@@ -71,7 +74,7 @@ class TestEnvironment2(gym.Env):
     def reset(self, seed=None, options= None):
         # We need the following line to seed self.np_random
         super().reset(seed=seed)
-
+        self.num_resets += 1
         self.current_rays = 0
         
         # Load new image
@@ -101,11 +104,12 @@ class TestEnvironment2(gym.Env):
         self.action = None
         if self.wand:
             wandb.log({"Current loss": self.current_loss, 
-                        })
+                        }, step = self.total_num_steps)
         # Must return observation and info
         return self._get_obs(), self._get_info()
 
     def step(self, action):
+        self.total_num_steps += 1
         #If agent performs actions means sending ray on the image, finds a point hopefully and reuse alghorithm 
         self.action = action
         x, y= self._shoot_ray(action)
@@ -129,7 +133,7 @@ class TestEnvironment2(gym.Env):
             
             # Convert loss to CPU float
             self.current_loss = float(self.loss(output, transformer_input).cpu().detach())
-        self.current_episode_reward = -self.current_loss * 1/ self.number_rays
+        self.current_episode_reward = -self.current_loss * 1/ self.current_rays
         self.total_reward += self.current_episode_reward
 
         done = self.current_rays >= self.number_rays
@@ -145,35 +149,63 @@ class TestEnvironment2(gym.Env):
                 "Episode Reward Mean": float(episode_rew_mean),
                 "Episode reward": float(self.current_episode_reward),
                 "Loss Mean": float(loss_mean),
-            })
+             }, step = self.total_num_steps,
+            )
         elif self.wand:
-            wandb.log({"Current loss": self.current_loss})
+            wandb.log({"Current loss": self.current_loss}
+                      , step=self.total_num_steps)
+            
+        if self.num_resets % 100 == 0 and self.wand:
+            predict_rgb =converter(self.obs) 
+            input_rgb = converter(self.input) 
+            ground_truth_rgb = converter(self.image) 
+         
+            if self.action is not None:
+                border, angle = self.action
+                angle = (angle + 1) * 180 + 180
+                plotter_with_ray(input_rgb, predict_rgb, ground_truth_rgb, 
+                            "Input", "Prediction", "Ground Truth", 
+                            self._value_to_border_pixel(border), angle, 
+                            (self.x, self.y), self.wand, 
+                            self.total_num_steps, -self.current_loss)
+            else:
+                plotter(input_rgb, predict_rgb, ground_truth_rgb, 
+                    "Input", "Prediction", "Ground Truth", 
+                    self.wand, self.total_num_steps, -self.current_loss)
+        
 
         return self._get_obs(), self.current_episode_reward, done, False, self._get_info()
+    
     def render(self):     
         # Convert tensors to numpy arrays and scale to 0-255 for visualization and  Duplicate channels for RGB display
         predict_rgb =converter(self.obs) 
         input_rgb = converter(self.input) 
-        grount_truth_rgb = converter(self.image) 
+        ground_truth_rgb = converter(self.image) 
 
         #For visualization
         if self.metadata["render_mode"] == 'human':
             self.num_wandb_steps += 1            
-            if ( self.action is not None):
+            if self.action is not None:
                 border, angle = self.action
-
-                angle = (angle + 1) * 180 +180
-                
-                plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self._value_to_border_pixel(border), angle, (self.x, self.y), self.wand, self.num_wandb_steps, -self.current_loss)
-                
+                angle = (angle + 1) * 180 + 180
+                plotter_with_ray(input_rgb, predict_rgb, ground_truth_rgb, 
+                            "Input", "Prediction", "Ground Truth", 
+                            self._value_to_border_pixel(border), angle, 
+                            (self.x, self.y), self.wand, 
+                            self.num_wandb_steps, -self.current_loss)
             else:
-                plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self.wand, self.num_wandb_steps, -self.current_loss)
+                plotter(input_rgb, predict_rgb, ground_truth_rgb, 
+                    "Input", "Prediction", "Ground Truth", 
+                    self.wand, self.num_wandb_steps, -self.current_loss)
+        
+        print("Current loss:", self.current_loss)
             
-            print("Curren loss :", self.current_loss)
-            
-        elif self.metadata["render_mode"] == 'rgb_array':
-            # Return the image for external rendering
-            return predict_rgb
+        # Ensure correct shape (H,W,C) and add batch dimension (N,H,W,C)
+        if len(predict_rgb.shape) == 2:
+            predict_rgb = np.stack([predict_rgb] * 3, axis=-1)  # Add channels
+        predict_rgb = np.expand_dims(predict_rgb, axis=0)  # Add batch dimension
+        
+        return predict_rgb
         
         
     def _shoot_ray(self, action):
