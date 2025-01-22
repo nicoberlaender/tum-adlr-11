@@ -58,6 +58,8 @@ class TestEnvironment2(gym.Env):
         self.loss = torch.nn.BCELoss()
 
         self.episode_rewards = []
+        self.episode_rewards2 = []
+        self.current_losses2 = []
         self.current_losses = []
 
         self.num_wandb_steps = 0
@@ -100,6 +102,7 @@ class TestEnvironment2(gym.Env):
         self.current_loss = self.loss(output, transformer_input)
 
         self.current_episode_reward = 0
+        self.reward = 0
 
         self.action = None
         if self.wand:
@@ -146,7 +149,6 @@ class TestEnvironment2(gym.Env):
                 episode_rew_mean = np.mean(self.episode_rewards)
                 loss_mean = np.mean(self.current_losses)
                 wandb.log({
-                    "Current loss": float(self.current_loss),
                     "Episode Reward Mean": float(episode_rew_mean),
                     "Episode reward": float(self.current_episode_reward),
                     "Loss Mean": float(loss_mean),
@@ -156,7 +158,7 @@ class TestEnvironment2(gym.Env):
                 wandb.log({"Current loss": self.current_loss}
                         , step=self.total_num_steps)
                 
-            if self.num_resets % 100 == 0 and self.wand:
+            if self.num_resets % 1000 == 0 and self.wand:
                 predict_rgb =converter(self.obs) 
                 input_rgb = converter(self.input) 
                 ground_truth_rgb = converter(self.image) 
@@ -174,8 +176,20 @@ class TestEnvironment2(gym.Env):
                         "Input", "Prediction", "Ground Truth", 
                         self.wand, self.total_num_steps, -self.current_loss)
         
-
-        return self._get_obs(), self.current_episode_reward, done, False, self._get_info()
+        self.reward = np.abs(self.current_loss - self.reward)
+        if self.wand:
+            # Append float value to list
+            self.episode_rewards2.append(float(self.reward))
+            self.current_losses2.append(float(self.current_loss))
+            episode_rew_mean2 = np.mean(self.episode_rewards2)
+            loss_mean2 = np.mean(self.current_losses2)
+            wandb.log({
+                "Episode Reward Mean2": float(episode_rew_mean2),
+                "Episode reward2": float(self.reward),
+                "Loss Mean2": float(loss_mean2),
+            }, step = self.total_num_steps,
+            )
+        return self._get_obs(), self.reward, done, False, self._get_info()
     
     def render(self):     
         # Convert tensors to numpy arrays and scale to 0-255 for visualization and  Duplicate channels for RGB display
