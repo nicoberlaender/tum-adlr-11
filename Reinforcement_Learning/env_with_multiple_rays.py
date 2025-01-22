@@ -176,7 +176,7 @@ class TestEnvironment2(gym.Env):
                         "Input", "Prediction", "Ground Truth", 
                         self.wand, self.total_num_steps, -self.current_loss)
         
-        self.reward = np.abs(self.current_loss - self.reward)
+        self.reward = -self.current_loss + self.reward
         if self.wand:
             # Append float value to list
             self.episode_rewards2.append(float(self.reward))
