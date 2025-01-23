@@ -39,7 +39,7 @@ progress_bar_callback = ProgressBarCallback()
 # Configure training
 config = {
     "env": env,
-    "total_timesteps": 400000,
+    "total_timesteps": 4000000,
     "policy": "MlpPolicy"
 }
 
