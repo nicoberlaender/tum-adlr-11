@@ -127,6 +127,9 @@ class TestEnvironment2(gym.Env):
                 self.input[x][y]= 1          
                 transformer_input = self.input.unsqueeze(0).to(self.device).float()
                 transformer_input = transformer_input.unsqueeze(0) 
+                transformer_truth = self.image.unsqueeze(0).to(self.device).float()
+                transformer_truth = transformer_truth.unsqueeze(0) 
+
 
                 with torch.no_grad():
                     output = self.unet(transformer_input)
@@ -136,7 +139,7 @@ class TestEnvironment2(gym.Env):
                 self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
                 
                 # Convert loss to CPU float
-                self.current_loss = float(self.loss(output, transformer_input).cpu().detach())
+                self.current_loss = float(self.loss(output, transformer_truth).cpu().detach())
             self.current_episode_reward = -self.current_loss 
             self.total_reward += self.current_episode_reward
 
