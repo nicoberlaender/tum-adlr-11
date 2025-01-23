@@ -65,7 +65,7 @@ class TestEnvironment2(gym.Env):
         self.num_wandb_steps = 0
 
         self.total_num_steps = 0
-
+        self.different_steps = 0
         self.num_resets = 0
     def _get_obs(self):
         return self.obs
@@ -149,6 +149,7 @@ class TestEnvironment2(gym.Env):
                 episode_rew_mean = np.mean(self.episode_rewards)
                 loss_mean = np.mean(self.current_losses)
                 wandb.log({
+                    "Current loss": self.current_loss,
                     "Episode Reward Mean": float(episode_rew_mean),
                     "Episode reward": float(self.current_episode_reward),
                     "Loss Mean": float(loss_mean),
@@ -175,7 +176,7 @@ class TestEnvironment2(gym.Env):
                     plotter(input_rgb, predict_rgb, ground_truth_rgb, 
                         "Input", "Prediction", "Ground Truth", 
                         self.wand, self.total_num_steps, -self.current_loss)
-        
+        self.different_steps+=1
         self.reward = -self.current_loss + self.reward
         if self.wand:
             # Append float value to list
@@ -187,8 +188,7 @@ class TestEnvironment2(gym.Env):
                 "Episode Reward Mean2": float(episode_rew_mean2),
                 "Episode reward2": float(self.reward),
                 "Loss Mean2": float(loss_mean2),
-            }, step = self.total_num_steps,
-            )
+            }, step = self.different_steps,)
         return self._get_obs(), self.reward, done, False, self._get_info()
     
     def render(self):     
