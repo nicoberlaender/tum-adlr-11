@@ -182,7 +182,7 @@ class TestEnvironment2(gym.Env):
         if done:
             wandb.log({"Total Reward": self.total_reward}, step = self.total_num_steps)
             
-        if self.num_resets % 100 == 0 and self.wand:
+        if self.num_resets % 700 == 0 and self.wand:
             predict_rgb =self.obs
             input_rgb = np.stack([self.input * 255] * 3, axis=-1)
             ground_truth_rgb = np.stack([self.image * 255] * 3, axis=-1)
