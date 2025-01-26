@@ -94,7 +94,7 @@ class TestEnvironment2(gym.Env):
         self.total_reward = 0
         self.current_loss = 0
 
-        transformer_input = self.input.unsqueeze(0).to(self.device).float()
+        transformer_input = torch.tensor(self.input).unsqueeze(0).to(self.device).float()
         transformer_input = transformer_input.unsqueeze(0)
         transformer_truth = self.image.unsqueeze(0).to(self.device).float()
         transformer_truth = transformer_truth.unsqueeze(0)  
