@@ -185,7 +185,7 @@ class TestEnvironment2(gym.Env):
         if self.num_resets % 100 == 0 and self.wand:
             predict_rgb =self.obs
             input_rgb = np.stack([self.input * 255] * 3, axis=-1)
-            ground_truth_rgb = converter(self.image) 
+            ground_truth_rgb = np.stack([self.image * 255] * 3, axis=-1)
          
             if self.action is not None:
                 border, angle = self.action
