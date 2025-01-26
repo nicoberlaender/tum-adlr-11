@@ -56,6 +56,7 @@ class TestEnvironment2(gym.Env):
         self.unet.eval()
 
         self.loss = torch.nn.BCELoss()
+        self.current_similarity = 0.0
 
         self.episode_rewards = []
         self.current_losses = []
