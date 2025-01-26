@@ -154,7 +154,9 @@ class TestEnvironment2(gym.Env):
 
             self.current_similarity = jaccard
 
-        self.current_episode_reward = 0.5-self.current_loss 
+        self.current_episode_reward = -self.current_loss 
+        if ( x is  not None and y is not None):
+            self.current_episode_reward += 0.5
         self.total_reward += self.current_episode_reward
 
         done = self.current_rays >= self.number_rays
