@@ -116,7 +116,6 @@ class TestEnvironment2(gym.Env):
 
     def step(self, action):
         self.total_num_steps += 1
-        print(f"Step: {self.total_num_steps}")  # Debug print
         #If agent performs actions means sending ray on the image, finds a point hopefully and reuse alghorithm 
         self.action = action
         x, y= self._shoot_ray(action)
