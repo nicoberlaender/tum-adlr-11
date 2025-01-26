@@ -126,7 +126,7 @@ class TestEnvironment2(gym.Env):
         if ( x is  not None and y is not None):
             
             self.input[x][y]= 1          
-            transformer_input = self.input.unsqueeze(0).to(self.device).float()
+            transformer_input = torch.tensor(self.input).unsqueeze(0).to(self.device).float()
             transformer_input = transformer_input.unsqueeze(0) 
 
             transformer_truth = self.image.unsqueeze(0).to(self.device).float()
