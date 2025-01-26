@@ -30,7 +30,7 @@ env1 = TestEnvironment2((224, 224), 15, data_path, render_mode='rgb_array', wand
 
 # Create vectorized environment
 env = DummyVecEnv([lambda : env1])
-env = VecNormalize(env, norm_obs=False, norm_reward=True,)
+env = VecNormalize(env, norm_obs=True, norm_reward=True,)
 # Define recording interval
 RECORD_INTERVAL = 2048 * 10  # 20,480 steps
 
@@ -52,9 +52,9 @@ run = wandb.init(
     save_code=True
 )
 
-# Define custom metrics
-wandb.define_metric("step")
-wandb.define_metric("Loss")
+run.define_metric("reward", step_metric="global_step")
+run.define_metric("episode_reward", step_metric="global_step")
+run.define_metric("loss", step_metric="global_step")
 
 # Create model
 model = PPO(
