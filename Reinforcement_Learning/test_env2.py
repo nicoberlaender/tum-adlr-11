@@ -96,7 +96,7 @@ class TestEnvironment2(gym.Env):
 
         transformer_input = torch.tensor(self.input).unsqueeze(0).to(self.device).float()
         transformer_input = transformer_input.unsqueeze(0)
-        transformer_truth = self.image.unsqueeze(0).to(self.device).float()
+        transformer_truth = torch.tensor(self.image).unsqueeze(0).to(self.device).float()
         transformer_truth = transformer_truth.unsqueeze(0)  
         with torch.no_grad():
             #Get prediction from model and found points
@@ -129,7 +129,7 @@ class TestEnvironment2(gym.Env):
             transformer_input = torch.tensor(self.input).unsqueeze(0).to(self.device).float()
             transformer_input = transformer_input.unsqueeze(0) 
 
-            transformer_truth = self.image.unsqueeze(0).to(self.device).float()
+            transformer_truth = torch.tensor(self.image).unsqueeze(0).to(self.device).float()
             transformer_truth = transformer_truth.unsqueeze(0)  
 
             with torch.no_grad():
