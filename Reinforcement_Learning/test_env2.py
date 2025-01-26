@@ -92,12 +92,14 @@ class TestEnvironment2(gym.Env):
         self.current_loss = 0
 
         transformer_input = self.input.unsqueeze(0).to(self.device).float()
-        transformer_input = transformer_input.unsqueeze(0) 
+        transformer_input = transformer_input.unsqueeze(0)
+        transformer_truth = self.image.unsqueeze(0).to(self.device).float()
+        transformer_truth = transformer_truth.unsqueeze(0)  
         with torch.no_grad():
             #Get prediction from model and found points
             output = self.unet(transformer_input)
         # Convert the model output to a probability map and binary mask
-        self.current_loss = self.loss(output, transformer_input)
+        self.current_loss = float(self.loss(output, transformer_truth).cpu().detach())
 
         self.current_episode_reward = 0
 
@@ -124,6 +126,9 @@ class TestEnvironment2(gym.Env):
             transformer_input = self.input.unsqueeze(0).to(self.device).float()
             transformer_input = transformer_input.unsqueeze(0) 
 
+            transformer_truth = self.image.unsqueeze(0).to(self.device).float()
+            transformer_truth = transformer_truth.unsqueeze(0)  
+
             with torch.no_grad():
                 output = self.unet(transformer_input)
 
@@ -132,13 +137,15 @@ class TestEnvironment2(gym.Env):
             self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
             
             # Convert loss to CPU float
-            self.current_loss = float(self.loss(output, transformer_input).cpu().detach())
-        self.current_episode_reward = -self.current_loss * 1/ self.current_rays
+            # Convert the model output to a probability map and binary mask
+            self.current_loss = float(self.loss(output, transformer_truth).cpu().detach())
+
+        self.current_episode_reward = -self.current_loss 
         self.total_reward += self.current_episode_reward
 
         done = self.current_rays >= self.number_rays
         
-        if done and self.wand:
+        if self.wand:
             # Append float value to list
             self.episode_rewards.append(float(self.current_episode_reward))
             self.current_losses.append(float(self.current_loss))
@@ -148,14 +155,14 @@ class TestEnvironment2(gym.Env):
                 "Current loss": float(self.current_loss),
                 "Episode Reward Mean": float(episode_rew_mean),
                 "Episode reward": float(self.current_episode_reward),
-                "Loss Mean": float(loss_mean),
+                "Loss Mean": float(loss_mean),              
              }, step = self.total_num_steps,
             )
-        elif self.wand:
-            wandb.log({"Current loss": self.current_loss}
-                      , step=self.total_num_steps)
+
+        if done:
+            wandb.log({"Total Reward": self.total_reward}, step = self.total_num_steps)
             
-        if self.num_resets % 100 == 0 and self.wand:
+        if self.num_resets % 4000 == 0 and self.wand:
             predict_rgb =converter(self.obs) 
             input_rgb = converter(self.input) 
             ground_truth_rgb = converter(self.image) 

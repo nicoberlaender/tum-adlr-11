@@ -51,12 +51,14 @@ class TestEnvironment2(gym.Env):
             self.device = 'cuda'
         elif torch.backends.mps.is_available():
             self.device = 'mps'
+
         # Load the model and map it to the GPU
         self.unet = torch.load("saved_models/model_full_old.pth", map_location=self.device)
         self.unet.eval()
 
         self.loss = torch.nn.BCELoss()
 
+        # Initialize variables for performance
         self.episode_rewards = []
         self.episode_rewards2 = []
         self.current_losses2 = []
@@ -65,8 +67,11 @@ class TestEnvironment2(gym.Env):
         self.num_wandb_steps = 0
 
         self.total_num_steps = 0
+
         self.different_steps = 0
+
         self.num_resets = 0
+
     def _get_obs(self):
         return self.obs
     
@@ -90,18 +95,18 @@ class TestEnvironment2(gym.Env):
         self.input = self.image > np.inf
 
         self.obs = self.input
-        self.total_reward = 0
-        self.current_loss = 0
+        self.total_episode_reward = 0
 
         transformer_input = self.input.unsqueeze(0).to(self.device).float()
-        transformer_input = transformer_input.unsqueeze(0) 
+        transformer_input = transformer_input.unsqueeze(0)
+        transformer_truth = self.image.unsqueeze(0).to(self.device).float()
+        transformer_truth = transformer_truth.unsqueeze(0)  
         with torch.no_grad():
             #Get prediction from model and found points
             output = self.unet(transformer_input)
         # Convert the model output to a probability map and binary mask
-        self.current_loss = self.loss(output, transformer_input)
+        self.current_loss = float(self.loss(output, transformer_truth).cpu().detach())
 
-        self.current_episode_reward = 0
         self.reward = 0
 
         self.action = None
@@ -112,6 +117,7 @@ class TestEnvironment2(gym.Env):
         return self._get_obs(), self._get_info()
 
     def step(self, action):
+
         for i in range(4):
             self.total_num_steps += 1
             #If agent performs actions means sending ray on the image, finds a point hopefully and reuse alghorithm 
@@ -141,28 +147,28 @@ class TestEnvironment2(gym.Env):
                 # Convert loss to CPU float
                 self.current_loss = float(self.loss(output, transformer_truth).cpu().detach())
             self.current_episode_reward = -self.current_loss 
-            self.total_reward += self.current_episode_reward
+
+            self.total_episode_reward += self.current_episode_reward
 
             done = self.current_rays >= self.number_rays
             
             if done and self.wand:
                 # Append float value to list
-                self.episode_rewards.append(float(self.current_episode_reward))
                 self.current_losses.append(float(self.current_loss))
-                episode_rew_mean = np.mean(self.episode_rewards)
                 loss_mean = np.mean(self.current_losses)
                 wandb.log({
                     "Current loss": self.current_loss,
-                    "Episode Reward Mean": float(episode_rew_mean),
-                    "Episode reward": float(self.current_episode_reward),
                     "Loss Mean": float(loss_mean),
                 }, step = self.total_num_steps,
                 )
             elif self.wand:
-                wandb.log({"Current loss": self.current_loss}
+                wandb.log({
+                    "Current loss": self.current_loss,
+                    "Loss Mean": float(loss_mean),
+                           }
                         , step=self.total_num_steps)
                 
-            if self.num_resets % 1000 == 0 and self.wand:
+            if self.num_resets % 3000 == 0 and self.wand:
                 predict_rgb =converter(self.obs) 
                 input_rgb = converter(self.input) 
                 ground_truth_rgb = converter(self.image) 
@@ -179,18 +185,17 @@ class TestEnvironment2(gym.Env):
                     plotter(input_rgb, predict_rgb, ground_truth_rgb, 
                         "Input", "Prediction", "Ground Truth", 
                         self.wand, self.total_num_steps, -self.current_loss)
+                    
         self.different_steps+=1
         self.reward = -self.current_loss + self.reward
+
         if self.wand:
             # Append float value to list
             self.episode_rewards2.append(float(self.reward))
-            self.current_losses2.append(float(self.current_loss))
             episode_rew_mean2 = np.mean(self.episode_rewards2)
-            loss_mean2 = np.mean(self.current_losses2)
             wandb.log({
                 "Episode Reward Mean2": float(episode_rew_mean2),
                 "Episode reward2": float(self.reward),
-                "Loss Mean2": float(loss_mean2),
             }, step = self.different_steps,)
         return self._get_obs(), self.reward, done, False, self._get_info()
     
