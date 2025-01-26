@@ -9,6 +9,7 @@ from matplotlib import pyplot as plt
 import os
 import wandb
 import sys
+import math
 # Add the parent directory to sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -157,7 +158,7 @@ class TestEnvironment2(gym.Env):
             if self.wand:
                 wandb.log({
                     "Current similarity": self.current_similarity,
-                    "Action_border": float(action[0]),
+                    "Action_position": float(action[0]),
                     "Action_angle": float(action[1]),
                     "Action_magnitude": float(np.linalg.norm(action))
                 })
@@ -173,11 +174,9 @@ class TestEnvironment2(gym.Env):
         #For visualization
         if self.metadata["render_mode"] == 'human':            
             if ( self.action is not None):
-                border, angle = self.action
+                position, angle = self.action
 
-                angle = (angle + 1) * 180 +180
-
-                plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self._value_to_border_pixel(border), angle, (self.y, self.x), self.wand, self.current_rays)
+                plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self._value_to_circle_pixel(position), angle, (self.y, self.x), self.wand, self.current_rays)
                 
             else:
                 plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self.wand, self.current_rays)
@@ -192,63 +191,69 @@ class TestEnvironment2(gym.Env):
             return render_img  # Return format: (height, width, 3)
         
         
+    import math
+
     def _shoot_ray(self, action):
-        #Get two different actions, the angle is already econded in angle_action since we are taking 360 degrees
         border, angle = action
+        x_start, y_start = self._value_to_circle_pixel(border)
 
-        x,y = self._value_to_border_pixel(border)
+        # Calculate center and radial direction
+        cx = (self.width - 1) / 2
+        cy = (self.height - 1) / 2
+        radial_x = cx - x_start
+        radial_y = cy - y_start
+        radial_length = math.hypot(radial_x, radial_y)
 
-        angle_action = (angle + 1) * 180
+        if radial_length == 0:
+            return None, None  # Edge case
 
-        #Conver angle tso radiants
-        angle_action = np.radians(angle_action)
+        # Calculate maximum safe angle deviation
+        half_width = (self.width - 1) / 2
+        half_height = (self.height - 1) / 2
+        radius = math.hypot(half_width, half_height)
+        max_deviation = math.atan(max(half_width, half_height) / radius)
 
-        # Compute step direction for ray tracing 
-        dx = np.cos(angle_action)
-        dy = np.sin(angle_action)
+        # Map [-1, 1] to [-max_deviation, max_deviation]
+        angle_dev = angle * max_deviation
 
-         # Ray tracing loop
-        while True:
+        # Calculate direction vector with constrained angle
+        cos_a = math.cos(angle_dev)
+        sin_a = math.sin(angle_dev)
+        dx = (radial_x * cos_a - radial_y * sin_a) / radial_length
+        dy = (radial_x * sin_a + radial_y * cos_a) / radial_length
+
+        # Tracing with guaranteed hit
+        x, y = x_start, y_start
+        for _ in range(int(2 * radius * 2)):  # Sufficient steps to cross image
             x += dx
             y += dy
-        
-            # Round x and y to nearest integer positions
             x_int = int(round(x))
             y_int = int(round(y))
-        
-            # Check if the ray goes out of bounds
-            if x_int < 0 or x_int >= self.width or y_int < 0 or y_int >= self.height:
-                return None, None
-        
-            # Check if the ray hits an obstacle (assumed to be represented by 1)
-            elif self.image[x_int, y_int] == 1:
-                return x_int, y_int
+
+            if 0 <= x_int < self.width and 0 <= y_int < self.height:
+                if self.image[x_int, y_int] == 1:
+                    return x_int, y_int
     
-    def _value_to_border_pixel(self, border):
-        border = (border + 1) / 2
+        return None, None  # Fallback (shouldn't reach here)
+    
+    def _value_to_circle_pixel(self, position):
+        # Convert action from [-1, 1] to angle in [0, 2π)
+        theta = (position + 1) * math.pi  # Scales to 0-2π
 
-         # Convert border value to pixel position
-        total_perimeter = 2 * (self.width + self.height)
-        position = border * total_perimeter
+        # Calculate image center coordinates
+        cx = (self.width - 1) / 2  # Center x-coordinate
+        cy = (self.height - 1) / 2  # Center y-coordinate
 
-        # Top edge
-        if position < self.width:
-            x = position
-            y = 0
-        # Right edge
-        elif position < self.width + self.height:
-            x = self.width - 1
-            y = position - self.width
-        # Bottom edge
-        elif position < 2 * self.width + self.height:
-            x = 2 * self.width + self.height - position - 1
-            y = self.height - 1
-        # Left edge
-        else:
-            x = 0
-            y = total_perimeter - position
-        
-        return x,y
+        # Calculate radius to image corners
+        half_width = (self.width - 1) / 2
+        half_height = (self.height - 1) / 2
+        radius = math.sqrt(half_width**2 + half_height**2)
+
+        # Convert polar coordinates to Cartesian coordinates
+        x = cx + radius * math.cos(theta)
+        y = cy + radius * math.sin(theta)
+
+        return x, y
     
 
 
