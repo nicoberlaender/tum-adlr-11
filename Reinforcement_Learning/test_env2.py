@@ -33,7 +33,7 @@ class TestEnvironment2(gym.Env):
         
         self.render_mode = render_mode
         #Obseervations are the points so fare known
-        self.observation_space = gym.spaces.MultiBinary([self.height, self.width])
+        self.observation_space = gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8)
 
         #Max number of rays the model can shoot
         self.number_rays = number_rays
@@ -83,9 +83,12 @@ class TestEnvironment2(gym.Env):
 
         #Initialize the image
         self.image = torchvision.io.read_image(image_path)
-        self.image = self.image[0] > 0
 
-        self.input = self.image > np.inf
+        #Convert image to numpy array with two axis and 0-1 values
+        self.image = self.image[0].numpy().astype(np.float32) / 255
+
+        #Input should be black image
+        self.input = np.zeros_like(self.image, dtype=np.float32)
 
         self.obs = self.input
         self.total_reward = 0
@@ -132,13 +135,23 @@ class TestEnvironment2(gym.Env):
             with torch.no_grad():
                 output = self.unet(transformer_input)
 
+            # Use probability map directly as observation, but cut away the batch dimension
+            self.obs = output.cpu().detach().numpy().squeeze()
             # Convert the model output to a probability map and binary mask
-            output_image = output[0][0].cpu()  
-            self.obs = (output_image > 0.5)  # Thresholding to create a binary mask
+            pred_mask = (output > 0.5).float()
+            pred_mask = pred_mask.cpu().detach().numpy().squeeze()
             
             # Convert loss to CPU float
             # Convert the model output to a probability map and binary mask
             self.current_loss = float(self.loss(output, transformer_truth).cpu().detach())
+
+            #calculate intersection between pred_mask and self.image
+            intersection = (pred_mask * self.image).sum()
+            union = pred_mask.sum() + self.image.sum() - intersection
+            jaccard = intersection / (union + 1e-6)
+
+
+            self.current_similarity = jaccard
 
         self.current_episode_reward = -self.current_loss 
         self.total_reward += self.current_episode_reward
@@ -156,14 +169,20 @@ class TestEnvironment2(gym.Env):
                 "Episode Reward Mean": float(episode_rew_mean),
                 "Episode reward": float(self.current_episode_reward),
                 "Loss Mean": float(loss_mean),              
-             }, step = self.total_num_steps,
-            )
+
+                    "Current similarity": self.current_similarity,
+                    "Action_border": float(action[0]),
+                    "Action_angle": float(action[1]),
+                    "Action_magnitude": float(np.linalg.norm(action))
+                }, step = self.total_num_steps,)
+
+            
 
         if done:
             wandb.log({"Total Reward": self.total_reward}, step = self.total_num_steps)
             
         if self.num_resets % 4000 == 0 and self.wand:
-            predict_rgb =converter(self.obs) 
+            predict_rgb =self.obs
             input_rgb = converter(self.input) 
             ground_truth_rgb = converter(self.image) 
          
@@ -276,25 +295,3 @@ class TestEnvironment2(gym.Env):
     
 
 
-from stable_baselines3.common.callbacks import BaseCallback
-import glob
-
-class VideoLoggingCallback(BaseCallback):
-    def __init__(self, video_path, log_freq=2048, verbose=0):
-        super().__init__(verbose)
-        self.video_path = video_path
-        self.log_freq = log_freq
-        self.logged_videos = set()
-
-    def _on_step(self):
-        if self.n_calls % self.log_freq == 0:
-            # Get a list of all video files in the folder
-            video_files = glob.glob(os.path.join(self.video_path, "*.mp4"))
-            
-            # Log only new videos
-            new_videos = [v for v in video_files if v not in self.logged_videos]
-            for video in new_videos:
-                wandb.log({"video": wandb.Video(video, fps=30, format="mp4")}, step=self.n_calls)
-                self.logged_videos.add(video)
-
-        return True
