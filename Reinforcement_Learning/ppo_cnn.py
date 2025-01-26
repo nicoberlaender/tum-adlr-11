@@ -1,6 +1,6 @@
 import wandb
 from stable_baselines3 import PPO
-from test_env2 import TestEnvironment2, VideoLoggingCallback
+from Reinforcement_Learning.cnn_environment import TestEnvironment2, VideoLoggingCallback
 from wandb.integration.sb3 import WandbCallback
 from stable_baselines3.common.vec_env import DummyVecEnv, VecVideoRecorder
 from stable_baselines3.common.callbacks import ProgressBarCallback
