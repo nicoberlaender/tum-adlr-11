@@ -94,7 +94,7 @@ class TestEnvironment2(gym.Env):
         self.obs = self.input
         self.total_reward = 0
         self.current_loss = 0
-
+        self.jaccard = 0
         transformer_input = torch.tensor(self.input).unsqueeze(0).to(self.device).float()
         transformer_input = transformer_input.unsqueeze(0)
         transformer_truth = torch.tensor(self.image).unsqueeze(0).to(self.device).float()
@@ -149,12 +149,12 @@ class TestEnvironment2(gym.Env):
             #calculate intersection between pred_mask and self.image
             intersection = (pred_mask * self.image).sum()
             union = pred_mask.sum() + self.image.sum() - intersection
-            jaccard = intersection / (union + 1e-6)
+            self.jaccard = intersection / (union + 1e-6)
 
 
-            self.current_similarity = jaccard
+            self.current_similarity = self.jaccard
 
-        self.current_episode_reward = jaccard
+        self.current_episode_reward = self.jaccard
         if ( x is  not None and y is not None):
             self.current_episode_reward += 0.0
         self.total_reward += self.current_episode_reward
