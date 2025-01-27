@@ -78,6 +78,8 @@ callback_list = CallbackList([progress_bar_callback, callback, video_logging_cal
 
 model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
 
+model.save("300kJaccard5e-4")
+
 env.close()
 
 """
