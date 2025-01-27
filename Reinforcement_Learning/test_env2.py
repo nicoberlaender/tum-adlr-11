@@ -301,7 +301,7 @@ class TestEnvironment2(gym.Env):
             y = total_perimeter - position
             self.info = 'left'
         
-        return x,y, info
+        return x,y
     
 
 
