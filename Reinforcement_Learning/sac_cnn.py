@@ -42,6 +42,7 @@ model = SAC(
     config["policy"],
     config["env"],
     learning_rate=5e-4,
+    buffer_size=10000,
     verbose=1,
     tensorboard_log=f"runs/{run.id}"
 )
