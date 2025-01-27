@@ -1,5 +1,5 @@
 import wandb
-from stable_baselines3 import PPO
+from stable_baselines3 import SAC
 from cnn_environment import TestEnvironment2
 from wandb.integration.sb3 import WandbCallback
 from stable_baselines3.common.vec_env import DummyVecEnv
@@ -38,7 +38,7 @@ run = wandb.init(
 
 
 # Create model
-model = PPO(
+model = SAC(
     config["policy"],
     config["env"],
     learning_rate=5e-4,
@@ -60,7 +60,7 @@ callback_list = CallbackList([progress_bar_callback, callback])
 
 model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
 
-model.save("models/300kJaccard5e-4")
+model.save("models/SAC300kJaccard5e-4")
 
 env.close()
 
