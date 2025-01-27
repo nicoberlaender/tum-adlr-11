@@ -55,6 +55,9 @@ class TestEnvironment2(gym.Env):
         self.unet = torch.load("saved_models/model_full_old.pth", map_location=self.device)
         self.unet.eval()
 
+        self.info = 0
+        self.past_info = 0
+
         self.loss = torch.nn.BCELoss()
         self.current_similarity = 0.0
 
@@ -155,8 +158,8 @@ class TestEnvironment2(gym.Env):
             self.current_similarity = self.jaccard
 
         self.current_episode_reward = self.jaccard
-        if ( x is  not None and y is not None):
-            self.current_episode_reward += 0.0
+        if ( x is  not None and y is not None and self.past_info is not self.info):
+            self.current_episode_reward += 0.5
         self.total_reward += self.current_episode_reward
 
         done = self.current_rays >= self.number_rays
@@ -276,25 +279,29 @@ class TestEnvironment2(gym.Env):
          # Convert border value to pixel position
         total_perimeter = 2 * (self.width + self.height)
         position = border * total_perimeter
-
+        self.past_info = self.info
         # Top edge
         if position < self.width:
             x = position
             y = 0
+            self.info = 'bottom'
         # Right edge
         elif position < self.width + self.height:
             x = self.width - 1
             y = position - self.width
+            self.info = 'right'
         # Bottom edge
         elif position < 2 * self.width + self.height:
             x = 2 * self.width + self.height - position - 1
             y = self.height - 1
+            self.info = 'top'
         # Left edge
         else:
             x = 0
             y = total_perimeter - position
+            self.info = 'left'
         
-        return x,y
+        return x,y, info
     
 
 
