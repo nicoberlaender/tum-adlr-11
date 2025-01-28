@@ -64,6 +64,8 @@ class TestEnvironment2(gym.Env):
         self.episode_rewards = []
         self.current_losses = []
         self.past_inters = 0
+        self.num_images = 0
+        self.wand_buffer = []
         self.num_wandb_steps = 0
 
         self.total_num_steps = 0
