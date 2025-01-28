@@ -151,7 +151,9 @@ class TestEnvironment2(gym.Env):
 
             #calculate intersection between pred_mask and self.image
             intersection = (pred_mask * self.image).sum()
-            union = pred_mask.sum() + self.image.sum() - intersection
+            
+            union = pred_mask.sum() + self.image.sum() - intersection - self.past_inters
+            self.past_inters = intersection
             self.jaccard = intersection / (union + 1e-6)
 
 
@@ -159,7 +161,7 @@ class TestEnvironment2(gym.Env):
 
         self.current_episode_reward = self.jaccard
         if ( x is  not None and y is not None and self.past_info is not self.info):
-            self.current_episode_reward += 0.5
+            self.current_episode_reward += 0.2
         self.total_reward += self.current_episode_reward
 
         done = self.current_rays >= self.number_rays
