@@ -33,7 +33,10 @@ class TestEnvironment2(gym.Env):
         
         self.render_mode = render_mode
         #Obseervations are the points so fare known
-        self.observation_space = gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8)
+        self.observation_space = gym.spaces.Dict({
+            "image": gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8),
+            "vector": gym.spaces.Box(low=-np.inf, high=np.inf, shape=(2,), dtype=np.float32)  # Adjust range as needed
+        })
 
         #Max number of rays the model can shoot
         self.number_rays = number_rays
@@ -56,7 +59,7 @@ class TestEnvironment2(gym.Env):
         self.unet.eval()
 
         self.info = 0
-        self.past_info = 0
+        self.past_info = []
 
         self.loss = torch.nn.BCELoss()
         self.current_similarity = 0.0
@@ -72,10 +75,16 @@ class TestEnvironment2(gym.Env):
 
         self.num_resets = 0
     def _get_obs(self):
-        return self.obs
+        return self.normalize_observation(self.obs)
     
     def _get_info(self):
         return {}
+    
+    def normalize_observation(self, obs):
+        return {
+            "image": obs["image"] / 255.0,  # Normalize to [0, 1]
+            "vector": obs["vector"]  # Keep unchanged
+        }
     
     def reset(self, seed=None, options= None):
         # We need the following line to seed self.np_random
@@ -95,8 +104,11 @@ class TestEnvironment2(gym.Env):
 
         #Input should be black image
         self.input = np.zeros_like(self.image, dtype=np.float32)
-
-        self.obs = self.input
+        self.past_action = np.zeros(2, dtype=np.float32)
+        self.obs = {
+                "image": self.input,  # (1, width, height)
+                "vector": self.past_action # (2,)
+            }
         self.total_reward = 0
         self.current_loss = 0
         self.jaccard = 0
@@ -117,6 +129,7 @@ class TestEnvironment2(gym.Env):
             wandb.log({"Current loss": self.current_loss, 
                         }, step = self.total_num_steps)
         # Must return observation and info
+        self.past_info = []
         return self._get_obs(), self._get_info()
 
     def step(self, action):
@@ -142,7 +155,11 @@ class TestEnvironment2(gym.Env):
                 output = self.unet(transformer_input)
 
             # Use probability map directly as observation, but cut away the batch dimension
-            self.obs = output.cpu().detach().numpy().squeeze()
+            self.obs = {
+                "image": output.cpu().detach().numpy().squeeze(),  # (1, width, height)
+                "vector": self.past_action # (2,)
+            }
+            self.past_action = action
             # Convert the model output to a probability map and binary mask
             pred_mask = (output > 0.5).float()
             pred_mask = pred_mask.cpu().detach().numpy().squeeze()
@@ -155,14 +172,14 @@ class TestEnvironment2(gym.Env):
             intersection = (pred_mask * self.image).sum()
             
             union = pred_mask.sum() + self.image.sum() - intersection - self.past_inters
-            self.past_inters = intersection
+            self.past_inters = max(self.past_inters, intersection)
             self.jaccard = intersection / (union + 1e-6)
 
 
             self.current_similarity = self.jaccard
 
         self.current_episode_reward = self.jaccard
-        if ( x is  not None and y is not None and self.past_info is not self.info):
+        if ( x is  not None and y is not None and self.info in self.past_info):
             self.current_episode_reward += 0.2
         self.total_reward += self.current_episode_reward
 
@@ -283,7 +300,7 @@ class TestEnvironment2(gym.Env):
          # Convert border value to pixel position
         total_perimeter = 2 * (self.width + self.height)
         position = border * total_perimeter
-        self.past_info = self.info
+        self.past_info.append(self.info)
         # Top edge
         if position < self.width:
             x = position
