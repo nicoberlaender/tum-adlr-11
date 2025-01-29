@@ -179,7 +179,7 @@ class TestEnvironment2(gym.Env):
             self.current_similarity = self.jaccard
 
         self.current_episode_reward = self.jaccard
-        if ( x is  not None and y is not None and self.info in self.past_info):
+        if ( x is  not None and y is not None and self.info not in self.past_info):
             self.current_episode_reward += 0.2
         self.total_reward += self.current_episode_reward
 
