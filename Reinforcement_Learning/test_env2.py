@@ -113,6 +113,8 @@ class TestEnvironment2(gym.Env):
             }
         self.total_reward = 0
         self.current_loss = 0
+        self.pred_mask =0 
+        self.past_inters = 0
         self.jaccard = 0
         transformer_input = torch.tensor(self.input).unsqueeze(0).to(self.device).float()
         transformer_input = transformer_input.unsqueeze(0)
@@ -125,7 +127,7 @@ class TestEnvironment2(gym.Env):
         self.current_loss = float(self.loss(output, transformer_truth).cpu().detach())
 
         self.current_episode_reward = 0
-
+        self.hit = 0
         self.action = None
         if self.wand:
             wandb.log({"Current loss": self.current_loss, 
@@ -146,7 +148,7 @@ class TestEnvironment2(gym.Env):
         self.current_rays += 1
 
         if ( x is  not None and y is not None):
-            
+            self.hit +=1
             self.input[x][y]= 1          
             transformer_input = torch.tensor(self.input).unsqueeze(0).to(self.device).float()
             transformer_input = transformer_input.unsqueeze(0) 
@@ -166,23 +168,27 @@ class TestEnvironment2(gym.Env):
             self.past_action = action
             # Convert the model output to a probability map and binary mask
             pred_mask = (output > 0.5).float()
-            pred_mask = pred_mask.cpu().detach().numpy().squeeze()
+            self.pred_mask = pred_mask.cpu().detach().numpy().squeeze()
             
             # Convert loss to CPU float
             # Convert the model output to a probability map and binary mask
             self.current_loss = float(self.loss(output, transformer_truth).cpu().detach())
 
-            #calculate intersection between pred_mask and self.image
-            intersection = (pred_mask * self.image).sum() -self.past_inters
             
-            union = pred_mask.sum() + self.image.sum() - intersection
-            self.past_inters = max(self.past_inters, intersection)
-            self.jaccard = intersection / (union + 1e-6)
+
+            #calculate intersection between pred_mask and self.image
+        intersection = (self.pred_mask * self.image).sum() -self.past_inters
+            
+        union = self.pred_mask.sum() + self.image.sum() - intersection
+        self.past_inters = max(self.past_inters, intersection)
+        self.jaccard = intersection * self.hit / (union + 1e-6)
 
 
-            self.current_similarity = self.jaccard
+        self.current_similarity = self.jaccard
 
         self.current_episode_reward = self.jaccard
+        if ( x is not None and y is not None):
+            self.current_episode_reward = max(0.1, self.current_episode_reward)
         if ( x is  not None and y is not None and self.info not in self.past_info):
             self.current_episode_reward += 0.2
         self.total_reward += self.current_episode_reward
