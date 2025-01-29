@@ -59,6 +59,7 @@ class TestEnvironment2(gym.Env):
         self.unet.eval()
 
         self.info = 0
+        self.image_obs = 0
         self.past_info = []
 
         self.loss = torch.nn.BCELoss()
@@ -105,6 +106,7 @@ class TestEnvironment2(gym.Env):
         #Input should be black image
         self.input = np.zeros_like(self.image, dtype=np.float32)
         self.past_action = np.zeros(2, dtype=np.float32)
+        self.image_obs = self.input
         self.obs = {
                 "image": self.input,  # (1, width, height)
                 "vector": self.past_action # (2,)
@@ -156,6 +158,7 @@ class TestEnvironment2(gym.Env):
                 output = self.unet(transformer_input)
 
             # Use probability map directly as observation, but cut away the batch dimension
+            self.image_obs = output.cpu().detach().numpy().squeeze()
             self.obs = {
                 "image": output.cpu().detach().numpy().squeeze(),  # (1, width, height)
                 "vector": self.past_action # (2,)
@@ -210,7 +213,7 @@ class TestEnvironment2(gym.Env):
             wandb.log({"Total Reward": self.total_reward}, step = self.total_num_steps)
             
         if self.num_resets % 700 == 0 and self.wand:
-            predict_rgb =self.obs
+            predict_rgb = self.image_obs
             input_rgb = np.stack([self.input * 255] * 3, axis=-1)
             ground_truth_rgb = np.stack([self.image * 255] * 3, axis=-1)
          
@@ -232,7 +235,7 @@ class TestEnvironment2(gym.Env):
     
     def render(self):     
         # Convert tensors to numpy arrays and scale to 0-255 for visualization and  Duplicate channels for RGB display
-        predict_rgb =converter(self.obs) 
+        predict_rgb =converter(self.image_obs) 
         input_rgb = converter(self.input) 
         ground_truth_rgb = converter(self.image) 
 
