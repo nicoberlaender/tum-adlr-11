@@ -181,7 +181,7 @@ class TestEnvironment2(gym.Env):
             
         union = self.pred_mask.sum() + self.image.sum() - intersection
         self.past_inters = max(self.past_inters, intersection)
-        self.jaccard = intersection * self.hit / (union + 1e-6)
+        self.jaccard = intersection / (union + 1e-6)
 
 
         self.current_similarity = self.jaccard
