@@ -111,6 +111,8 @@ class TestEnvironment2(gym.Env):
 
         self.current_similarity = 0
 
+        self.past_actions = [(0, 0)] * self.number_rays
+
         # Must return observation and info
         return self._get_obs(), self._get_info()
     
