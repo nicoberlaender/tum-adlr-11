@@ -29,7 +29,12 @@ class TestEnvironment2(gym.Env):
 
         self.action_space = gym.spaces.Box(low=-1, high=1, shape=(2,), dtype=np.float32)
 
-        self.observation_space = gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8)
+        #self.observation_space = gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8)
+        self.observation_space = gym.spaces.Dict({
+            'image': gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8),
+            'past_actions': gym.spaces.Box(low=-1, high=1, shape=(number_rays, 2), dtype=np.float32),
+            'current_rays': gym.spaces.Discrete(number_rays)
+        })
 
         self.metadata = {'render_mode': render_mode,
                           'render_fps': 30}
@@ -62,11 +67,19 @@ class TestEnvironment2(gym.Env):
 
         self.current_similarity = 0
 
+        self.past_actions = [(0, 0)] * number_rays
+
 
     def _get_obs(self):
         # Add channel dimension to observation
-        observation = self.obs[None, :, :] * 255
-        return observation.astype(np.uint8)
+        image_observation = self.obs[None, :, :] * 255
+        image_observation = image_observation.astype(np.uint8)
+        return {
+            'image': image_observation,
+            'past_actions': np.array(self.past_actions),
+            'current_rays': self.current_rays
+        }
+        #return observation.astype(np.uint8)
     
     def _get_info(self):
         return {}
@@ -104,6 +117,7 @@ class TestEnvironment2(gym.Env):
 
     def step(self, action):
         self.action = action
+        self.past_actions[self.current_rays] = action
         x, y= self._shoot_ray(action)
         self.x = x
         self.y = y
