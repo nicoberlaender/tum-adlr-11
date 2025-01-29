@@ -40,7 +40,7 @@ progress_bar_callback = ProgressBarCallback()
 config = {
     "env": env,
     "total_timesteps": 4000000,
-    "policy": "MlpPolicy"
+    "policy": "MultiInputPolicy"
 }
 
 # Initialize wandb
