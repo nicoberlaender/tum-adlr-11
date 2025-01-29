@@ -170,9 +170,9 @@ class TestEnvironment2(gym.Env):
             self.current_loss = float(self.loss(output, transformer_truth).cpu().detach())
 
             #calculate intersection between pred_mask and self.image
-            intersection = (pred_mask * self.image).sum()
+            intersection = (pred_mask * self.image).sum() -self.past_inters
             
-            union = pred_mask.sum() + self.image.sum() - intersection - self.past_inters
+            union = pred_mask.sum() + self.image.sum() - intersection
             self.past_inters = max(self.past_inters, intersection)
             self.jaccard = intersection / (union + 1e-6)
 
