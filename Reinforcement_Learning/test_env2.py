@@ -130,6 +130,7 @@ class TestEnvironment2(gym.Env):
                         }, step = self.total_num_steps)
         # Must return observation and info
         self.past_info = []
+        self.info = 0
         return self._get_obs(), self._get_info()
 
     def step(self, action):
