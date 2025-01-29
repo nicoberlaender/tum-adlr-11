@@ -113,7 +113,7 @@ class TestEnvironment2(gym.Env):
             }
         self.total_reward = 0
         self.current_loss = 0
-        self.pred_mask =0 
+        self.pred_mask =np.zeros(self.image.shape)
         self.past_inters = 0
         self.jaccard = 0
         transformer_input = torch.tensor(self.input).unsqueeze(0).to(self.device).float()
