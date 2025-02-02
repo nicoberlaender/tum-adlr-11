@@ -60,7 +60,7 @@ callback_list = CallbackList([progress_bar_callback, callback])
 
 model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
 
-model.save("models/300kJaccard5e-4")
+model.save("models/200kJaccard1e-3Heatmap")
 
 env.close()
 
