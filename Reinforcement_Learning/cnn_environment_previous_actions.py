@@ -31,7 +31,6 @@ class TestEnvironment2(gym.Env):
 
         #self.observation_space = gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8)
         self.observation_space = gym.spaces.Dict({
-            'image': gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8),
             'past_actions': gym.spaces.Box(low=-1, high=1, shape=(number_rays, 2), dtype=np.float32),
             'current_rays': gym.spaces.Discrete(number_rays)
         })
@@ -75,7 +74,6 @@ class TestEnvironment2(gym.Env):
         image_observation = self.obs[None, :, :] * 255
         image_observation = image_observation.astype(np.uint8)
         return {
-            'image': image_observation,
             'past_actions': np.array(self.past_actions),
             'current_rays': self.current_rays
         }
