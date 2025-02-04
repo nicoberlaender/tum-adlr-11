@@ -1,22 +1,18 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import torch.nn.functional as F
 import wandb
 import os
-import matplotlib.pyplot as plt
 from tqdm import tqdm
 
 from types import SimpleNamespace
 from torchvision import transforms
-from torchvision.transforms import ToTensor
 from torch.utils.data import DataLoader, random_split
 from torch.optim.lr_scheduler import OneCycleLR
 from torch.utils.data import ConcatDataset
 
 from model.my_unet_model import UNet
 from dataset.create_dataset_file import ImageDataset
-from loss.decide_loss import get_loss_function
 
 def main():
 
@@ -174,7 +170,7 @@ def main():
             torch.save(checkpoint,'saved_models/best_model.pth')
 
         # Log metrics to wandb
-        if (use_wandb == True):
+        if (use_wandb):
             wandb.log({ 
             "epoch/train_loss": train_loss,
             "epoch/val_loss": val_loss,
@@ -186,7 +182,7 @@ def main():
               f"Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
 
     # Finish wandb logging
-    if (use_wandb ==True):
+    if (use_wandb):
         wandb.finish()
 
     # Save the model
@@ -269,7 +265,7 @@ def train_and_val():
     model = UNet(1, 32, 1)
     model= model.to(device)
 
-    criterion = get_loss_function()
+    criterion = torch.nn.BCELoss()
     
     optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
 
@@ -382,7 +378,7 @@ def train_and_val():
 
 
     # Finish wandb logging
-    if (use_wandb ==True):
+    if (use_wandb):
         wandb.finish()
 
     # Save the model
