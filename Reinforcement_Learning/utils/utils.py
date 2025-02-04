@@ -82,7 +82,7 @@ def plotter_with_ray(image1, image2, image3, title1, title2, title3,
         plt.show()
 
 #PLot 3 images( usually input, output and ground truth and add title, point and arrow)
-def plotter (image1, image2, imgae3, title1, title2, title3, wand= False, step= 0):
+def plotter (image1, image2, imgae3, title1, title2, title3, wand= False, step= 0, loss= 0,):
     # Display both images side by side using matplotlib
     fig, axes = plt.subplots(1, 3, figsize=(10, 5))
             
@@ -106,7 +106,7 @@ def plotter (image1, image2, imgae3, title1, title2, title3, wand= False, step= 
     # Show the combined plot
     plt.tight_layout()
     if wand:
-        wandb.log({"Image": wandb.Image(plt), 
-                   "Step" : step})
+        wandb.log({"Image": wandb.Image(plt),
+            "Step": step})
     else:
         plt.show()
