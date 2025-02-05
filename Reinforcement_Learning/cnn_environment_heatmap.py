@@ -9,7 +9,7 @@ import math
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from Reinforcement_Learning.utils import plotter_with_ray, plotter
+from utils import plotter_with_ray, plotter
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '2D_Shape_Completion'))
 sys.path.append(project_root)
@@ -25,7 +25,7 @@ class TestEnvironment2(gym.Env):
 
         self.action_space = gym.spaces.Box(low=-1, high=1, shape=(2,), dtype=np.float32)
 
-        self.observation_space = gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8)
+        self.observation_space = gym.spaces.Box(low=0, high=255, shape=(5, self.width, self.height), dtype=np.uint8)
 
         self.metadata = {'render_mode': render_mode,
                           'render_fps': 30}
@@ -49,7 +49,7 @@ class TestEnvironment2(gym.Env):
         elif torch.backends.mps.is_available():
             self.device = 'mps'
         # Load the model and map it to the GPU
-        self.unet = torch.load("saved_models/model_full_old.pth", map_location=self.device)
+        self.unet = torch.load("shape_completion_models/model_full_old.pth", map_location=self.device)
         self.unet.eval()
 
         self.loss = torch.nn.BCELoss()
@@ -65,7 +65,22 @@ class TestEnvironment2(gym.Env):
         # Add channel dimension to observation
         image_observation = self.obs[None, :, :] * 255
         image_observation = image_observation.astype(np.uint8)
-        return image_observation
+        # Create positional encoding grid
+        y = np.linspace(-1, 1, self.height)
+        x = np.linspace(-1, 1, self.width)
+        x_grid, y_grid = np.meshgrid(x, y)
+
+        # Create sinusoidal positional encoding
+        freq = 2.0 * np.pi
+        pos_enc_x = np.sin(x_grid * freq).reshape(1, self.height, self.width)
+        pos_enc_y = np.sin(y_grid * freq).reshape(1, self.height, self.width)
+        pos_enc_x_cos = np.cos(x_grid * freq).reshape(1, self.height, self.width)
+        pos_enc_y_cos = np.cos(y_grid * freq).reshape(1, self.height, self.width)
+
+        # Stack observation with positional encodings
+        observation = np.vstack([image_observation, pos_enc_x * 255, pos_enc_y * 255, 
+                                pos_enc_x_cos * 255, pos_enc_y_cos * 255])
+        return observation.astype(np.uint8)
     
     def _get_info(self):
         return {

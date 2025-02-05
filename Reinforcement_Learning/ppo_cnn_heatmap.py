@@ -23,7 +23,7 @@ progress_bar_callback = ProgressBarCallback()
 # Configure training
 config = {
     "env": env,
-    "total_timesteps": 1000000,
+    "total_timesteps": 200000,
     "policy": "CnnPolicy"
 }
 
@@ -60,7 +60,7 @@ callback_list = CallbackList([progress_bar_callback, callback])
 
 model.learn(total_timesteps=config["total_timesteps"], callback=callback_list)
 
-model.save("models/1MJaccard1e-3Heatmap")
+model.save("models/200kJaccard1e-3HeatmapPE")
 
 env.close()
 
