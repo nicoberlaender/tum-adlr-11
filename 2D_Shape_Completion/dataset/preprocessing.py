@@ -1,7 +1,5 @@
 import numpy as np
-
 from PIL import Image
-
 
 def get_surface_pixels(image):
     """
@@ -111,9 +109,18 @@ def pil_to_binary(image):
     
     return binary_image
 
-
 def path_to_tensor (image_path, device):
-    #Initialize the image fron the path
+    """
+    Converts an image file to a binary tensor.
+
+    Args:
+        image_path (str): Path to the image file
+        device (torch.device): Device to which the tensor should be moved (not currently used)
+
+    Returns:
+        torch.Tensor: Binary tensor where original white pixels (255) are converted to 1 and black pixels (0) remain 0
+    """
+    
 
     image = Image.open(image_path).convert('L')  # Convert to grayscale
 

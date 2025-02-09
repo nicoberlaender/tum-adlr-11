@@ -6,16 +6,15 @@ import torchvision
 import wandb
 import sys
 import math
+from utils import plotter_with_ray, plotter
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
-from Reinforcement_Learning.utils import plotter_with_ray, plotter
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '2D_Shape_Completion'))
 sys.path.append(project_root)
 
-class TestEnvironment2(gym.Env):
-    def __init__(self, image_shape, number_rays, data_location, render_mode = 'rgb_array', wand = False):
+class CNN_Environment(gym.Env):
+    def __init__(self, image_shape, number_rays, data_location, render_mode = 'rgb_array', wand = True, observation_type = "full"):
 
         self.wand = wand
 
@@ -25,11 +24,23 @@ class TestEnvironment2(gym.Env):
 
         self.action_space = gym.spaces.Box(low=-1, high=1, shape=(2,), dtype=np.float32)
 
-        self.observation_space = gym.spaces.Dict({
-            'image': gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8),
-            'past_actions': gym.spaces.Box(low=-1, high=1, shape=(number_rays, 2), dtype=np.float32),
-            'current_rays': gym.spaces.Discrete(number_rays)
-        })
+        self.observation_type = observation_type
+
+        if observation_type == "full":
+            self.observation_space = gym.spaces.Dict({
+                'image': gym.spaces.Box(low=0, high=255, shape=(1, self.width, self.height), dtype=np.uint8),
+                'past_actions': gym.spaces.Box(low=-1, high=1, shape=(number_rays, 2), dtype=np.float32),
+                'current_rays': gym.spaces.Discrete(number_rays)
+            })
+        elif observation_type == "heatmap":
+            self.observation_space = gym.spaces.Box(low=0, high=255, shape=(5, self.width, self.height), dtype=np.uint8)
+        elif observation_type == "past_actions":
+            self.observation_space = gym.spaces.Dict({
+                'past_actions': gym.spaces.Box(low=-1, high=1, shape=(number_rays, 2), dtype=np.float32),
+                'current_rays': gym.spaces.Discrete(number_rays)
+            })
+        else:
+            raise ValueError("Observations must be 'full', 'heatmap' or 'past_actions'")
 
         self.metadata = {'render_mode': render_mode,
                           'render_fps': 30}
@@ -69,12 +80,19 @@ class TestEnvironment2(gym.Env):
         # Add channel dimension to observation
         image_observation = self.obs[None, :, :] * 255
         image_observation = image_observation.astype(np.uint8)
-        return {
-            'image': image_observation,
-            'past_actions': np.array(self.past_actions),
-            'current_rays': self.current_rays
-        }
-        #return observation.astype(np.uint8)
+        if self.observation_type == "full":
+            return {
+                'image': image_observation,
+                'past_actions': np.array(self.past_actions),
+                'current_rays': self.current_rays
+            }
+        elif self.observation_type == "heatmap":
+            return image_observation
+        elif self.observation_type == "past_actions":
+            return {
+                'past_actions': np.array(self.past_actions),
+                'current_rays': self.current_rays
+            }
     
     def _get_info(self):
         return {

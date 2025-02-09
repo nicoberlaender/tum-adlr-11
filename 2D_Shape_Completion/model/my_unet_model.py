@@ -3,6 +3,15 @@ import torch.nn.init as init
 
 class UNet(nn.Module):
     def __init__(self, n_channels, n2_channels, n_classes, bilinear=False, sigmoid = True):
+        """Initialize U-Net model.
+        Args:
+            n_channels (int): Number of input channels
+            n2_channels (int): Number of channels in first layer
+            n_classes (int): Number of output classes
+            bilinear (bool, optional): Use bilinear upsampling. Defaults to False.
+            sigmoid (bool, optional): Apply sigmoid activation. Defaults to True.
+        """
+        
         super(UNet, self).__init__()
         self.n_channels = n_channels
         self.n_classes = n_classes
@@ -27,6 +36,12 @@ class UNet(nn.Module):
         self.apply(self._initialize_weights)
 
     def _initialize_weights(self, m):
+        """
+        Initialize weights for Conv2d and BatchNorm2d layers using He initialization.
+        Args:
+            m: Module to initialize
+        """
+        
         if isinstance(m, nn.Conv2d):
             # Apply He initialization (Kaiming initialization)
             init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
@@ -40,6 +55,14 @@ class UNet(nn.Module):
 
 
     def forward(self, x):
+        """
+        Forward pass of the UNet model.
+        Args:
+            x (torch.Tensor): Input tensor
+        Returns:
+            torch.Tensor: Output logits, with sigmoid activation if specified
+        """
+
         x1 = self.inc(x)
         x2 = self.down1(x1)
         x3 = self.down2(x2)
