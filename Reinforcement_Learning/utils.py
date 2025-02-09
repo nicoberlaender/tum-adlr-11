@@ -1,4 +1,3 @@
-import torch
 import numpy as np
 import matplotlib.pyplot as plt
 import wandb
@@ -110,3 +109,65 @@ def plotter (image1, image2, imgae3, title1, title2, title3, wand= False, step= 
             "Step": step})
     else:
         plt.show()
+
+def value_to_circle_pixel(position, width, height):
+    # Convert action from [-1, 1] to angle in [0, 2π)
+    theta = (position + 1) * math.pi  # Scales to 0-2π
+
+    # Calculate image center coordinates
+    cx = (width - 1) / 2  # Center x-coordinate
+    cy = (height - 1) / 2  # Center y-coordinate
+
+    # Calculate radius to image corners
+    half_width = (width - 1) / 2
+    half_height = (height - 1) / 2
+    radius = math.sqrt(half_width**2 + half_height**2)
+
+    # Convert polar coordinates to Cartesian coordinates
+    x = cx + radius * math.cos(theta)
+    y = cy + radius * math.sin(theta)
+
+    return x, y
+
+def shoot_ray(action, width, height, image):
+    border, angle = action
+    x_start, y_start = value_to_circle_pixel(border)
+
+    # Calculate center and radial direction
+    cx = (width - 1) / 2
+    cy = (height - 1) / 2
+    radial_x = cx - x_start
+    radial_y = cy - y_start
+    radial_length = math.hypot(radial_x, radial_y)
+
+    if radial_length == 0:
+        return None, None  # Edge case
+
+    # Calculate maximum safe angle deviation
+    half_width = (width - 1) / 2
+    half_height = (height - 1) / 2
+    radius = math.hypot(half_width, half_height)
+    max_deviation = math.atan(max(half_width, half_height) / radius)
+
+    # Map [-1, 1] to [-max_deviation, max_deviation]
+    angle_dev = angle * max_deviation
+
+    # Calculate direction vector with constrained angle
+    cos_a = math.cos(angle_dev)
+    sin_a = math.sin(angle_dev)
+    dx = (radial_x * cos_a - radial_y * sin_a) / radial_length
+    dy = (radial_x * sin_a + radial_y * cos_a) / radial_length
+
+    # Tracing with guaranteed hit
+    x, y = x_start, y_start
+    for _ in range(int(2 * radius * 2)):  # Sufficient steps to cross image
+        x += dx
+        y += dy
+        x_int = int(round(x))
+        y_int = int(round(y))
+
+        if 0 <= x_int < width and 0 <= y_int < height:
+            if image[x_int, y_int] == 1:
+                return x_int, y_int
+    
+    return None, None  # Fallback (shouldn't reach here)

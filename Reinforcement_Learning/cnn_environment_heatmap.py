@@ -9,7 +9,7 @@ import math
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from utils import plotter_with_ray, plotter
+from utils import plotter_with_ray, plotter, value_to_circle_pixel
 
 project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '2D_Shape_Completion'))
 sys.path.append(project_root)
@@ -74,12 +74,9 @@ class TestEnvironment2(gym.Env):
         freq = 2.0 * np.pi
         pos_enc_x = np.sin(x_grid * freq).reshape(1, self.height, self.width)
         pos_enc_y = np.sin(y_grid * freq).reshape(1, self.height, self.width)
-        pos_enc_x_cos = np.cos(x_grid * freq).reshape(1, self.height, self.width)
-        pos_enc_y_cos = np.cos(y_grid * freq).reshape(1, self.height, self.width)
 
         # Stack observation with positional encodings
-        observation = np.vstack([image_observation, pos_enc_x * 255, pos_enc_y * 255, 
-                                pos_enc_x_cos * 255, pos_enc_y_cos * 255])
+        observation = np.vstack([image_observation, pos_enc_x * 255, pos_enc_y * 255])
         return observation.astype(np.uint8)
     
     def _get_info(self):
@@ -215,9 +212,6 @@ class TestEnvironment2(gym.Env):
             render_img = np.repeat(render_img, 3, axis=-1)  # Repeat to 3 channels
             render_img = render_img.astype(np.uint8)  # Convert to uint8
             return render_img  # Return format: (height, width, 3)
-        
-        
-    import math
 
     def _shoot_ray(self, action):
         border, angle = action
@@ -261,22 +255,3 @@ class TestEnvironment2(gym.Env):
                     return x_int, y_int
     
         return None, None  # Fallback (shouldn't reach here)
-    
-    def _value_to_circle_pixel(self, position):
-        # Convert action from [-1, 1] to angle in [0, 2π)
-        theta = (position + 1) * math.pi  # Scales to 0-2π
-
-        # Calculate image center coordinates
-        cx = (self.width - 1) / 2  # Center x-coordinate
-        cy = (self.height - 1) / 2  # Center y-coordinate
-
-        # Calculate radius to image corners
-        half_width = (self.width - 1) / 2
-        half_height = (self.height - 1) / 2
-        radius = math.sqrt(half_width**2 + half_height**2)
-
-        # Convert polar coordinates to Cartesian coordinates
-        x = cx + radius * math.cos(theta)
-        y = cy + radius * math.sin(theta)
-
-        return x, y

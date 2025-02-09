@@ -12,11 +12,11 @@ class ImageDataset(Dataset):
             len_dataset (int): Maximum number of samples to take from the dataset.
             transform (callable, optional): Transformations to apply to the images.
         """
-        self.root_dir = root_dir
         if test:
-            self.samples_dir = os.path.join(root_dir, 'test')
+            root_dir = os.path.join(root_dir, 'test')
         else:
-            self.samples_dir = os.path.join(root_dir, 'train')
+            root_dir = os.path.join(root_dir, 'train')
+        samples_dir = os.path.join(root_dir, 'samples')
         self.transform = transform
         self.data = []
         self.sampled_data = []
@@ -27,7 +27,7 @@ class ImageDataset(Dataset):
                 continue
             if os.path.isfile(image_path):  # Check if it's a file
                 number = os.path.basename(image_path).split('.')[0]
-                folder_path = os.path.join(self.samples_dir, str(number))
+                folder_path = os.path.join(samples_dir, str(number))
                 num_samples = len(os.listdir(folder_path))
 
                 for _ in range(num_samples):

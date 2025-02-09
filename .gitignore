@@ -5,7 +5,6 @@ data.zip
 *.pyc
 2D_Shape_Completion/dataset/__pycache__/
 /data_new/data_new
-
 2D_Shape_Completion/model/__pycache__/
 2D_Shape_Completion/data_new/
 *.DS_Store
@@ -35,3 +34,7 @@ PPO.zip
 videos
 Reinforcement_Learning/models/
 2D_Shape_Completion/segmaps/
+Reinforcement_Learning/data/
+Reinforcement_Learning/segmaps/
+.vscode/
+2D_Shape_Completion/data.zip

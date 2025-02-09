@@ -11,13 +11,16 @@ from stable_baselines3.common.callbacks import CallbackList
 def main(observation_type):
     # Setup paths
     current_path = os.getcwd()
-    parent_path = os.path.abspath(os.path.join(current_path, os.pardir))
-    data_path = os.path.join(parent_path, "data_new")
+    data_path = os.path.join(current_path, "data", "train")
 
     env1 = CNN_Environment((224, 224), 15, data_path, render_mode='rgb_array', wand= True, observation_type=observation_type)
 
     # Create vectorized environment
     env = DummyVecEnv([lambda : env1])
+
+    policy = "MultiInputPolicy"
+    if observation_type == "heatmap":
+        policy = "CnnPolicy"
 
     # Add a progress bar callback
     progress_bar_callback = ProgressBarCallback()
@@ -26,7 +29,7 @@ def main(observation_type):
     config = {
         "env": env,
         "total_timesteps": 200000,
-        "policy": "MultiInputPolicy"
+        "policy": policy
     }
 
     # Initialize wandb
