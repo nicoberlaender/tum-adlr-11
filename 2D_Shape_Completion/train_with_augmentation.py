@@ -16,7 +16,7 @@ def main():
 
   # Define hyperparameters
     hyperparameters = {
-        "epochs": 100,
+        "epochs": 1,
         "batch_size": 64,
         "learning_rate": 1e-3
 }
