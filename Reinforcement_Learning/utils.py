@@ -110,7 +110,7 @@ def plotter (image1, image2, imgae3, title1, title2, title3, wand= False, step= 
     else:
         plt.show()
 
-def value_to_circle_pixel(position, width, height):
+def value_to_circle_pixel(position, width=224, height=224):
     # Convert action from [-1, 1] to angle in [0, 2π)
     theta = (position + 1) * math.pi  # Scales to 0-2π
 
@@ -129,10 +129,10 @@ def value_to_circle_pixel(position, width, height):
 
     return x, y
 
-def shoot_ray(action, width, height, image):
+def shoot_ray(action, image,width=224, height=224):
     border, angle = action
-    x_start, y_start = value_to_circle_pixel(border)
 
+    x_start, y_start = value_to_circle_pixel(border)
     # Calculate center and radial direction
     cx = (width - 1) / 2
     cy = (height - 1) / 2

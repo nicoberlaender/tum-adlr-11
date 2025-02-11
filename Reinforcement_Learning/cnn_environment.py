@@ -13,7 +13,7 @@ project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '2D
 sys.path.append(project_root)
 
 class CNN_Environment(gym.Env):
-    def __init__(self, image_shape, number_rays, data_location, render_mode = 'rgb_array', wand = True, observation_type = "full"):
+    def __init__(self, image_shape, number_rays, data_location, render_mode = 'rgb_array', wand = True, observation_type = "full", random_perfect = False):
 
         self.wand = wand
 
@@ -63,7 +63,7 @@ class CNN_Environment(gym.Env):
         elif torch.backends.mps.is_available():
             self.device = 'mps'
         # Load the model and map it to the GPU
-        self.unet = torch.load("saved_models/model_full_old.pth", map_location=self.device)
+        self.unet = torch.load("shape_completion_models/model_full_old.pth", map_location=self.device)
         self.unet.eval()
 
         self.loss = torch.nn.BCELoss()
@@ -74,6 +74,9 @@ class CNN_Environment(gym.Env):
 
         self.past_actions = [(0, 0)] * number_rays
 
+        self.hit =False
+
+        self.random_perfect = random_perfect
 
     def _get_obs(self):
         # Add channel dimension to observation
@@ -97,6 +100,7 @@ class CNN_Environment(gym.Env):
         return {
             'current_similarity': self.current_similarity,
             'current_loss': self.current_loss,
+            'ray_hit': self.hit,
         }
     
     def reset(self, seed=None, options= None):
@@ -131,21 +135,28 @@ class CNN_Environment(gym.Env):
 
         self.past_actions = [(0, 0)] * self.number_rays
 
+        self.hit =False
+
         # Must return observation and info
         return self._get_obs(), self._get_info()
     
 
     def step(self, action):
+        x, y= shoot_ray(action,  self.image, self.width, self.height,)
+        if self.random_perfect and (x is None or y is None):
+            self.hit = False
+            return self._get_obs(), 0, False, False, self._get_info()
         self.action = action
         self.past_actions[self.current_rays] = action
-        x, y= shoot_ray(action, self.width, self.height, self.image)
+        
         self.x = x
         self.y = y
 
         self.current_rays += 1
-
+        self.hit =False
         if (x is not None and y is not None):
-            self.input[x][y] = 1     
+            self.input[x][y] = 1   
+            self.hit =True  
             
             # Feed the input to the model
             transformer_input = torch.from_numpy(self.input).to(self.device).float()
