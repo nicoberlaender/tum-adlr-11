@@ -224,7 +224,7 @@ class CNN_Environment(gym.Env):
             if ( self.action is not None):
                 position, angle = self.action
 
-                plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self._value_to_circle_pixel(position), angle, (self.y, self.x), self.wand, self.current_rays)
+                plotter_with_ray(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", value_to_circle_pixel(position), angle, (self.y, self.x), self.wand, self.current_rays)
                 
             else:
                 plotter(input_rgb, predict_rgb, grount_truth_rgb, "Input", "Prediction", "Ground Truth", self.wand, self.current_rays)

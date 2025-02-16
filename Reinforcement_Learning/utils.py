@@ -16,7 +16,7 @@ def plotter_with_ray(image1, image2, image3, title1, title2, title3,
     fig, axes = plt.subplots(1, 3, figsize=(10, 5))
     
     # Plot input image with ray
-    axes[0].imshow(image1)
+    axes[0].imshow(image1, cmap='gray')
     axes[0].set_title(title1)
     axes[0].axis("off")
 
@@ -62,15 +62,19 @@ def plotter_with_ray(image1, image2, image3, title1, title2, title3,
                  head_width=5, head_length=5, 
                  fc='red', ec='red')
     # Also draw a circle around the image
-    circle = plt.Circle((center_x, center_y), radius, color='grey', fill=False)
+    circle = plt.Circle((center_y, center_x), radius, color='grey', fill=False)
     axes[0].add_artist(circle)
+    axes[0].set_aspect('equal')
+    # Add padding around the circle
+    axes[0].set_xlim(center_y - radius - 10, center_y + radius + 10)
+    axes[0].set_ylim(center_x - radius - 10, center_x + radius + 10)
 
     # Plot other images
-    axes[1].imshow(image2)
+    axes[1].imshow(image2, cmap='gray')
     axes[1].set_title(title2)
     axes[1].axis("off")
 
-    axes[2].imshow(image3)
+    axes[2].imshow(image3, cmap='gray')
     axes[2].set_title(title3)
     axes[2].axis("off")
 
