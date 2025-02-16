@@ -11,10 +11,8 @@ from stable_baselines3.common.callbacks import CallbackList
 def main(observation_type):
     # Setup paths
     current_path = os.getcwd()
-    parent_path = os.path.dirname(current_path)
 
-# Construct the new path: parent_directory/data_new/data_new
-    data_path = os.path.join(parent_path, "data_new", "data_new")
+    data_path = os.path.join(current_path, "data", "train")
 
     env1 = CNN_Environment((224, 224), 15, data_path, render_mode='rgb_array', wand= True, observation_type=observation_type)
 
@@ -31,7 +29,7 @@ def main(observation_type):
     # Configure training
     config = {
         "env": env,
-        "total_timesteps": 500000,
+        "total_timesteps": 200000,
         "policy": policy
     }
 
