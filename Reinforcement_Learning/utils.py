@@ -62,9 +62,8 @@ def plotter_with_ray(image1, image2, image3, title1, title2, title3,
                  head_width=5, head_length=5, 
                  fc='red', ec='red')
     # Also draw a circle around the image
-    circle = plt.Circle((center_y, center_x), radius, color='grey', fill=False)
+    circle = plt.Circle((center_x, center_y), radius, color='grey', fill=False)
     axes[0].add_artist(circle)
-    axes[0].set_aspect('equal')
     # Add padding around the circle
     axes[0].set_xlim(center_y - radius - 10, center_y + radius + 10)
     axes[0].set_ylim(center_x - radius - 10, center_x + radius + 10)

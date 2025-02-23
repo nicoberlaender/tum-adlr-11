@@ -78,6 +78,9 @@ class CNN_Environment(gym.Env):
 
         self.random_perfect = random_perfect
 
+        self.x = None
+        self.y = None
+
     def _get_obs(self):
         # Add channel dimension to observation
         image_observation = self.obs[None, :, :] * 255
@@ -101,6 +104,7 @@ class CNN_Environment(gym.Env):
             'current_similarity': self.current_similarity,
             'current_loss': self.current_loss,
             'ray_hit': self.hit,
+            'hit_point': (self.x, self.y)
         }
     
     def reset(self, seed=None, options= None):

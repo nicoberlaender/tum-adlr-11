@@ -39,3 +39,5 @@ Reinforcement_Learning/segmaps/
 .vscode/
 2D_Shape_Completion/data.zip
 Reinforcement_Learning/data.zip
+2D_Shape_Completion/_inference copy.ipynb
+2D_Shape_Completion/output_images
